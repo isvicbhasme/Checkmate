@@ -1,5 +1,4 @@
-/nbproject/*
-/nbproject
-nbproject/**
+/nbproject/
+!/nbproject/src
 /build/
 /dist/
