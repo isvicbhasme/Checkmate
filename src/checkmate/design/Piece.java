@@ -3,14 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package checkmate.design;
 
 import checkmate.Launcher;
 import checkmate.util.CellInfo;
 import checkmate.util.PieceInfo;
-import javafx.event.EventHandler;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -19,14 +16,14 @@ import javafx.scene.text.Text;
  *
  * @author bhasme
  */
-public abstract class Piece extends Text implements IMovable{
+public abstract class Piece extends Text implements IMovable {
+
     protected CellInfo.File currentFile;
     protected CellInfo.Rank currentRank;
     protected PieceInfo.Type pieceType;
     protected boolean isMouseDown;
-    
-    public Piece(char unicodeString, PieceInfo.Color color, PieceInfo.Type pieceType)
-    {
+
+    public Piece(char unicodeString, PieceInfo.Color color, PieceInfo.Type pieceType) {
         super(unicodeString + "");
         setFill(Paint.valueOf(color.getColorName()));
         setFont(getPieceFont());
@@ -53,18 +50,24 @@ public abstract class Piece extends Text implements IMovable{
     protected void setPosition(CellInfo.Rank newRank, CellInfo.File newFile) {
         Cell cell = Launcher.board.getCell(newRank, newFile);
         cell.addPieceToCellGroup(this);
+        currentFile = newFile;
+        currentRank = newRank;
+        Cell newCell = Launcher.board.getCell(newRank, newFile);
+        newCell.disableEventHandlers();
     }
 
     @Override
     public void moveTo(CellInfo.Rank newRank, CellInfo.File newFile) {
         Cell currentCell = Launcher.board.getCell(currentRank, currentFile);
         currentCell.removePieceFromCellGroup(this);
+        currentCell.enableEventHandlers();
         setPosition(newRank, newFile);
     }
-    
+
     private void initCommonEvents() {
     }
-    
-    protected abstract void initEventHandlers(); 
+
+    protected abstract void initEventHandlers();
+
     protected abstract void setInitialPosition(PieceInfo.Color color, PieceInfo.Type pieceType);
 }

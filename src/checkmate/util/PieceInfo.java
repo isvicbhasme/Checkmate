@@ -30,7 +30,7 @@ public class PieceInfo {
     public enum FontInfo {
 
         TYPE("TAHOMA"),
-        SIZE("45");
+        SIZE("40");
 
         public final String data;
 
@@ -38,8 +38,9 @@ public class PieceInfo {
             this.data = data;
         }
     }
-    
+
     public enum Type {
+
         ROOK_LEFT,
         KNIGHT_LEFT,
         BISHOP_LEFT,
@@ -105,8 +106,9 @@ public class PieceInfo {
             return file;
         }
     }
-    
+
     public enum RelativePosition {
+
         LEFT,
         RIGHT,
         CENTER;

@@ -10,7 +10,6 @@ import checkmate.util.PieceInfo;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.scene.Group;
 import javafx.scene.layout.GridPane;
 
 /**
@@ -30,9 +29,8 @@ public class Board extends GridPane {
             }
         }
     }
-    
-    public Cell getCell(CellInfo.Rank rank, CellInfo.File file)
-    {
+
+    public Cell getCell(CellInfo.Rank rank, CellInfo.File file) {
         return (Cell) getChildren().get(file.ordinal() + (8 * rank.ordinal()));
     }
 

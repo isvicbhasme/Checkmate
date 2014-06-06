@@ -6,6 +6,7 @@
 package checkmate.design;
 
 import checkmate.Launcher;
+import checkmate.event.CellEvtHandler;
 import checkmate.util.CellInfo;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
@@ -17,7 +18,9 @@ import javafx.scene.shape.Rectangle;
 public class Cell extends CellGroup {
 
     private final int length;
-    private Rectangle cell;
+    private final Rectangle cell;
+    private final CellEvtHandler cellHandler;
+    private boolean isOccupied;
 
     public Cell(CellInfo.Rank rank, CellInfo.File file) {
         super();
@@ -31,6 +34,8 @@ public class Cell extends CellGroup {
         this.rank = rank;
         this.file = file;
         getChildren().add(cell);
+        cellHandler = new CellEvtHandler();
+        enableEventHandlers();
     }
 
     public double getLength() {
@@ -52,18 +57,18 @@ public class Cell extends CellGroup {
     public int getDistanceFromCenter() {
         return CellInfo.centerDistanceMap[file.ordinal() + (8 * rank.ordinal())];
     }
-    
+
     public void addPieceToCellGroup(Piece piece) {
-        while(getChildren().size() > 1) {
+        while (getChildren().size() > 1) {
             getChildren().remove(1);
         }
         getChildren().add(piece);
     }
-    
+
     public void removePieceFromCellGroup(Piece piece) {
         getChildren().remove(piece);
     }
-            
+
     private static CellInfo.Color computeColor(CellInfo.File file, CellInfo.Rank rank) {
         if ((file.ordinal() + rank.ordinal()) % 2 == 0) {
             return CellInfo.Color.WHITE;
@@ -72,4 +77,20 @@ public class Cell extends CellGroup {
         }
     }
 
+    public final void enableEventHandlers() {
+        setOnMouseClicked(cellHandler::handleMouseEvent);
+
+    }
+
+    public boolean isOccupied() {
+        return isOccupied;
+    }
+
+    public void setIsOccupied(boolean isOccupied) {
+        this.isOccupied = isOccupied;
+    }
+
+    void disableEventHandlers() {
+        setOnMouseClicked(null);
+    }
 }

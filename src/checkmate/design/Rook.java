@@ -21,7 +21,7 @@ public class Rook extends Piece {
 
     public Rook(PieceInfo.Color color, PieceInfo.Type pieceType) throws IOException {
         super(unicodeString, color, pieceType);
-        rookHandler = new RookEvtHandler(this);
+        rookHandler = new RookEvtHandler();
         setInitialPosition(color, pieceType);
         initEventHandlers();
     }
@@ -45,7 +45,7 @@ public class Rook extends Piece {
         }
         setPosition(defaultRank, defaultFile);
     }
-    
+
     @Override
     protected final void initEventHandlers() {
         setOnMouseClicked(rookHandler::handleMouseEvent);

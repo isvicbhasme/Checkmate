@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package checkmate.design;
 
 import checkmate.event.KnightEvtHandler;
@@ -14,14 +13,14 @@ import checkmate.util.PieceInfo;
  *
  * @author bhasme
  */
-public class Knight extends Piece{
-    
+public class Knight extends Piece {
+
     public static final char unicodeString = '\u2658';
-    protected KnightEvtHandler knightHandler; 
+    protected KnightEvtHandler knightHandler;
 
     public Knight(PieceInfo.Color color, PieceInfo.Type pieceType) {
         super(unicodeString, color, pieceType);
-        knightHandler = new KnightEvtHandler(this);
+        knightHandler = new KnightEvtHandler();
         setInitialPosition(color, pieceType);
         initEventHandlers();
     }
@@ -51,5 +50,5 @@ public class Knight extends Piece{
         setOnMouseClicked(knightHandler::handleMouseEvent);
         setOnKeyPressed(knightHandler::handleKeyEvent);
     }
-    
+
 }

@@ -3,10 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package checkmate.event;
 
-import checkmate.design.IMovable;
 import checkmate.design.Rook;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -15,19 +13,29 @@ import javafx.scene.input.MouseEvent;
  *
  * @author bhasme
  */
-public class RookEvtHandler {
-    IMovable movableInterface;
+public class RookEvtHandler implements IEventHandler {
 
-    public RookEvtHandler(IMovable movableInterface) {
-        this.movableInterface = movableInterface;
-    }
-    
+    @Override
     public void handleMouseEvent(MouseEvent event) {
-        Rook rook = (Rook)event.getSource();
-        System.out.println("String: "+rook.getText());
+        Rook rook = (Rook) event.getSource();
+        if (!gamePlay.isPieceSelected()) {
+            processFirstClick(rook);
+        } else {
+            processSecondClick(rook);
+        }
     }
-    
+
+    @Override
     public void handleKeyEvent(KeyEvent event) {
-        
+
+    }
+
+    private void processFirstClick(Rook piece) {
+        gamePlay.setIsPieceSelected(true);
+        gamePlay.setMovingPiece(piece);
+    }
+
+    private void processSecondClick(Rook piece) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
