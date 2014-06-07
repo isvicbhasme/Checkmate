@@ -39,11 +39,19 @@ public class PieceInfo {
         }
     }
 
-    public enum RelativePosition {
+    public enum Position {
 
         LEFT,
         RIGHT,
-        CENTER;
+        CENTER,
+        ONE,
+        TWO,
+        THREE,
+        FOUR,
+        FIVE,
+        SIX,
+        SEVEN,
+        EIGHT;
     }
 
     public enum InitBlackPosition {
@@ -55,7 +63,16 @@ public class PieceInfo {
         QUEEN(CellInfo.Rank.ONE, CellInfo.File.E),
         BISHOP_RIGHT(CellInfo.Rank.ONE, CellInfo.File.F),
         KNIGHT_RIGHT(CellInfo.Rank.ONE, CellInfo.File.G),
-        ROOK_RIGHT(CellInfo.Rank.ONE, CellInfo.File.H);
+        ROOK_RIGHT(CellInfo.Rank.ONE, CellInfo.File.H),
+        PAWN_1(CellInfo.Rank.TWO, CellInfo.File.A),
+        PAWN_2(CellInfo.Rank.TWO, CellInfo.File.B),
+        PAWN_3(CellInfo.Rank.TWO, CellInfo.File.C),
+        PAWN_4(CellInfo.Rank.TWO, CellInfo.File.D),
+        PAWN_5(CellInfo.Rank.TWO, CellInfo.File.E),
+        PAWN_6(CellInfo.Rank.TWO, CellInfo.File.F),
+        PAWN_7(CellInfo.Rank.TWO, CellInfo.File.G),
+        PAWN_8(CellInfo.Rank.TWO, CellInfo.File.H);
+        
 
         private final CellInfo.Rank rank;
         private final CellInfo.File file;
@@ -83,7 +100,15 @@ public class PieceInfo {
         QUEEN(CellInfo.Rank.EIGHT, CellInfo.File.E),
         BISHOP_RIGHT(CellInfo.Rank.EIGHT, CellInfo.File.F),
         KNIGHT_RIGHT(CellInfo.Rank.EIGHT, CellInfo.File.G),
-        ROOK_RIGHT(CellInfo.Rank.EIGHT, CellInfo.File.H);
+        ROOK_RIGHT(CellInfo.Rank.EIGHT, CellInfo.File.H),
+        PAWN_1(CellInfo.Rank.SEVEN, CellInfo.File.A),
+        PAWN_2(CellInfo.Rank.SEVEN, CellInfo.File.B),
+        PAWN_3(CellInfo.Rank.SEVEN, CellInfo.File.C),
+        PAWN_4(CellInfo.Rank.SEVEN, CellInfo.File.D),
+        PAWN_5(CellInfo.Rank.SEVEN, CellInfo.File.E),
+        PAWN_6(CellInfo.Rank.SEVEN, CellInfo.File.F),
+        PAWN_7(CellInfo.Rank.SEVEN, CellInfo.File.G),
+        PAWN_8(CellInfo.Rank.SEVEN, CellInfo.File.H);
 
         private final CellInfo.Rank rank;
         private final CellInfo.File file;

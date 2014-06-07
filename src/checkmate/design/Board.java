@@ -36,9 +36,40 @@ public class Board extends GridPane {
 
     public void createPieces() {
         try {
-            new Rook(PieceInfo.Type.BLACK_ROOK, PieceInfo.RelativePosition.LEFT);
-            new Knight(PieceInfo.Type.BLACK_KNIGHT, PieceInfo.RelativePosition.LEFT);
-            new Bishop(PieceInfo.Type.BLACK_BISHOP, PieceInfo.RelativePosition.LEFT);
+            new Rook(PieceInfo.Type.BLACK_ROOK, PieceInfo.Position.LEFT);
+            new Knight(PieceInfo.Type.BLACK_KNIGHT, PieceInfo.Position.LEFT);
+            new Bishop(PieceInfo.Type.BLACK_BISHOP, PieceInfo.Position.LEFT);
+            new King(PieceInfo.Type.BLACK_KING, PieceInfo.Position.CENTER);
+            new Queen(PieceInfo.Type.BLACK_QUEEN, PieceInfo.Position.CENTER);
+            new Bishop(PieceInfo.Type.BLACK_BISHOP, PieceInfo.Position.RIGHT);
+            new Knight(PieceInfo.Type.BLACK_KNIGHT, PieceInfo.Position.RIGHT);
+            new Rook(PieceInfo.Type.BLACK_ROOK, PieceInfo.Position.RIGHT);
+            new Pawn(PieceInfo.Type.BLACK_PAWN, PieceInfo.Position.ONE);
+            new Pawn(PieceInfo.Type.BLACK_PAWN, PieceInfo.Position.TWO);
+            new Pawn(PieceInfo.Type.BLACK_PAWN, PieceInfo.Position.THREE);
+            new Pawn(PieceInfo.Type.BLACK_PAWN, PieceInfo.Position.FOUR);
+            new Pawn(PieceInfo.Type.BLACK_PAWN, PieceInfo.Position.FIVE);
+            new Pawn(PieceInfo.Type.BLACK_PAWN, PieceInfo.Position.SIX);
+            new Pawn(PieceInfo.Type.BLACK_PAWN, PieceInfo.Position.SEVEN);
+            new Pawn(PieceInfo.Type.BLACK_PAWN, PieceInfo.Position.EIGHT);
+            
+            new Rook(PieceInfo.Type.WHITE_ROOK, PieceInfo.Position.LEFT);
+            new Knight(PieceInfo.Type.WHITE_KNIGHT, PieceInfo.Position.LEFT);
+            new Bishop(PieceInfo.Type.WHITE_BISHOP, PieceInfo.Position.LEFT);
+            new King(PieceInfo.Type.WHITE_KING, PieceInfo.Position.CENTER);
+            new Queen(PieceInfo.Type.WHITE_QUEEN, PieceInfo.Position.CENTER);
+            new Bishop(PieceInfo.Type.WHITE_BISHOP, PieceInfo.Position.RIGHT);
+            new Knight(PieceInfo.Type.WHITE_KNIGHT, PieceInfo.Position.RIGHT);
+            new Rook(PieceInfo.Type.WHITE_ROOK, PieceInfo.Position.RIGHT);
+            new Pawn(PieceInfo.Type.WHITE_PAWN, PieceInfo.Position.ONE);
+            new Pawn(PieceInfo.Type.WHITE_PAWN, PieceInfo.Position.TWO);
+            new Pawn(PieceInfo.Type.WHITE_PAWN, PieceInfo.Position.THREE);
+            new Pawn(PieceInfo.Type.WHITE_PAWN, PieceInfo.Position.FOUR);
+            new Pawn(PieceInfo.Type.WHITE_PAWN, PieceInfo.Position.FIVE);
+            new Pawn(PieceInfo.Type.WHITE_PAWN, PieceInfo.Position.SIX);
+            new Pawn(PieceInfo.Type.WHITE_PAWN, PieceInfo.Position.SEVEN);
+            new Pawn(PieceInfo.Type.WHITE_PAWN, PieceInfo.Position.EIGHT);
+            
         } catch (IOException ex) {
             Logger.getLogger(Board.class.getName()).log(Level.SEVERE, null, ex);
         }

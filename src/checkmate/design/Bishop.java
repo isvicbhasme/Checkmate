@@ -18,7 +18,7 @@ public final class Bishop extends Piece{
     
     protected BishopEvtHandler bishopHandler;
 
-    public Bishop(PieceInfo.Type pieceType, PieceInfo.RelativePosition position) {
+    public Bishop(PieceInfo.Type pieceType, PieceInfo.Position position) {
         super(pieceType, position);
         bishopHandler = new BishopEvtHandler();
         setInitialPosition(pieceType, position);
@@ -26,20 +26,20 @@ public final class Bishop extends Piece{
     }
 
     @Override
-    protected final void setInitialPosition(PieceInfo.Type pieceType, PieceInfo.RelativePosition position) {
+    protected final void setInitialPosition(PieceInfo.Type pieceType, PieceInfo.Position position) {
         CellInfo.Rank defaultRank;
         CellInfo.File defaultFile;
         if (pieceType == PieceInfo.Type.BLACK_BISHOP) {
-            defaultRank = position == PieceInfo.RelativePosition.LEFT ? PieceInfo.InitBlackPosition.BISHOP_LEFT.getRank()
+            defaultRank = position == PieceInfo.Position.LEFT ? PieceInfo.InitBlackPosition.BISHOP_LEFT.getRank()
                     : PieceInfo.InitBlackPosition.BISHOP_RIGHT.getRank();
 
-            defaultFile = position == PieceInfo.RelativePosition.LEFT ? PieceInfo.InitBlackPosition.BISHOP_LEFT.getFile()
+            defaultFile = position == PieceInfo.Position.LEFT ? PieceInfo.InitBlackPosition.BISHOP_LEFT.getFile()
                     : PieceInfo.InitBlackPosition.BISHOP_RIGHT.getFile();
         } else if(pieceType == PieceInfo.Type.WHITE_BISHOP) {
-            defaultRank = position == PieceInfo.RelativePosition.LEFT ? PieceInfo.InitWhitePosition.BISHOP_LEFT.getRank()
+            defaultRank = position == PieceInfo.Position.LEFT ? PieceInfo.InitWhitePosition.BISHOP_LEFT.getRank()
                     : PieceInfo.InitWhitePosition.BISHOP_RIGHT.getRank();
 
-            defaultFile = position == PieceInfo.RelativePosition.LEFT ? PieceInfo.InitWhitePosition.BISHOP_LEFT.getFile()
+            defaultFile = position == PieceInfo.Position.LEFT ? PieceInfo.InitWhitePosition.BISHOP_LEFT.getFile()
                     : PieceInfo.InitWhitePosition.BISHOP_RIGHT.getFile();
         } else {
             throw new IllegalStateException("Illegal piece creation");

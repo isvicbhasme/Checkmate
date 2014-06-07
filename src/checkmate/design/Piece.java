@@ -22,9 +22,9 @@ public abstract class Piece extends Text implements IMovable {
     protected PieceInfo.Type pieceType;
     protected boolean isMouseDown;
     protected final char unicodeString;
-    protected final PieceInfo.RelativePosition position;
+    protected final PieceInfo.Position position;
 
-    public Piece(PieceInfo.Type pieceType, PieceInfo.RelativePosition position) {
+    public Piece(PieceInfo.Type pieceType, PieceInfo.Position position) {
         super(pieceType.getUnicodeChar() + "");
         this.unicodeString = pieceType.getUnicodeChar();
         this.position = position;
@@ -75,5 +75,5 @@ public abstract class Piece extends Text implements IMovable {
 
     protected abstract void initEventHandlers();
 
-    protected abstract void setInitialPosition(PieceInfo.Type pieceType, PieceInfo.RelativePosition position);
+    protected abstract void setInitialPosition(PieceInfo.Type pieceType, PieceInfo.Position position);
 }

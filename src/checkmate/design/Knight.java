@@ -17,7 +17,7 @@ public class Knight extends Piece {
 
     protected KnightEvtHandler knightHandler;
 
-    public Knight(PieceInfo.Type pieceType, PieceInfo.RelativePosition position) {
+    public Knight(PieceInfo.Type pieceType, PieceInfo.Position position) {
         super(pieceType, position);
         knightHandler = new KnightEvtHandler();
         setInitialPosition(pieceType, position);
@@ -25,20 +25,20 @@ public class Knight extends Piece {
     }
 
     @Override
-    protected final void setInitialPosition(PieceInfo.Type pieceType, PieceInfo.RelativePosition position) {
+    protected final void setInitialPosition(PieceInfo.Type pieceType, PieceInfo.Position position) {
         CellInfo.Rank defaultRank;
         CellInfo.File defaultFile;
         if (pieceType == PieceInfo.Type.BLACK_KNIGHT) {
-            defaultRank = position == PieceInfo.RelativePosition.LEFT ? PieceInfo.InitBlackPosition.KNIGHT_LEFT.getRank()
+            defaultRank = position == PieceInfo.Position.LEFT ? PieceInfo.InitBlackPosition.KNIGHT_LEFT.getRank()
                     : PieceInfo.InitBlackPosition.KNIGHT_RIGHT.getRank();
 
-            defaultFile = position == PieceInfo.RelativePosition.LEFT ? PieceInfo.InitBlackPosition.KNIGHT_LEFT.getFile()
+            defaultFile = position == PieceInfo.Position.LEFT ? PieceInfo.InitBlackPosition.KNIGHT_LEFT.getFile()
                     : PieceInfo.InitBlackPosition.KNIGHT_RIGHT.getFile();
         } else if(pieceType == PieceInfo.Type.WHITE_KNIGHT) {
-            defaultRank = position == PieceInfo.RelativePosition.LEFT ? PieceInfo.InitWhitePosition.KNIGHT_LEFT.getRank()
+            defaultRank = position == PieceInfo.Position.LEFT ? PieceInfo.InitWhitePosition.KNIGHT_LEFT.getRank()
                     : PieceInfo.InitWhitePosition.KNIGHT_RIGHT.getRank();
 
-            defaultFile = position == PieceInfo.RelativePosition.LEFT ? PieceInfo.InitWhitePosition.KNIGHT_LEFT.getFile()
+            defaultFile = position == PieceInfo.Position.LEFT ? PieceInfo.InitWhitePosition.KNIGHT_LEFT.getFile()
                     : PieceInfo.InitWhitePosition.KNIGHT_RIGHT.getFile();
         } else {
             throw new IllegalStateException("Illegal piece creation");
