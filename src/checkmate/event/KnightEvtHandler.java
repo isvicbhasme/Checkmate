@@ -5,38 +5,16 @@
  */
 package checkmate.event;
 
-import checkmate.design.Knight;
-import static checkmate.event.IEventHandler.gamePlay;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
+import checkmate.design.Rook;
 
 /**
  *
  * @author bhasme
  */
-public class KnightEvtHandler implements IEventHandler {
+public class KnightEvtHandler extends PieceEvtHandler {
 
     @Override
-    public void handleMouseEvent(MouseEvent event) {
-        Knight knight = (Knight) event.getSource();
-        if (!gamePlay.isPieceSelected()) {
-            processFirstClick(knight);
-        } else {
-            processSecondClick(knight);
-        }
-    }
-
-    @Override
-    public void handleKeyEvent(KeyEvent event) {
-
-    }
-
-    private void processFirstClick(Knight piece) {
-        gamePlay.setIsPieceSelected(true);
-        gamePlay.setMovingPiece(piece);
-    }
-
-    private void processSecondClick(Knight piece) {
+    protected void processSecondClick(Rook piece) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
