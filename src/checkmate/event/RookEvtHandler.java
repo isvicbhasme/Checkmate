@@ -5,7 +5,7 @@
  */
 package checkmate.event;
 
-import checkmate.design.Rook;
+import checkmate.design.Piece;
 
 /**
  *
@@ -14,7 +14,7 @@ import checkmate.design.Rook;
 public class RookEvtHandler extends PieceEvtHandler {
 
     @Override
-    protected void processSecondClick(Rook piece) {
+    protected void processSecondClick(Piece piece) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

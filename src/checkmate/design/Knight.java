@@ -15,32 +15,33 @@ import checkmate.util.PieceInfo;
  */
 public class Knight extends Piece {
 
-    public static final char unicodeString = '\u2658';
     protected KnightEvtHandler knightHandler;
 
-    public Knight(PieceInfo.Color color, PieceInfo.Type pieceType) {
-        super(unicodeString, color, pieceType);
+    public Knight(PieceInfo.Type pieceType, PieceInfo.RelativePosition position) {
+        super(pieceType, position);
         knightHandler = new KnightEvtHandler();
-        setInitialPosition(color, pieceType);
+        setInitialPosition(pieceType, position);
         initEventHandlers();
     }
 
     @Override
-    protected final void setInitialPosition(PieceInfo.Color color, PieceInfo.Type pieceType) {
+    protected final void setInitialPosition(PieceInfo.Type pieceType, PieceInfo.RelativePosition position) {
         CellInfo.Rank defaultRank;
         CellInfo.File defaultFile;
-        if (color == PieceInfo.Color.BLACK) {
-            defaultRank = pieceType == PieceInfo.Type.KNIGHT_LEFT ? PieceInfo.InitBlackPosition.KNIGHT_LEFT.getRank()
+        if (pieceType == PieceInfo.Type.BLACK_KNIGHT) {
+            defaultRank = position == PieceInfo.RelativePosition.LEFT ? PieceInfo.InitBlackPosition.KNIGHT_LEFT.getRank()
                     : PieceInfo.InitBlackPosition.KNIGHT_RIGHT.getRank();
 
-            defaultFile = pieceType == PieceInfo.Type.KNIGHT_LEFT ? PieceInfo.InitBlackPosition.KNIGHT_LEFT.getFile()
+            defaultFile = position == PieceInfo.RelativePosition.LEFT ? PieceInfo.InitBlackPosition.KNIGHT_LEFT.getFile()
                     : PieceInfo.InitBlackPosition.KNIGHT_RIGHT.getFile();
-        } else {
-            defaultRank = pieceType == PieceInfo.Type.KNIGHT_LEFT ? PieceInfo.InitWhitePosition.KNIGHT_LEFT.getRank()
+        } else if(pieceType == PieceInfo.Type.WHITE_KNIGHT) {
+            defaultRank = position == PieceInfo.RelativePosition.LEFT ? PieceInfo.InitWhitePosition.KNIGHT_LEFT.getRank()
                     : PieceInfo.InitWhitePosition.KNIGHT_RIGHT.getRank();
 
-            defaultFile = pieceType == PieceInfo.Type.KNIGHT_LEFT ? PieceInfo.InitWhitePosition.KNIGHT_LEFT.getFile()
+            defaultFile = position == PieceInfo.RelativePosition.LEFT ? PieceInfo.InitWhitePosition.KNIGHT_LEFT.getFile()
                     : PieceInfo.InitWhitePosition.KNIGHT_RIGHT.getFile();
+        } else {
+            throw new IllegalStateException("Illegal piece creation");
         }
         setPosition(defaultRank, defaultFile);
     }

@@ -8,7 +8,6 @@ package checkmate.design;
 import checkmate.Launcher;
 import checkmate.util.CellInfo;
 import checkmate.util.PieceInfo;
-import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
@@ -22,10 +21,13 @@ public abstract class Piece extends Text implements IMovable {
     protected CellInfo.Rank currentRank;
     protected PieceInfo.Type pieceType;
     protected boolean isMouseDown;
+    protected final char unicodeString;
+    protected final PieceInfo.RelativePosition position;
 
-    public Piece(char unicodeString, PieceInfo.Color color, PieceInfo.Type pieceType) {
-        super(unicodeString + "");
-        setFill(Paint.valueOf(color.getColorName()));
+    public Piece(PieceInfo.Type pieceType, PieceInfo.RelativePosition position) {
+        super(pieceType.getUnicodeChar() + "");
+        this.unicodeString = pieceType.getUnicodeChar();
+        this.position = position;
         setFont(getPieceFont());
         initCommonEvents();
         this.pieceType = pieceType;
@@ -67,7 +69,11 @@ public abstract class Piece extends Text implements IMovable {
     private void initCommonEvents() {
     }
 
+    public PieceInfo.Type getPieceType() {
+        return pieceType;
+    }
+
     protected abstract void initEventHandlers();
 
-    protected abstract void setInitialPosition(PieceInfo.Color color, PieceInfo.Type pieceType);
+    protected abstract void setInitialPosition(PieceInfo.Type pieceType, PieceInfo.RelativePosition position);
 }

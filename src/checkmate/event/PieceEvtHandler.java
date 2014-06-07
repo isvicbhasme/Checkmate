@@ -5,7 +5,7 @@
  */
 package checkmate.event;
 
-import checkmate.design.Rook;
+import checkmate.design.Piece;
 import static checkmate.event.IEventHandler.gamePlay;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -18,11 +18,11 @@ public abstract class PieceEvtHandler implements IEventHandler {
 
     @Override
     public void handleMouseEvent(MouseEvent event) {
-        Rook rook = (Rook) event.getSource();
+        Piece piece = (Piece) event.getSource();
         if (!gamePlay.isPieceSelected()) {
-            processFirstClick(rook);
+            processFirstClick(piece);
         } else {
-            processSecondClick(rook);
+            processSecondClick(piece);
         }
     }
 
@@ -31,10 +31,10 @@ public abstract class PieceEvtHandler implements IEventHandler {
 
     }
 
-    protected void processFirstClick(Rook piece) {
+    protected void processFirstClick(Piece piece) {
         gamePlay.setIsPieceSelected(true);
         gamePlay.setMovingPiece(piece);
     }
 
-    protected abstract void processSecondClick(Rook piece);
+    protected abstract void processSecondClick(Piece piece);
 }

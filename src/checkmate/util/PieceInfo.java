@@ -39,16 +39,11 @@ public class PieceInfo {
         }
     }
 
-    public enum Type {
+    public enum RelativePosition {
 
-        ROOK_LEFT,
-        KNIGHT_LEFT,
-        BISHOP_LEFT,
-        KING,
-        QUEEN,
-        BISHOP_RIGHT,
-        KNIGHT_RIGHT,
-        ROOK_RIGHT;
+        LEFT,
+        RIGHT,
+        CENTER;
     }
 
     public enum InitBlackPosition {
@@ -107,4 +102,28 @@ public class PieceInfo {
         }
     }
 
+    public enum Type {
+        WHITE_ROOK('\u2656'),
+        WHITE_KNIGHT('\u2658'),
+        WHITE_BISHOP('\u2657'),
+        WHITE_KING('\u2654'),
+        WHITE_QUEEN('\u2655'),
+        WHITE_PAWN('\u2659'),
+        BLACK_ROOK('\u265C'),
+        BLACK_KNIGHT('\u265E'),
+        BLACK_BISHOP('\u265D'),
+        BLACK_KING('\u265A'),
+        BLACK_QUEEN('\u265B'),
+        BLACK_PAWN('\u265F');
+        
+        private final char unicodeChar;
+
+        Type(char unicodeChar) {
+            this.unicodeChar = unicodeChar;
+        }
+        
+        public char getUnicodeChar() {
+            return unicodeChar;
+        }
+    }
 }

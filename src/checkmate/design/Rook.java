@@ -16,32 +16,33 @@ import java.io.IOException;
  */
 public class Rook extends Piece {
 
-    public static final char unicodeString = '\u2656';
     protected RookEvtHandler rookHandler;
 
-    public Rook(PieceInfo.Color color, PieceInfo.Type pieceType) throws IOException {
-        super(unicodeString, color, pieceType);
+    public Rook(PieceInfo.Type pieceType, PieceInfo.RelativePosition position) throws IOException {
+        super(pieceType, position);
         rookHandler = new RookEvtHandler();
-        setInitialPosition(color, pieceType);
+        setInitialPosition(pieceType, position);
         initEventHandlers();
     }
 
     @Override
-    protected final void setInitialPosition(PieceInfo.Color color, PieceInfo.Type pieceType) {
+    protected final void setInitialPosition(PieceInfo.Type pieceType, PieceInfo.RelativePosition position) {
         CellInfo.Rank defaultRank;
         CellInfo.File defaultFile;
-        if (color == PieceInfo.Color.BLACK) {
-            defaultRank = pieceType == PieceInfo.Type.ROOK_LEFT ? PieceInfo.InitBlackPosition.ROOK_LEFT.getRank()
+        if (pieceType == PieceInfo.Type.BLACK_ROOK) {
+            defaultRank = position == PieceInfo.RelativePosition.LEFT ? PieceInfo.InitBlackPosition.ROOK_LEFT.getRank()
                     : PieceInfo.InitBlackPosition.ROOK_RIGHT.getRank();
 
-            defaultFile = pieceType == PieceInfo.Type.ROOK_LEFT ? PieceInfo.InitBlackPosition.ROOK_LEFT.getFile()
+            defaultFile = position == PieceInfo.RelativePosition.LEFT ? PieceInfo.InitBlackPosition.ROOK_LEFT.getFile()
                     : PieceInfo.InitBlackPosition.ROOK_RIGHT.getFile();
-        } else {
-            defaultRank = pieceType == PieceInfo.Type.ROOK_LEFT ? PieceInfo.InitWhitePosition.ROOK_LEFT.getRank()
+        } else if (pieceType == PieceInfo.Type.WHITE_ROOK) {
+            defaultRank = position == PieceInfo.RelativePosition.LEFT ? PieceInfo.InitWhitePosition.ROOK_LEFT.getRank()
                     : PieceInfo.InitWhitePosition.ROOK_RIGHT.getRank();
 
-            defaultFile = pieceType == PieceInfo.Type.ROOK_LEFT ? PieceInfo.InitWhitePosition.ROOK_LEFT.getFile()
+            defaultFile = position == PieceInfo.RelativePosition.LEFT ? PieceInfo.InitWhitePosition.ROOK_LEFT.getFile()
                     : PieceInfo.InitWhitePosition.ROOK_RIGHT.getFile();
+        } else {
+            throw new IllegalStateException("Illegal piece creation");
         }
         setPosition(defaultRank, defaultFile);
     }

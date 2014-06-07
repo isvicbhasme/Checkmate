@@ -36,8 +36,9 @@ public class Board extends GridPane {
 
     public void createPieces() {
         try {
-            new Rook(PieceInfo.Color.BLACK, PieceInfo.Type.ROOK_LEFT);
-            new Knight(PieceInfo.Color.BLACK, PieceInfo.Type.KNIGHT_LEFT);
+            new Rook(PieceInfo.Type.BLACK_ROOK, PieceInfo.RelativePosition.LEFT);
+            new Knight(PieceInfo.Type.BLACK_KNIGHT, PieceInfo.RelativePosition.LEFT);
+            new Bishop(PieceInfo.Type.BLACK_BISHOP, PieceInfo.RelativePosition.LEFT);
         } catch (IOException ex) {
             Logger.getLogger(Board.class.getName()).log(Level.SEVERE, null, ex);
         }
