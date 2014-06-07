@@ -107,10 +107,4 @@ public class PieceInfo {
         }
     }
 
-    public enum RelativePosition {
-
-        LEFT,
-        RIGHT,
-        CENTER;
-    }
 }
