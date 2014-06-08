@@ -34,8 +34,10 @@ public class CellEvtHandler implements IEventHandler {
         CellInfo.Rank newRank = clickedCell.getRank();
         CellInfo.File newFile = clickedCell.getFile();
         Piece selectedPiece = gamePlay.getMovingPiece();
-        selectedPiece.moveTo(newRank, newFile);
-        gamePlay.resetPieceMovement();
+        if (selectedPiece.isMoveAllowed(newRank, newFile)) {
+            selectedPiece.moveTo(newRank, newFile);
+            gamePlay.resetPieceMovement();
+        }
     }
 
 }

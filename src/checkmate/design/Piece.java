@@ -58,6 +58,11 @@ public abstract class Piece extends Text implements IMovable {
         newCell.disableEventHandlers();
     }
 
+    /**
+     * Moves the piece to the specified cell. Note that the validity of the movement is not checked by this method.
+     * @param newRank Rank of the target cell
+     * @param newFile File of the target cell
+     */
     @Override
     public void moveTo(CellInfo.Rank newRank, CellInfo.File newFile) {
         Cell currentCell = Launcher.board.getCell(currentRank, currentFile);
@@ -76,4 +81,12 @@ public abstract class Piece extends Text implements IMovable {
     protected abstract void initEventHandlers();
 
     protected abstract void setInitialPosition(PieceInfo.Type pieceType, PieceInfo.Position position);
+
+    /**
+     * Checks if movement is allowed to an empty cell specified by the parameters
+     * @param toRank Rank of the target cell
+     * @param toFile File of the target cell
+     * @return TRUE if the movement is valid, FALSE otherwise
+     */
+    public abstract boolean isMoveAllowed(CellInfo.Rank toRank, CellInfo.File toFile);
 }

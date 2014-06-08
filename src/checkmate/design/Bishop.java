@@ -52,5 +52,10 @@ public final class Bishop extends Piece{
         setOnMouseClicked(bishopHandler::handleMouseEvent);
         setOnKeyPressed(bishopHandler::handleKeyEvent);
     }
+
+    @Override
+    public boolean isMoveAllowed(CellInfo.Rank toRank, CellInfo.File toFile) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

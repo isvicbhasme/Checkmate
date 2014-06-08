@@ -105,4 +105,9 @@ public class Pawn extends Piece {
         setOnMouseClicked(pawnHandler::handleMouseEvent);
         setOnKeyPressed(pawnHandler::handleKeyEvent);
     }
+
+    @Override
+    public boolean isMoveAllowed(CellInfo.Rank toRank, CellInfo.File toFile) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
