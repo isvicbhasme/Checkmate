@@ -6,7 +6,6 @@
 package checkmate.design;
 
 import checkmate.Launcher;
-import checkmate.event.RookEvtHandler;
 import checkmate.util.CellInfo;
 import checkmate.util.PieceInfo;
 import java.io.IOException;
@@ -20,11 +19,8 @@ import java.util.Set;
  */
 public class Rook extends Piece {
 
-    protected RookEvtHandler rookHandler;
-
     public Rook(PieceInfo.Type pieceType, PieceInfo.Position position) throws IOException {
         super(pieceType, position);
-        rookHandler = new RookEvtHandler();
         setInitialPosition(pieceType, position);
         initEventHandlers();
     }
@@ -53,8 +49,8 @@ public class Rook extends Piece {
 
     @Override
     protected final void initEventHandlers() {
-        setOnMouseClicked(rookHandler::handleMouseEvent);
-        setOnKeyPressed(rookHandler::handleKeyEvent);
+        setOnMouseClicked(pieceHandler::handleMouseEvent);
+        setOnKeyPressed(pieceHandler::handleKeyEvent);
     }
 
     @Override

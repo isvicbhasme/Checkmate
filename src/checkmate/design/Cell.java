@@ -20,7 +20,7 @@ public class Cell extends CellGroup {
 
     private final int length;
     private final Rectangle cell;
-    private final CellEvtHandler cellHandler;
+    private static final CellEvtHandler cellHandler = new CellEvtHandler();
     private boolean isOccupied;
 
     public Cell(CellInfo.Rank rank, CellInfo.File file) {
@@ -37,7 +37,7 @@ public class Cell extends CellGroup {
         this.rank = rank;
         this.file = file;
         getChildren().add(cell);
-        cellHandler = new CellEvtHandler();
+        //cellHandler = new CellEvtHandler();
         enableEventHandlers();
     }
 

@@ -6,7 +6,6 @@
 
 package checkmate.design;
 
-import checkmate.event.BishopEvtHandler;
 import checkmate.util.CellInfo;
 import checkmate.util.PieceInfo;
 
@@ -14,13 +13,10 @@ import checkmate.util.PieceInfo;
  *
  * @author Isaac
  */
-public final class Bishop extends Piece{
-    
-    protected BishopEvtHandler bishopHandler;
+public final class Bishop extends Piece {
 
     public Bishop(PieceInfo.Type pieceType, PieceInfo.Position position) {
         super(pieceType, position);
-        bishopHandler = new BishopEvtHandler();
         setInitialPosition(pieceType, position);
         initEventHandlers();
     }
@@ -49,8 +45,8 @@ public final class Bishop extends Piece{
 
     @Override
     protected final void initEventHandlers() {
-        setOnMouseClicked(bishopHandler::handleMouseEvent);
-        setOnKeyPressed(bishopHandler::handleKeyEvent);
+        setOnMouseClicked(pieceHandler::handleMouseEvent);
+        setOnKeyPressed(pieceHandler::handleKeyEvent);
     }
 
     @Override

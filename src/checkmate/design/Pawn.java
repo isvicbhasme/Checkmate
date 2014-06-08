@@ -5,7 +5,6 @@
  */
 package checkmate.design;
 
-import checkmate.event.PawnEvtHandler;
 import checkmate.util.CellInfo;
 import checkmate.util.PieceInfo;
 
@@ -15,11 +14,8 @@ import checkmate.util.PieceInfo;
  */
 public class Pawn extends Piece {
 
-    protected PawnEvtHandler pawnHandler;
-
     public Pawn(PieceInfo.Type pieceType, PieceInfo.Position position) {
         super(pieceType, position);
-        pawnHandler = new PawnEvtHandler();
         setInitialPosition(pieceType, position);
         initEventHandlers();
     }
@@ -102,8 +98,8 @@ public class Pawn extends Piece {
 
     @Override
     protected final void initEventHandlers() {
-        setOnMouseClicked(pawnHandler::handleMouseEvent);
-        setOnKeyPressed(pawnHandler::handleKeyEvent);
+        setOnMouseClicked(pieceHandler::handleMouseEvent);
+        setOnKeyPressed(pieceHandler::handleKeyEvent);
     }
 
     @Override

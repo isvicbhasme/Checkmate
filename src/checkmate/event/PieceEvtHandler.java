@@ -14,7 +14,7 @@ import javafx.scene.input.MouseEvent;
  *
  * @author Isaac
  */
-public abstract class PieceEvtHandler implements IEventHandler {
+public class PieceEvtHandler implements IEventHandler {
 
     @Override
     public void handleMouseEvent(MouseEvent event) {
@@ -36,5 +36,7 @@ public abstract class PieceEvtHandler implements IEventHandler {
         gamePlay.setMovingPiece(piece);
     }
 
-    protected abstract void processSecondClick(Piece piece);
+    protected void processSecondClick(Piece piece) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

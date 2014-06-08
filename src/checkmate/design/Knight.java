@@ -5,7 +5,6 @@
  */
 package checkmate.design;
 
-import checkmate.event.KnightEvtHandler;
 import checkmate.util.CellInfo;
 import checkmate.util.PieceInfo;
 
@@ -15,11 +14,8 @@ import checkmate.util.PieceInfo;
  */
 public class Knight extends Piece {
 
-    protected KnightEvtHandler knightHandler;
-
     public Knight(PieceInfo.Type pieceType, PieceInfo.Position position) {
         super(pieceType, position);
-        knightHandler = new KnightEvtHandler();
         setInitialPosition(pieceType, position);
         initEventHandlers();
     }
@@ -48,8 +44,8 @@ public class Knight extends Piece {
 
     @Override
     protected final void initEventHandlers() {
-        setOnMouseClicked(knightHandler::handleMouseEvent);
-        setOnKeyPressed(knightHandler::handleKeyEvent);
+        setOnMouseClicked(pieceHandler::handleMouseEvent);
+        setOnKeyPressed(pieceHandler::handleKeyEvent);
     }
 
     @Override

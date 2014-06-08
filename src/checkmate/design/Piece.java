@@ -6,6 +6,7 @@
 package checkmate.design;
 
 import checkmate.Launcher;
+import checkmate.event.PieceEvtHandler;
 import checkmate.util.CellInfo;
 import checkmate.util.PieceInfo;
 import javafx.scene.text.Font;
@@ -20,9 +21,9 @@ public abstract class Piece extends Text implements IMovable {
     protected CellInfo.File currentFile;
     protected CellInfo.Rank currentRank;
     protected PieceInfo.Type pieceType;
-    protected boolean isMouseDown;
     protected final char unicodeString;
     protected final PieceInfo.Position position;
+    protected static final PieceEvtHandler pieceHandler = new PieceEvtHandler();
 
     public Piece(PieceInfo.Type pieceType, PieceInfo.Position position) {
         super(pieceType.getUnicodeChar() + "");
