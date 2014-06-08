@@ -44,14 +44,14 @@ public class Board extends GridPane {
             new Bishop(PieceInfo.Type.BLACK_BISHOP, PieceInfo.Position.RIGHT);
             new Knight(PieceInfo.Type.BLACK_KNIGHT, PieceInfo.Position.RIGHT);
             new Rook(PieceInfo.Type.BLACK_ROOK, PieceInfo.Position.RIGHT);
-//            new Pawn(PieceInfo.Type.BLACK_PAWN, PieceInfo.Position.ONE);
-//            new Pawn(PieceInfo.Type.BLACK_PAWN, PieceInfo.Position.TWO);
-//            new Pawn(PieceInfo.Type.BLACK_PAWN, PieceInfo.Position.THREE);
-//            new Pawn(PieceInfo.Type.BLACK_PAWN, PieceInfo.Position.FOUR);
-//            new Pawn(PieceInfo.Type.BLACK_PAWN, PieceInfo.Position.FIVE);
-//            new Pawn(PieceInfo.Type.BLACK_PAWN, PieceInfo.Position.SIX);
-//            new Pawn(PieceInfo.Type.BLACK_PAWN, PieceInfo.Position.SEVEN);
-//            new Pawn(PieceInfo.Type.BLACK_PAWN, PieceInfo.Position.EIGHT);
+            new Pawn(PieceInfo.Type.BLACK_PAWN, PieceInfo.Position.ONE);
+            new Pawn(PieceInfo.Type.BLACK_PAWN, PieceInfo.Position.TWO);
+            new Pawn(PieceInfo.Type.BLACK_PAWN, PieceInfo.Position.THREE);
+            new Pawn(PieceInfo.Type.BLACK_PAWN, PieceInfo.Position.FOUR);
+            new Pawn(PieceInfo.Type.BLACK_PAWN, PieceInfo.Position.FIVE);
+            new Pawn(PieceInfo.Type.BLACK_PAWN, PieceInfo.Position.SIX);
+            new Pawn(PieceInfo.Type.BLACK_PAWN, PieceInfo.Position.SEVEN);
+            new Pawn(PieceInfo.Type.BLACK_PAWN, PieceInfo.Position.EIGHT);
             
             new Rook(PieceInfo.Type.WHITE_ROOK, PieceInfo.Position.LEFT);
             new Knight(PieceInfo.Type.WHITE_KNIGHT, PieceInfo.Position.LEFT);

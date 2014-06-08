@@ -5,13 +5,11 @@
  */
 package checkmate.design;
 
-import checkmate.Launcher;
+import checkmate.move.IMovable;
+import checkmate.move.RookMoves;
 import checkmate.util.CellInfo;
 import checkmate.util.PieceInfo;
 import java.io.IOException;
-import java.util.EnumSet;
-import java.util.Iterator;
-import java.util.Set;
 
 /**
  *
@@ -19,12 +17,24 @@ import java.util.Set;
  */
 public class Rook extends Piece {
 
+    /**
+     *
+     * @param pieceType Enum specifying the type of chess piece
+     * @param position Enum specifying the position of chess piece
+     * @throws IOException
+     */
     public Rook(PieceInfo.Type pieceType, PieceInfo.Position position) throws IOException {
         super(pieceType, position);
         setInitialPosition(pieceType, position);
         initEventHandlers();
+        moveHandler = (IMovable) new RookMoves(this);
     }
 
+    /**
+     * Sets the initial position of a chess piece during startup
+     * @param pieceType Enum specifying the type of chess piece
+     * @param position Enum specifying the position of chess piece
+     */
     @Override
     protected final void setInitialPosition(PieceInfo.Type pieceType, PieceInfo.Position position) {
         CellInfo.Rank defaultRank;
@@ -47,72 +57,13 @@ public class Rook extends Piece {
         setPosition(defaultRank, defaultFile);
     }
 
+    /**
+     * Initialize the event handlers for mouse and keyboard.
+     */
     @Override
     protected final void initEventHandlers() {
-        setOnMouseClicked(pieceHandler::handleMouseEvent);
-        setOnKeyPressed(pieceHandler::handleKeyEvent);
-    }
-
-    @Override
-    public boolean isMoveAllowed(CellInfo.Rank toRank, CellInfo.File toFile) {
-        boolean isPathClear = false;
-        if (getRankPosition() == toRank) {
-            if (getFilePosition().compareTo(toFile) < 0) {
-                Set<CellInfo.File> filesInPath = EnumSet.range(getFilePosition(), toFile);
-                isPathClear = isFilePathClear(filesInPath);
-            } else if (getFilePosition().compareTo(toFile) > 0) {
-                Set<CellInfo.File> filesInPath = EnumSet.range(toFile, getFilePosition());
-                isPathClear = isFilePathClear(filesInPath);
-            } else {
-                throw new IllegalStateException("Source and destination of move is the same");
-            }
-        } else if(getFilePosition() == toFile) {
-            if (getRankPosition().compareTo(toRank) < 0) {
-                Set<CellInfo.Rank> ranksInPath = EnumSet.range(getRankPosition(), toRank);
-                isPathClear = isRankPathClear(ranksInPath);
-            } else if (getRankPosition().compareTo(toRank) > 0) {
-                Set<CellInfo.Rank> filesInPath = EnumSet.range(toRank, getRankPosition());
-                isPathClear = isRankPathClear(filesInPath);
-            } else {
-                throw new IllegalStateException("Source("+getRankPosition()+", "+getFilePosition()+") and destination("+toRank+", "+toFile+") of move is the same");
-            }
-        }
-        System.out.println("Sending "+isPathClear);
-        return isPathClear;
-    }
-
-    private boolean isFilePathClear(Set<CellInfo.File> filesInPath ) {
-        boolean isPathClear = true;
-        Iterator<CellInfo.File> pathIterator = filesInPath.iterator();
-        while (pathIterator.hasNext()) {
-            CellInfo.File fileInPath = pathIterator.next();
-            if (fileInPath == getFilePosition()) {
-                continue; //skip because this is where is current piece resides
-            }
-            Cell cellInPath = Launcher.board.getCell(getRankPosition(), fileInPath);
-            if (cellInPath.isOccupied()) {
-                isPathClear = false;
-                break;
-            }
-        }
-        return isPathClear;
-    }
-    
-    private boolean isRankPathClear(Set<CellInfo.Rank> ranksInPath ) {
-        boolean isPathClear = true;
-        Iterator<CellInfo.Rank> pathIterator = ranksInPath.iterator();
-        while (pathIterator.hasNext()) {
-            CellInfo.Rank rankInPath = pathIterator.next();
-            if (rankInPath == getRankPosition()) {
-                continue; //skip because this is where is current piece resides
-            }
-            Cell cellInPath = Launcher.board.getCell(rankInPath, getFilePosition());
-            if (cellInPath.isOccupied()) {
-                isPathClear = false;
-                break;
-            }
-        }
-        return isPathClear;
+        setOnMouseClicked(eventHandler::handleMouseEvent);
+        setOnKeyPressed(eventHandler::handleKeyEvent);
     }
 
 }

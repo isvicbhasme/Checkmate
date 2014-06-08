@@ -17,6 +17,10 @@ import javafx.scene.input.MouseEvent;
  */
 public class CellEvtHandler implements IEventHandler {
 
+    /**
+     *
+     * @param event MouseEvent object
+     */
     @Override
     public void handleMouseEvent(MouseEvent event) {
         Cell clickedCell = (Cell) event.getSource();
@@ -25,6 +29,10 @@ public class CellEvtHandler implements IEventHandler {
         }
     }
 
+    /**
+     *
+     * @param event KeyEvent object
+     */
     @Override
     public void handleKeyEvent(KeyEvent event) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -35,9 +43,6 @@ public class CellEvtHandler implements IEventHandler {
         CellInfo.File newFile = clickedCell.getFile();
         Piece selectedPiece = gamePlay.getMovingPiece();
         gamePlay.resetPieceMovement();
-        if (selectedPiece.isMoveAllowed(newRank, newFile)) {
-            selectedPiece.moveTo(newRank, newFile);
-        }
+        selectedPiece.getMoveHandler().moveIfPermitted(newRank, newFile);
     }
-
 }
