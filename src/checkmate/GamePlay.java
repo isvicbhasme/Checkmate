@@ -5,6 +5,7 @@
  */
 package checkmate;
 
+import checkmate.design.Cell;
 import checkmate.design.Piece;
 
 /**
@@ -42,11 +43,13 @@ public class GamePlay {
 
     public void setMovingPiece(Piece movingPiece) {
         this.movingPiece = movingPiece;
+        movingPiece.getCell().enableHighlight();
     }
 
     public void resetPieceMovement() {
-        this.movingPiece = null;
-        this.isPieceSelected = false;
+        movingPiece.getCell().disableHighlight();
+        movingPiece = null;
+        isPieceSelected = false;
     }
 
 }

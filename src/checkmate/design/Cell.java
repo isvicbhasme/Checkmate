@@ -10,6 +10,7 @@ import checkmate.event.CellEvtHandler;
 import checkmate.util.CellInfo;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.StrokeType;
 
 /**
  *
@@ -24,12 +25,14 @@ public class Cell extends CellGroup {
 
     public Cell(CellInfo.Rank rank, CellInfo.File file) {
         super();
-        cell = new Rectangle(Launcher.resource.getDoubleConfig("Square.length"),
-                Launcher.resource.getDoubleConfig("Square.length"),
+        cell = new Rectangle(Launcher.resource.getDoubleConfig("Cell.length"),
+                Launcher.resource.getDoubleConfig("Cell.length"),
                 Paint.valueOf(computeColor(file, rank).getColorName()));
-        this.length = Launcher.resource.getIntConfig("Square.length");
+        this.length = Launcher.resource.getIntConfig("Cell.length");
         cell.setX(length * file.ordinal());
         cell.setY(length * rank.ordinal());
+        cell.setStrokeType(StrokeType.INSIDE);
+        cell.setStrokeWidth(Launcher.resource.getDoubleConfig("Cell.highlightWidth"));
         this.color = computeColor(file, rank);
         this.rank = rank;
         this.file = file;
@@ -92,5 +95,13 @@ public class Cell extends CellGroup {
 
     void disableEventHandlers() {
         setOnMouseClicked(null);
+    }
+
+    public void enableHighlight() {
+        cell.setStroke(Paint.valueOf(Launcher.resource.getStringConfig("Cell.highlight")));
+    }
+    
+    public void disableHighlight() {
+        cell.setStroke(null);
     }
 }

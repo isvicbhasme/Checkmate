@@ -5,10 +5,14 @@
  */
 package checkmate.design;
 
+import checkmate.Launcher;
 import checkmate.event.RookEvtHandler;
 import checkmate.util.CellInfo;
 import checkmate.util.PieceInfo;
 import java.io.IOException;
+import java.util.EnumSet;
+import java.util.Iterator;
+import java.util.Set;
 
 /**
  *
@@ -55,7 +59,64 @@ public class Rook extends Piece {
 
     @Override
     public boolean isMoveAllowed(CellInfo.Rank toRank, CellInfo.File toFile) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        boolean isPathClear = false;
+        if (getRankPosition() == toRank) {
+            if (getFilePosition().compareTo(toFile) < 0) {
+                Set<CellInfo.File> filesInPath = EnumSet.range(getFilePosition(), toFile);
+                isPathClear = isFilePathClear(filesInPath);
+            } else if (getFilePosition().compareTo(toFile) > 0) {
+                Set<CellInfo.File> filesInPath = EnumSet.range(toFile, getFilePosition());
+                isPathClear = isFilePathClear(filesInPath);
+            } else {
+                throw new IllegalStateException("Source and destination of move is the same");
+            }
+        } else if(getFilePosition() == toFile) {
+            if (getRankPosition().compareTo(toRank) < 0) {
+                Set<CellInfo.Rank> ranksInPath = EnumSet.range(getRankPosition(), toRank);
+                isPathClear = isRankPathClear(ranksInPath);
+            } else if (getRankPosition().compareTo(toRank) > 0) {
+                Set<CellInfo.Rank> filesInPath = EnumSet.range(toRank, getRankPosition());
+                isPathClear = isRankPathClear(filesInPath);
+            } else {
+                throw new IllegalStateException("Source("+getRankPosition()+", "+getFilePosition()+") and destination("+toRank+", "+toFile+") of move is the same");
+            }
+        }
+        System.out.println("Sending "+isPathClear);
+        return isPathClear;
+    }
+
+    private boolean isFilePathClear(Set<CellInfo.File> filesInPath ) {
+        boolean isPathClear = true;
+        Iterator<CellInfo.File> pathIterator = filesInPath.iterator();
+        while (pathIterator.hasNext()) {
+            CellInfo.File fileInPath = pathIterator.next();
+            if (fileInPath == getFilePosition()) {
+                continue; //skip because this is where is current piece resides
+            }
+            Cell cellInPath = Launcher.board.getCell(getRankPosition(), fileInPath);
+            if (cellInPath.isOccupied()) {
+                isPathClear = false;
+                break;
+            }
+        }
+        return isPathClear;
+    }
+    
+    private boolean isRankPathClear(Set<CellInfo.Rank> ranksInPath ) {
+        boolean isPathClear = true;
+        Iterator<CellInfo.Rank> pathIterator = ranksInPath.iterator();
+        while (pathIterator.hasNext()) {
+            CellInfo.Rank rankInPath = pathIterator.next();
+            if (rankInPath == getRankPosition()) {
+                continue; //skip because this is where is current piece resides
+            }
+            Cell cellInPath = Launcher.board.getCell(rankInPath, getFilePosition());
+            if (cellInPath.isOccupied()) {
+                isPathClear = false;
+                break;
+            }
+        }
+        return isPathClear;
     }
 
 }

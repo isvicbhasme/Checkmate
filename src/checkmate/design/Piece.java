@@ -89,4 +89,12 @@ public abstract class Piece extends Text implements IMovable {
      * @return TRUE if the movement is valid, FALSE otherwise
      */
     public abstract boolean isMoveAllowed(CellInfo.Rank toRank, CellInfo.File toFile);
+
+    /**
+     * Retrieves the cell in which the current piece is located.
+     * @return Cell of the current piece
+     */
+    public Cell getCell() {
+        return Launcher.board.getCell(currentRank, currentFile);
+    }
 }
