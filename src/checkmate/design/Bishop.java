@@ -6,6 +6,8 @@
 
 package checkmate.design;
 
+import checkmate.move.BishopMoves;
+import checkmate.move.IMovable;
 import checkmate.util.CellInfo;
 import checkmate.util.PieceInfo;
 
@@ -19,6 +21,7 @@ public final class Bishop extends Piece {
         super(pieceType, position);
         setInitialPosition(pieceType, position);
         initEventHandlers();
+        moveHandler = (IMovable) new BishopMoves(this);
     }
 
     @Override

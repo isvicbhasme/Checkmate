@@ -11,15 +11,14 @@ import checkmate.design.Piece;
  *
  * @author Isaac
  */
-public class RookMoves extends PieceMoves {
+public class BishopMoves extends PieceMoves {
 
     /**
      *
-     * @param piece Rook on which moves are done
+     * @param piece Bishop on which moves are done
      */
-    public RookMoves(Piece piece) {
-        this.moveType = new Straight(piece, Integer.MAX_VALUE, true);
+    public BishopMoves(Piece piece) {
+        this.moveType = new Cross(piece, Integer.MAX_VALUE);
         this.piece = piece;
     }
-
 }

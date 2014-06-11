@@ -17,7 +17,7 @@ import java.util.Set;
  *
  * @author Isaac
  */
-public class Straight {
+public class Straight implements IMove {
 
     /**
      * Piece instance that is allowed to move straight
@@ -62,7 +62,6 @@ public class Straight {
         } else {
             return isPathClear;
         }
-        System.out.println("Straight " + isPathClear);
         return isPathClear;
     }
 
