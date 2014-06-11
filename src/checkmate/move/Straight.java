@@ -106,10 +106,10 @@ public class Straight {
 
     private boolean isNumOfStepsValid(CellInfo.File targetFile, CellInfo.Rank targetRank) {
         if (isHorizontalMoveAllowed) {
-            return (Math.abs(targetFile.ordinal() - piece.getFilePosition().ordinal()) < maxSteps
-                    && Math.abs(targetRank.ordinal() - piece.getRankPosition().ordinal()) < maxSteps);
+            return (Math.abs(targetFile.ordinal() - piece.getFilePosition().ordinal()) <= maxSteps
+                    && Math.abs(targetRank.ordinal() - piece.getRankPosition().ordinal()) <= maxSteps);
         } else {
-            return Math.abs(targetRank.ordinal() - piece.getRankPosition().ordinal()) < maxSteps;
+            return Math.abs(targetRank.ordinal() - piece.getRankPosition().ordinal()) <= maxSteps;
         }
     }
 
