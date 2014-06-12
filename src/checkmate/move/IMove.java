@@ -6,7 +6,7 @@
 
 package checkmate.move;
 
-import checkmate.util.CellInfo;
+import checkmate.util.Address;
 
 /**
  *
@@ -14,6 +14,6 @@ import checkmate.util.CellInfo;
  */
 public interface IMove {
 
-    public boolean isMoveAllowed(CellInfo.Rank rank, CellInfo.File file);
+    public boolean isMoveAllowed(Address targetCell);
     
 }

@@ -9,6 +9,7 @@ package checkmate.move;
 import checkmate.Launcher;
 import checkmate.design.Cell;
 import checkmate.design.Piece;
+import checkmate.util.Address;
 import checkmate.util.CellInfo;
 
 /**
@@ -41,7 +42,7 @@ public abstract class PieceMoves implements IMovable{
      */
     @Override
     public boolean isMovePermitted(CellInfo.Rank rank, CellInfo.File file) {
-        return moveType.isMoveAllowed(rank, file);
+        return moveType.isMoveAllowed(new Address(rank, file));
     }
     
 

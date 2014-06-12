@@ -8,6 +8,7 @@ package checkmate.move;
 import checkmate.Launcher;
 import checkmate.design.Cell;
 import checkmate.design.Piece;
+import checkmate.util.Address;
 import checkmate.util.CellInfo;
 import java.util.EnumSet;
 import java.util.Iterator;
@@ -43,43 +44,58 @@ public class Cross implements IMove {
     /**
      * Checks whether this.piece can move to the given target cell
      *
-     * @param toRank Rank of target cell
-     * @param toFile File of target cell
+     * @param targetCell
      * @return true if movement is allowed, false otherwise.
      */
-    public boolean isMoveAllowed(CellInfo.Rank toRank, CellInfo.File toFile) {
+    @Override
+    public boolean isMoveAllowed(Address targetCell) {
         boolean isPathClear = false;
-        if (isDiagonal(toRank, toFile) && isNumOfStepsValid(toFile)) {
-            isPathClear = isMoveObstructed(toRank, toFile);
+        if (isDiagonal(targetCell) && isNumOfStepsValid(targetCell.file)) {
+            isPathClear = isMoveObstructed(targetCell);
         }
         return isPathClear;
     }
 
-    private boolean isDiagonal(CellInfo.Rank toRank, CellInfo.File toFile) {
-        int rankDifference = Math.abs(piece.getRankPosition().ordinal() - toRank.ordinal());
-        int fileDifference = Math.abs(piece.getFilePosition().ordinal() - toFile.ordinal());
+    private boolean isDiagonal(Address target) {
+        int rankDifference = Math.abs(piece.getRankPosition().ordinal() - target.rank.ordinal());
+        int fileDifference = Math.abs(piece.getFilePosition().ordinal() - target.file.ordinal());
         return rankDifference == fileDifference;
     }
 
-    private boolean isMoveObstructed(CellInfo.Rank toRank, CellInfo.File toFile) throws IllegalStateException {
+    private boolean isMoveObstructed(Address target) throws IllegalStateException {
         boolean isClear = true;
-        Set<CellInfo.Rank> ranksInPath = getRanksInPath(toRank);
-        Set<CellInfo.File> filesInPath = getFilesInPath(toFile);
-        Iterator<CellInfo.Rank> rankIterator = ranksInPath.iterator();
-        Iterator<CellInfo.File> fileIterator = filesInPath.iterator();
-        while (rankIterator.hasNext() && fileIterator.hasNext()) {
-            CellInfo.Rank rankInPath = rankIterator.next();
-            CellInfo.File fileInPath = fileIterator.next();
-            if (fileInPath == piece.getFilePosition() && rankInPath == piece.getRankPosition()) {
-                continue; //skip because this is where is current piece resides
-            }
-            Cell cellInPath = Launcher.board.getCell(rankInPath, fileInPath);
-            if (cellInPath.isOccupied()) {
+        Address current = piece.getAddress();
+        while((current = getNextCellInPath(current, target)) != null) {
+            System.out.println("Checking:"+current.rank+","+current.file);
+            if(Launcher.board.getCell(current).isOccupied())
+            {
                 isClear = false;
                 break;
             }
         }
         return isClear;
+    }
+
+    private Address getNextCellInPath(Address currentCell, Address lastCell) {
+        if (currentCell.equals(lastCell)) {
+            return null;
+        }
+        CellInfo.Rank rank = currentCell.rank;
+        CellInfo.File file = currentCell.file;
+        CellInfo.Rank lastRank = lastCell.rank;
+        CellInfo.File lastFile = lastCell.file;
+        Address newAddress = new Address();
+        if (rank.ordinal() < lastRank.ordinal()) {
+            newAddress.rank = CellInfo.Rank.values[rank.ordinal() + 1];
+        } else {
+            newAddress.rank = CellInfo.Rank.values[rank.ordinal() - 1];
+        }
+        if (file.ordinal() < lastFile.ordinal()) {
+            newAddress.file = CellInfo.File.values[file.ordinal() + 1];
+        } else {
+            newAddress.file = CellInfo.File.values[file.ordinal() - 1];
+        }
+        return newAddress;
     }
 
     private Set<CellInfo.File> getFilesInPath(CellInfo.File toFile) {

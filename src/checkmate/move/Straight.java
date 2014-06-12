@@ -8,6 +8,7 @@ package checkmate.move;
 import checkmate.Launcher;
 import checkmate.design.Cell;
 import checkmate.design.Piece;
+import checkmate.util.Address;
 import checkmate.util.CellInfo;
 import java.util.EnumSet;
 import java.util.Iterator;
@@ -55,22 +56,22 @@ public class Straight implements IMove {
      * @param toFile File of target cell
      * @return true if movement is allowed, false otherwise.
      */
-    public boolean isMoveAllowed(CellInfo.Rank toRank, CellInfo.File toFile) {
+    public boolean isMoveAllowed(Address cellAddress) {
         boolean isPathClear = false;
-        if (isNumOfStepsValid(toFile, toRank)) {
-            isPathClear = isMoveObstructed(toRank, toFile);
+        if (isNumOfStepsValid(cellAddress)) {
+            isPathClear = isMoveObstructed(cellAddress);
         } else {
             return isPathClear;
         }
         return isPathClear;
     }
 
-    private boolean isMoveObstructed(CellInfo.Rank toRank, CellInfo.File toFile) throws IllegalStateException {
+    private boolean isMoveObstructed(Address cellAddress) throws IllegalStateException {
         boolean isClear = false;
-        if (piece.getRankPosition() == toRank && isHorizontalMoveAllowed) {
-            isClear = isHorizontalMoveBlocked(toFile);
-        } else if (piece.getFilePosition() == toFile) {
-            isClear = isVerticalMoveBlocked(toRank);
+        if (piece.getRankPosition() == cellAddress.rank && isHorizontalMoveAllowed) {
+            isClear = isHorizontalMoveBlocked(cellAddress.file);
+        } else if (piece.getFilePosition() == cellAddress.file) {
+            isClear = isVerticalMoveBlocked(cellAddress.rank);
         }
         return isClear;
     }
@@ -103,12 +104,12 @@ public class Straight implements IMove {
         return isPathClear;
     }
 
-    private boolean isNumOfStepsValid(CellInfo.File targetFile, CellInfo.Rank targetRank) {
+    private boolean isNumOfStepsValid(Address cellAddress) {
         if (isHorizontalMoveAllowed) {
-            return (Math.abs(targetFile.ordinal() - piece.getFilePosition().ordinal()) <= maxSteps
-                    && Math.abs(targetRank.ordinal() - piece.getRankPosition().ordinal()) <= maxSteps);
+            return (Math.abs(cellAddress.file.ordinal() - piece.getFilePosition().ordinal()) <= maxSteps
+                    && Math.abs(cellAddress.rank.ordinal() - piece.getRankPosition().ordinal()) <= maxSteps);
         } else {
-            return Math.abs(targetRank.ordinal() - piece.getRankPosition().ordinal()) <= maxSteps;
+            return Math.abs(cellAddress.rank.ordinal() - piece.getRankPosition().ordinal()) <= maxSteps;
         }
     }
 

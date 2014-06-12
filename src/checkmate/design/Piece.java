@@ -8,6 +8,7 @@ package checkmate.design;
 import checkmate.Launcher;
 import checkmate.event.PieceEvtHandler;
 import checkmate.move.IMovable;
+import checkmate.util.Address;
 import checkmate.util.CellInfo;
 import checkmate.util.PieceInfo;
 import javafx.scene.text.Font;
@@ -82,5 +83,9 @@ public abstract class Piece extends Text {
 
     public IMovable getMoveHandler() {
         return moveHandler;
+    }
+    
+    public Address getAddress() {
+        return new Address(currentRank, currentFile);
     }
 }

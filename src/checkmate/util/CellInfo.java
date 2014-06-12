@@ -7,7 +7,7 @@ package checkmate.util;
 
 /**
  *
- * @author basme
+ * @author bhasme
  *
  * Contains different Enum types associated with a cell
  */
@@ -49,6 +49,7 @@ public class CellInfo {
     public enum Rank {
 
         ONE, TWO, THREE, FIVE, SIX, SEVEN, EIGHT;
+        public static final Rank values[] = values();
     }
 
     /**
@@ -57,6 +58,7 @@ public class CellInfo {
     public enum File {
 
         A, B, C, D, E, F, G, H;
+        public static final File values[] = values();
     }
 
 }
