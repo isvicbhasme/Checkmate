@@ -5,6 +5,7 @@
  */
 package checkmate.design;
 
+import checkmate.move.KnightMoves;
 import checkmate.util.CellInfo;
 import checkmate.util.PieceInfo;
 
@@ -18,6 +19,7 @@ public class Knight extends Piece {
         super(pieceType, position);
         setInitialPosition(pieceType, position);
         initEventHandlers();
+        moveHandler = new KnightMoves(this);
     }
 
     @Override
