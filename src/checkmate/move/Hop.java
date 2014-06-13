@@ -21,7 +21,7 @@ public class Hop implements IMove{
      */
     private final Piece piece;
     
-    private enum ExpectedMagnitude {
+    private enum Quadrant {
         TOP_LEFT(-1, -1),
         TOP_RIGHT(-1, 1),
         BOTTOM_LEFT(1, -1),
@@ -30,7 +30,7 @@ public class Hop implements IMove{
         int first;
         int second;
 
-        private ExpectedMagnitude(int first, int second) {
+        private Quadrant(int first, int second) {
             this.first = first;
             this.second = second;
         }
@@ -50,21 +50,17 @@ public class Hop implements IMove{
         Address[] expectedCells;
         if(isCellAbovePiece(targetCell)) {
             if(isCellLeftOfPiece(targetCell)) {
-                expectedCells = getExpectedCells(ExpectedMagnitude.TOP_LEFT);
+                expectedCells = getExpectedCells(Quadrant.TOP_LEFT);
             } else {
-                expectedCells = getExpectedCells(ExpectedMagnitude.TOP_RIGHT);
+                expectedCells = getExpectedCells(Quadrant.TOP_RIGHT);
             }
         }
         else {
             if(isCellLeftOfPiece(targetCell)) {
-                expectedCells = getExpectedCells(ExpectedMagnitude.BOTTOM_LEFT);
+                expectedCells = getExpectedCells(Quadrant.BOTTOM_LEFT);
             } else {
-                expectedCells = getExpectedCells(ExpectedMagnitude.BOTTOM_RIGHT);
+                expectedCells = getExpectedCells(Quadrant.BOTTOM_RIGHT);
             }
-        }
-        for(Address cell: expectedCells) {
-            if(cell != null)
-                System.out.println("Cell checks: "+cell.rank+","+cell.file);
         }
         if(expectedCells == null)
             return false;
@@ -79,8 +75,7 @@ public class Hop implements IMove{
         return (cell.file.ordinal() < piece.getFilePosition().ordinal());
     }
     
-    private Address[] getExpectedCells(ExpectedMagnitude magnitude) {
-        System.out.println("Getting "+magnitude);
+    private Address[] getExpectedCells(Quadrant magnitude) {
         Address expectedCells[] = new Address[2];
         int index = 0;
         int rank = piece.getRankPosition().ordinal() + (2 * magnitude.first);
@@ -89,48 +84,6 @@ public class Hop implements IMove{
             expectedCells[index++] = new Address(CellInfo.Rank.values[rank], CellInfo.File.values[file]);
         rank = piece.getRankPosition().ordinal() + (1 * magnitude.first);
         file = piece.getFilePosition().ordinal() + (2 * magnitude.second);
-        if(isRankFileValid(rank, file))
-            expectedCells[index++] = new Address(CellInfo.Rank.values[rank], CellInfo.File.values[file]);
-        return expectedCells;
-    }
-    
-    private Address[] getExpectedTopRightells() {
-        Address expectedCells[] = new Address[2];
-        int index = 0;
-        int rank = piece.getRankPosition().ordinal() - 2;
-        int file = piece.getFilePosition().ordinal() + 1;
-        if(isRankFileValid(rank, file))
-            expectedCells[index++] = new Address(CellInfo.Rank.values[rank], CellInfo.File.values[file]);
-        rank = piece.getRankPosition().ordinal() - 1;
-        file = piece.getFilePosition().ordinal() + 2;
-        if(isRankFileValid(rank, file))
-            expectedCells[index++] = new Address(CellInfo.Rank.values[rank], CellInfo.File.values[file]);
-        return expectedCells;
-    }
-    
-    private Address[] getExpectedBottomLeftCells() {
-        Address expectedCells[] = new Address[2];
-        int index = 0;
-        int rank = piece.getRankPosition().ordinal() + 2;
-        int file = piece.getFilePosition().ordinal() - 1;
-        if(isRankFileValid(rank, file))
-            expectedCells[index++] = new Address(CellInfo.Rank.values[rank], CellInfo.File.values[file]);
-        rank = piece.getRankPosition().ordinal() + 1;
-        file = piece.getFilePosition().ordinal() - 2;
-        if(isRankFileValid(rank, file))
-            expectedCells[index++] = new Address(CellInfo.Rank.values[rank], CellInfo.File.values[file]);
-        return expectedCells;
-    }
-    
-    private Address[] getExpectedBottomRightells() {
-        Address expectedCells[] = new Address[2];
-        int index = 0;
-        int rank = piece.getRankPosition().ordinal() + 2;
-        int file = piece.getFilePosition().ordinal() + 1;
-        if(isRankFileValid(rank, file))
-            expectedCells[index++] = new Address(CellInfo.Rank.values[rank], CellInfo.File.values[file]);
-        rank = piece.getRankPosition().ordinal() + 1;
-        file = piece.getFilePosition().ordinal() + 2;
         if(isRankFileValid(rank, file))
             expectedCells[index++] = new Address(CellInfo.Rank.values[rank], CellInfo.File.values[file]);
         return expectedCells;

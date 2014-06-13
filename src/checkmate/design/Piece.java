@@ -88,4 +88,8 @@ public abstract class Piece extends Text {
     public Address getAddress() {
         return new Address(currentRank, currentFile);
     }
+    
+    public boolean isWhitePiece() {
+        return pieceType.getUnicodeChar() < pieceType.BLACK_KING.getUnicodeChar();
+    }
 }

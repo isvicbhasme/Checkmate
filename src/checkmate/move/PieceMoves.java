@@ -23,7 +23,7 @@ public abstract class PieceMoves implements IMovable{
     protected Piece piece;
 
     public PieceMoves() {
-        this.moveTypes = new ArrayList<IMove>();
+        this.moveTypes = new ArrayList<>();
     }
     
     /**

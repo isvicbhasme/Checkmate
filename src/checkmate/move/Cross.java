@@ -6,13 +6,9 @@
 package checkmate.move;
 
 import checkmate.Launcher;
-import checkmate.design.Cell;
 import checkmate.design.Piece;
 import checkmate.util.Address;
 import checkmate.util.CellInfo;
-import java.util.EnumSet;
-import java.util.Iterator;
-import java.util.Set;
 
 /**
  *

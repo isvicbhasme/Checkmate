@@ -19,10 +19,10 @@ public class PieceEvtHandler implements IEventHandler {
     @Override
     public void handleMouseEvent(MouseEvent event) {
         Piece piece = (Piece) event.getSource();
-        if (!gamePlay.isPieceSelected()) {
-            processFirstClick(piece);
-        } else {
+        if (gamePlay.isPieceSelected()) {
             processSecondClick(piece);
+        } else {
+            processFirstClick(piece);
         }
     }
 

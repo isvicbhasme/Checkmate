@@ -13,11 +13,15 @@ import checkmate.design.Piece;
  * @author bhasme
  */
 public class KingMoves extends PieceMoves{
+    
+    private final static int MAX_MOVES = 1;
+    private final static boolean HORIZONTAL_MOVE_ALLOWED = true;
+    private final static boolean BACKWARD_MOVE_ALLOWED = true;
 
     public KingMoves(Piece piece) {
         this.piece = piece;
-        this.moveTypes.add(new Straight(piece, 1, true));
-        this.moveTypes.add(new Cross(piece, 1));
+        this.moveTypes.add(new Straight(piece, MAX_MOVES, HORIZONTAL_MOVE_ALLOWED, BACKWARD_MOVE_ALLOWED));
+        this.moveTypes.add(new Cross(piece, MAX_MOVES));
     }
     
 }
