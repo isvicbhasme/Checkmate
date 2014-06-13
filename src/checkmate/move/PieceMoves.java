@@ -49,10 +49,10 @@ public abstract class PieceMoves implements IMovable{
     public boolean isMovePermitted(CellInfo.Rank rank, CellInfo.File file) {
         for(IMove move: moveTypes)
         {
-            if(!move.isMoveAllowed(new Address(rank, file)))
-                return false;
+            if(move.isMoveAllowed(new Address(rank, file)))
+                return true;
         }
-        return true;
+        return false;
     }
     
 

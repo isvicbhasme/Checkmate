@@ -6,6 +6,8 @@
 
 package checkmate.design;
 
+import checkmate.move.IMovable;
+import checkmate.move.QueenMoves;
 import checkmate.util.CellInfo;
 import checkmate.util.PieceInfo;
 
@@ -19,6 +21,7 @@ public class Queen extends Piece{
         super(pieceType, position);
         setInitialPosition(pieceType, position);
         initEventHandlers();
+        moveHandler = (IMovable) new QueenMoves(this);
     }
 
     @Override
