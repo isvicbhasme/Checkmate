@@ -5,7 +5,6 @@
  */
 package checkmate;
 
-import checkmate.design.Cell;
 import checkmate.design.Piece;
 
 /**
@@ -16,17 +15,16 @@ public class GamePlay {
 
     private boolean isPieceSelected;
     private Piece movingPiece;
+    private static GamePlay instance = null;
 
     private GamePlay() {
     }
 
     public static GamePlay getInstance() {
-        return GamePlayHolder.INSTANCE;
-    }
-
-    private static class GamePlayHolder {
-
-        private static final GamePlay INSTANCE = new GamePlay();
+        if(instance == null) {
+            instance = new GamePlay();
+        }
+        return instance;
     }
 
     public boolean isPieceSelected() {
