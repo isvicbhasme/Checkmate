@@ -66,7 +66,6 @@ public class Cross implements IMove {
         boolean isClear = true;
         Address current = piece.getAddress();
         while((current = getNextCellInPath(current, target)) != null) {
-            System.out.println("Checking:"+current.rank+","+current.file);
             if(Launcher.board.getCell(current).isOccupied())
             {
                 isClear = false;

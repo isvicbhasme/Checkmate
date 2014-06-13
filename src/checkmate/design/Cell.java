@@ -66,10 +66,12 @@ public class Cell extends CellGroup {
             getChildren().remove(1);
         }
         getChildren().add(piece);
+        isOccupied = true;
     }
 
     public void removePieceFromCellGroup(Piece piece) {
         getChildren().remove(piece);
+        isOccupied = false;
     }
 
     private static CellInfo.Color computeColor(CellInfo.File file, CellInfo.Rank rank) {
