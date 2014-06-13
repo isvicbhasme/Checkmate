@@ -18,7 +18,7 @@ public class BishopMoves extends PieceMoves {
      * @param piece Bishop on which moves are done
      */
     public BishopMoves(Piece piece) {
-        this.moveType = new Cross(piece, Integer.MAX_VALUE);
+        this.moveTypes.add(new Cross(piece, Integer.MAX_VALUE));
         this.piece = piece;
     }
 }

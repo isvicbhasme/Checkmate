@@ -66,7 +66,6 @@ public class Cross implements IMove {
         boolean isClear = true;
         Address current = piece.getAddress();
         while((current = getNextCellInPath(current, target)) != null) {
-            System.out.println("Checking:"+current.rank+","+current.file);
             if(Launcher.board.getCell(current).isOccupied())
             {
                 isClear = false;
@@ -96,26 +95,6 @@ public class Cross implements IMove {
             newAddress.file = CellInfo.File.values[file.ordinal() - 1];
         }
         return newAddress;
-    }
-
-    private Set<CellInfo.File> getFilesInPath(CellInfo.File toFile) {
-        Set<CellInfo.File> filesInPath;
-        if (piece.getFilePosition().ordinal() < toFile.ordinal()) {
-            filesInPath = EnumSet.range(piece.getFilePosition(), toFile);
-        } else {
-            filesInPath = EnumSet.range(toFile, piece.getFilePosition());
-        }
-        return filesInPath;
-    }
-
-    private Set<CellInfo.Rank> getRanksInPath(CellInfo.Rank toRank) {
-        Set<CellInfo.Rank> ranksInPath;
-        if (piece.getRankPosition().ordinal() < toRank.ordinal()) {
-            ranksInPath = EnumSet.range(piece.getRankPosition(), toRank);
-        } else {
-            ranksInPath = EnumSet.range(toRank, piece.getRankPosition());
-        }
-        return ranksInPath;
     }
 
     private boolean isNumOfStepsValid(CellInfo.File targetFile) {

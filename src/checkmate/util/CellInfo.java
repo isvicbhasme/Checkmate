@@ -48,7 +48,7 @@ public class CellInfo {
      */
     public enum Rank {
 
-        ONE, TWO, THREE, FIVE, SIX, SEVEN, EIGHT;
+        ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT;
         public static final Rank values[] = values();
     }
 

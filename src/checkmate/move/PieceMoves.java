@@ -11,6 +11,7 @@ import checkmate.design.Cell;
 import checkmate.design.Piece;
 import checkmate.util.Address;
 import checkmate.util.CellInfo;
+import java.util.ArrayList;
 
 /**
  *
@@ -18,8 +19,12 @@ import checkmate.util.CellInfo;
  */
 public abstract class PieceMoves implements IMovable{
     
-    protected IMove moveType;
+    protected ArrayList<IMove> moveTypes;
     protected Piece piece;
+
+    public PieceMoves() {
+        this.moveTypes = new ArrayList<IMove>();
+    }
     
     /**
      * Moves the piece to the specified cell. Note that the validity of the movement is not checked by this method.
@@ -42,7 +47,12 @@ public abstract class PieceMoves implements IMovable{
      */
     @Override
     public boolean isMovePermitted(CellInfo.Rank rank, CellInfo.File file) {
-        return moveType.isMoveAllowed(new Address(rank, file));
+        for(IMove move: moveTypes)
+        {
+            if(!move.isMoveAllowed(new Address(rank, file)))
+                return false;
+        }
+        return true;
     }
     
 

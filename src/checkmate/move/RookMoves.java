@@ -18,7 +18,7 @@ public class RookMoves extends PieceMoves {
      * @param piece Rook on which moves are done
      */
     public RookMoves(Piece piece) {
-        this.moveType = new Straight(piece, Integer.MAX_VALUE, true);
+        this.moveTypes.add(new Straight(piece, Integer.MAX_VALUE, true));
         this.piece = piece;
     }
 
