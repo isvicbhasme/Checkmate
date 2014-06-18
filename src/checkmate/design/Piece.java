@@ -27,6 +27,7 @@ public abstract class Piece extends Text {
     protected final PieceInfo.Position position;
     protected static final PieceEvtHandler eventHandler = new PieceEvtHandler();
     protected IMovable moveHandler;
+    protected final PieceInfo.Color color;
 
     public Piece(PieceInfo.Type pieceType, PieceInfo.Position position) {
         super(pieceType.getUnicodeChar() + "");
@@ -35,6 +36,7 @@ public abstract class Piece extends Text {
         setFont(getPieceFont());
         initCommonEvents();
         this.pieceType = pieceType;
+        this.color = (pieceType.getUnicodeChar() < PieceInfo.Type.BLACK_KING.getUnicodeChar())? PieceInfo.Color.WHITE : PieceInfo.Color.BLACK;
     }
 
     public CellInfo.File getFilePosition() {
@@ -90,6 +92,6 @@ public abstract class Piece extends Text {
     }
     
     public boolean isWhitePiece() {
-        return pieceType.getUnicodeChar() < pieceType.BLACK_KING.getUnicodeChar();
+        return color == PieceInfo.Color.WHITE;
     }
 }

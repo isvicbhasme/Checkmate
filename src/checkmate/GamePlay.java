@@ -30,17 +30,14 @@ public class GamePlay {
     public boolean isPieceSelected() {
         return isPieceSelected;
     }
-
-    public void setIsPieceSelected(boolean isPieceSelected) {
-        this.isPieceSelected = isPieceSelected;
-    }
-
+    
     public Piece getMovingPiece() {
         return movingPiece;
     }
 
     public void setMovingPiece(Piece movingPiece) {
         this.movingPiece = movingPiece;
+        this.isPieceSelected = true;
         movingPiece.getCell().enableHighlight();
     }
 

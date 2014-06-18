@@ -32,7 +32,6 @@ public class PieceEvtHandler implements IEventHandler {
     }
 
     protected void processFirstClick(Piece piece) {
-        gamePlay.setIsPieceSelected(true);
         gamePlay.setMovingPiece(piece);
     }
 

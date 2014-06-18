@@ -106,4 +106,8 @@ public class Cell extends CellGroup {
     public void disableHighlight() {
         cell.setStroke(null);
     }
+    
+    public boolean isHighlighted() {
+        return cell.getStroke() == null;
+    }
 }
