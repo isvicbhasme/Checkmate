@@ -14,6 +14,8 @@ import checkmate.util.PieceInfo;
  * @author Isaac
  */
 public class King extends Piece {
+    
+    protected boolean isFirstMove;
 
     public King(PieceInfo.Type pieceType, PieceInfo.Position position) {
         super(pieceType, position);
@@ -36,6 +38,7 @@ public class King extends Piece {
             throw new IllegalStateException("Illegal piece creation");
         }
         setPosition(defaultRank, defaultFile);
+        isFirstMove = true;
     }
 
     @Override
@@ -43,4 +46,16 @@ public class King extends Piece {
         setOnMouseClicked(eventHandler::handleMouseEvent);
         setOnKeyPressed(eventHandler::handleKeyEvent);
     }
+    
+    public boolean isFirstMove() {
+        return isFirstMove;
+    }
+
+    @Override
+    public void setPosition(CellInfo.Rank newRank, CellInfo.File newFile) {
+        super.setPosition(newRank, newFile);
+        isFirstMove = false;
+    }
+    
+    
 }

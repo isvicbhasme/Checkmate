@@ -16,6 +16,8 @@ import java.io.IOException;
  * @author bhasme
  */
 public class Rook extends Piece {
+    
+    protected boolean isFirstMove;
 
     /**
      *
@@ -55,6 +57,7 @@ public class Rook extends Piece {
             throw new IllegalStateException("Illegal piece creation");
         }
         setPosition(defaultRank, defaultFile);
+        isFirstMove = true;
     }
 
     /**
@@ -66,4 +69,9 @@ public class Rook extends Piece {
         setOnKeyPressed(eventHandler::handleKeyEvent);
     }
 
+    @Override
+    public void setPosition(CellInfo.Rank newRank, CellInfo.File newFile) {
+        super.setPosition(newRank, newFile);
+        isFirstMove = false;
+    }
 }
