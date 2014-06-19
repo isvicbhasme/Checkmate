@@ -27,7 +27,7 @@ public class Cross implements IMove {
     protected int maxSteps;
 
     /**
-     * Performs validations related to straight movements
+     * Performs validations related to cross movements
      *
      * @param piece Piece to be validated
      * @param maxSteps Maximum steps that is allowed in one move
