@@ -110,4 +110,12 @@ public class Cell extends CellGroup {
     public boolean isHighlighted() {
         return cell.getStroke() == null;
     }
+    
+    public boolean isOccupiedByWhite() {
+        return isOccupied && ((Piece)getChildren().get(1)).isWhitePiece();
+    }
+    
+    public Piece getPiece() {
+        return (getChildren().size() > 1)? (Piece)getChildren().get(1) : null;
+    }
 }

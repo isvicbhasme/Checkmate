@@ -82,8 +82,4 @@ public class Board extends GridPane {
             Logger.getLogger(Board.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    public Piece getPiece(PieceInfo.Type pieceType) {
-        return boardPieces.get(pieceType);
-    }
 }

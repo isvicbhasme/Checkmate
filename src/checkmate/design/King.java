@@ -16,12 +16,14 @@ import checkmate.util.PieceInfo;
 public class King extends Piece {
     
     protected boolean isFirstMove;
+    protected boolean isInCheck;
 
     public King(PieceInfo.Type pieceType, PieceInfo.Position position) {
         super(pieceType, position);
         setInitialPosition(pieceType, position);
         initEventHandlers();
         this.moveHandler = new KingMoves(this);
+        this.isInCheck = false;
     }
 
     @Override
@@ -57,5 +59,11 @@ public class King extends Piece {
         isFirstMove = false;
     }
     
+    public void setInCheck(boolean inCheck) {
+        this.isInCheck = inCheck;
+    }
     
+    public boolean isInCheck() {
+        return this.isInCheck;
+    }
 }
