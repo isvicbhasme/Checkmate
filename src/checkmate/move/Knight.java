@@ -3,22 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package checkmate.move;
 
 import checkmate.design.Piece;
 
 /**
  *
- * @author Isaac
+ * @author basme
  */
-public class BishopMoves extends PieceMoves {
+public class Knight extends MovablePiece{
 
-    /**
-     *
-     * @param piece Bishop on which moves are done
-     */
-    public BishopMoves(Piece piece) {
-        this.moveTypes.add(new Cross(piece, Integer.MAX_VALUE));
+    public Knight(Piece piece) {
         this.piece = piece;
+        this.moveTypes.add(new Hop(piece));
     }
+    
 }

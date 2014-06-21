@@ -25,7 +25,10 @@ public class CellEvtHandler implements IEventHandler {
     public void handleMouseEvent(MouseEvent event) {
         Cell clickedCell = (Cell) event.getSource();
         if (gamePlay.isPieceSelected() && !clickedCell.isOccupied()) {
-            processPieceMovement(clickedCell);
+            Piece selectedPiece = gamePlay.getMovingPiece();
+            if (isTurnToPlay(selectedPiece)) {
+                processPieceMovement(clickedCell, selectedPiece);
+            }
         }
     }
 
@@ -38,11 +41,20 @@ public class CellEvtHandler implements IEventHandler {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    private void processPieceMovement(Cell clickedCell) {
+    private void processPieceMovement(Cell clickedCell, Piece selectedPiece) {
         CellInfo.Rank newRank = clickedCell.getRank();
         CellInfo.File newFile = clickedCell.getFile();
-        Piece selectedPiece = gamePlay.getMovingPiece();
         gamePlay.resetPieceMovement();
-        selectedPiece.getMoveHandler().moveIfPermitted(newRank, newFile);
+        if (selectedPiece.getMoveHandler().moveIfPermitted(newRank, newFile)) {
+            gamePlay.togglePlayTurn();
+        }
+    }
+
+    private boolean isTurnToPlay(Piece selectedPiece) {
+        if (selectedPiece.isWhitePiece()) {
+            return gamePlay.isWhitesTurnToPlay();
+        } else {
+            return gamePlay.isBlacksTurnToPlay();
+        }
     }
 }

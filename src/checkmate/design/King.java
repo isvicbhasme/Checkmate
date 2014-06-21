@@ -1,11 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package checkmate.design;
 
-import checkmate.move.KingMoves;
 import checkmate.util.CellInfo;
 import checkmate.util.PieceInfo;
 
@@ -22,7 +17,7 @@ public class King extends Piece {
         super(pieceType, position);
         setInitialPosition(pieceType, position);
         initEventHandlers();
-        this.moveHandler = new KingMoves(this);
+        this.moveHandler = new checkmate.move.King(this);
         this.isInCheck = false;
     }
 

@@ -1,12 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 
 package checkmate.design;
 
-import checkmate.move.BishopMoves;
 import checkmate.move.IMovable;
 import checkmate.util.CellInfo;
 import checkmate.util.PieceInfo;
@@ -21,7 +16,7 @@ public final class Bishop extends Piece {
         super(pieceType, position);
         setInitialPosition(pieceType, position);
         initEventHandlers();
-        moveHandler = (IMovable) new BishopMoves(this);
+        moveHandler = (IMovable) new checkmate.move.Bishop(this);
     }
 
     @Override

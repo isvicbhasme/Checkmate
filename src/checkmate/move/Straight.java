@@ -39,6 +39,8 @@ public class Straight implements IMove {
      * Indicates whether the piece can move vertical
      */
     private final boolean isBackwardMoveRestricted;
+    private Address targetCell;
+    private boolean isAttackingAllowed;
 
     /**
      * Performs validations related to straight movements
@@ -53,32 +55,36 @@ public class Straight implements IMove {
         this.maxSteps = maxSteps;
         this.isHorizontalMoveAllowed = isHorizontalMoveAllowed;
         this.isBackwardMoveRestricted = !isBackwardMoveAllowed;
+        this.isAttackingAllowed = true;
     }
 
     /**
      * Checks whether this.piece can move to the given target cell
      *
-     * @param cellAddress Target cell against which move should be checked
+     * @param target Target cell against which move should be checked
      * @return true if movement is allowed, false otherwise.
      */
     @Override
-    public boolean isMoveAllowed(Address cellAddress) {
-        boolean isPathClear = false;
-        if (isNumOfStepsValid(cellAddress)) {
-            isPathClear = isPathFree(cellAddress);
-        } else {
-            return isPathClear;
+    public boolean isMoveAllowed(Address target) {
+        boolean canMove = false;
+        if (isNumOfStepsValid(target)) {
+            if (!isAttackingAllowed && Launcher.board.getCell(target).isOccupied()) {
+                canMove = false;
+            } else {
+                setTargetCell(target);
+                canMove = isPathFree();
+            }
         }
-        return isPathClear;
+        return canMove;
     }
 
-    private boolean isPathFree(Address cellAddress) throws IllegalStateException {
+    private boolean isPathFree() throws IllegalStateException {
         boolean isClear = false;
-        if (piece.getRank() == cellAddress.rank && isHorizontalMoveAllowed) {
-            isClear = isHorizontalPathFree(cellAddress.file);
-        } else if (piece.getFile() == cellAddress.file) {
-            isClear = (isBackwardMoveRestricted && isPieceGoingBackward(cellAddress)) ? false 
-                    : isVerticalPathFree(cellAddress.rank);
+        if (piece.getRank() == targetCell.rank && isHorizontalMoveAllowed) {
+            isClear = isHorizontalPathFree(targetCell.file);
+        } else if (piece.getFile() == targetCell.file) {
+            isClear = (isBackwardMoveRestricted && isPieceGoingBackward()) ? false
+                    : isVerticalPathFree(targetCell.rank);
         }
         return isClear;
     }
@@ -125,8 +131,8 @@ public class Straight implements IMove {
         Iterator<CellInfo.File> pathIterator = filesInPath.iterator();
         while (pathIterator.hasNext()) {
             CellInfo.File fileInPath = pathIterator.next();
-            if (fileInPath == piece.getFile()) {
-                continue; //skip because this is where is current piece resides
+            if (fileInPath == piece.getFile() || fileInPath == targetCell.file) {
+                continue; //skip the ends, because it is either the piece's current position or the destination
             }
             Cell cellInPath = Launcher.board.getCell(piece.getRank(), fileInPath);
             if (cellInPath.isOccupied()) {
@@ -142,8 +148,8 @@ public class Straight implements IMove {
         Iterator<CellInfo.Rank> pathIterator = ranksInPath.iterator();
         while (pathIterator.hasNext()) {
             CellInfo.Rank rankInPath = pathIterator.next();
-            if (rankInPath == piece.getRank()) {
-                continue; //skip because this is where is current piece resides
+            if (rankInPath == piece.getRank() || rankInPath == targetCell.rank) {
+                continue; //skip the ends, because it is either the piece's current position or the destination
             }
             Cell cellInPath = Launcher.board.getCell(rankInPath, piece.getFile());
             if (cellInPath.isOccupied()) {
@@ -154,7 +160,7 @@ public class Straight implements IMove {
         return isPathClear;
     }
 
-    private boolean isPieceGoingBackward(Address targetCell) {
+    private boolean isPieceGoingBackward() {
         if (piece.isWhitePiece()) {
             return targetCell.rank.ordinal() > piece.getRank().ordinal();
         } else {
@@ -164,5 +170,13 @@ public class Straight implements IMove {
 
     public void setMaxSteps(int maxSteps) {
         this.maxSteps = maxSteps;
+    }
+
+    private void setTargetCell(Address targetCell) {
+        this.targetCell = targetCell;
+    }
+
+    public void setIsAttackingAllowed(boolean isAttackingAllowed) {
+        this.isAttackingAllowed = isAttackingAllowed;
     }
 }

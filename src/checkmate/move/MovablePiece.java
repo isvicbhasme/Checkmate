@@ -20,12 +20,12 @@ import javafx.util.Duration;
  *
  * @author Isaac
  */
-public abstract class PieceMoves implements IMovable {
+public abstract class MovablePiece implements IMovable {
 
     protected ArrayList<IMove> moveTypes;
     protected Piece piece;
 
-    public PieceMoves() {
+    public MovablePiece() {
         this.moveTypes = new ArrayList<>();
     }
 
@@ -117,12 +117,15 @@ public abstract class PieceMoves implements IMovable {
      *
      * @param rank Rank of the target cell
      * @param file File of the target cell
+     * @return True if piece is moved, False otherwise
      */
     @Override
-    public void moveIfPermitted(CellInfo.Rank rank, CellInfo.File file) {
-        if (isMovePermitted(rank, file)) {
+    public boolean moveIfPermitted(CellInfo.Rank rank, CellInfo.File file) {
+        boolean isMoveAllowed = false;
+        if (isMoveAllowed = isMovePermitted(rank, file)) {
             moveTo(rank, file);
         }
+        return isMoveAllowed;
     }
 
 }

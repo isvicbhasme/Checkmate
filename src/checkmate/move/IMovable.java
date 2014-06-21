@@ -14,6 +14,6 @@ import checkmate.util.CellInfo;
  */
 public interface IMovable {
     public boolean isMovePermitted(CellInfo.Rank rank, CellInfo.File file);
-    public void moveIfPermitted(CellInfo.Rank rank, CellInfo.File file);
+    public boolean moveIfPermitted(CellInfo.Rank rank, CellInfo.File file);
     public void moveTo(CellInfo.Rank rank, CellInfo.File file);
 }

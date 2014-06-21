@@ -6,6 +6,7 @@
 package checkmate;
 
 import checkmate.design.Piece;
+import checkmate.util.PieceInfo;
 
 /**
  *
@@ -16,6 +17,7 @@ public class GamePlay {
     private boolean isPieceSelected;
     private Piece movingPiece;
     private static GamePlay instance = null;
+    private PieceInfo.Color playTurn = PieceInfo.Color.WHITE;
 
     private GamePlay() {
     }
@@ -39,6 +41,22 @@ public class GamePlay {
         this.movingPiece = movingPiece;
         this.isPieceSelected = true;
         movingPiece.getCell().enableHighlight();
+    }
+    
+    public void togglePlayTurn() {
+        playTurn = (playTurn == PieceInfo.Color.WHITE)? PieceInfo.Color.BLACK : PieceInfo.Color.WHITE;
+    }
+    
+    public boolean isWhitesTurnToPlay() {
+        return playTurn == PieceInfo.Color.WHITE;
+    }
+    
+    public boolean isBlacksTurnToPlay() {
+        return playTurn == PieceInfo.Color.BLACK;
+    }
+    
+    public PieceInfo.Color getPlayTurn() {
+        return playTurn;
     }
 
     public void resetPieceMovement() {

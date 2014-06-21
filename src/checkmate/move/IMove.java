@@ -12,7 +12,7 @@ import checkmate.util.Address;
  *
  * @author Isaac
  */
-public interface IMove {
+public interface IMove{
 
     public boolean isMoveAllowed(Address targetCell);
     

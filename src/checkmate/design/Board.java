@@ -20,7 +20,8 @@ import javafx.scene.layout.GridPane;
  */
 public class Board extends GridPane {
 
-    HashMap<PieceInfo.Type, Piece> boardPieces = new HashMap();
+    private HashMap<PieceInfo.Type, Piece> boardPieces = new HashMap();
+    private HashMap<PieceInfo.Type, Piece> defeatedPieces = new HashMap();
 
     public Board() {
         create();
@@ -81,5 +82,9 @@ public class Board extends GridPane {
         } catch (IOException ex) {
             Logger.getLogger(Board.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    public void removeFromBoard(Piece piece) {
+        defeatedPieces.put(piece.getPieceType(), boardPieces.remove(piece.getPieceType()));
     }
 }

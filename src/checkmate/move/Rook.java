@@ -3,24 +3,26 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package checkmate.move;
 
 import checkmate.design.Piece;
 
 /**
  *
- * @author basme
+ * @author Isaac
  */
-public class QueenMoves extends PieceMoves{
-        
+public class Rook extends MovablePiece {
+    
     private final static boolean HORIZONTAL_MOVE_ALLOWED = true;
     private final static boolean BACKWARD_MOVE_ALLOWED = true;
 
-    public QueenMoves(Piece piece) {
-        this.piece = piece;
+    /**
+     *
+     * @param piece Rook on which moves are done
+     */
+    public Rook(Piece piece) {
         this.moveTypes.add(new Straight(piece, Integer.MAX_VALUE, HORIZONTAL_MOVE_ALLOWED, BACKWARD_MOVE_ALLOWED));
-        this.moveTypes.add(new Cross(piece, Integer.MAX_VALUE));
+        this.piece = piece;
     }
-    
+
 }

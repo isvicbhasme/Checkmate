@@ -6,23 +6,21 @@
 
 package checkmate.move;
 
-import checkmate.Launcher;
 import checkmate.design.Piece;
-import checkmate.design.Rook;
 import checkmate.util.CellInfo;
 
 /**
  *
  * @author bhasme
  */
-public class KingMoves extends PieceMoves{
+public class King extends MovablePiece{
     
     private final static int MAX_MOVES = 1;
     private final static boolean HORIZONTAL_MOVE_ALLOWED = true;
     private final static boolean BACKWARD_MOVE_ALLOWED = true;
     private final Castling castling;
 
-    public KingMoves(Piece piece) {
+    public King(Piece piece) {
         this.piece = piece;
         this.castling = new Castling(piece);
         this.moveTypes.add(new Straight(piece, MAX_MOVES, HORIZONTAL_MOVE_ALLOWED, BACKWARD_MOVE_ALLOWED));

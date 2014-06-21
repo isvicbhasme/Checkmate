@@ -26,6 +26,8 @@ public class Cross implements IMove {
      */
     protected int maxSteps;
 
+    private boolean isOnlyAttackAllowed;
+
     /**
      * Performs validations related to cross movements
      *
@@ -35,6 +37,7 @@ public class Cross implements IMove {
     public Cross(Piece piece, int maxSteps) {
         this.piece = piece;
         this.maxSteps = maxSteps;
+        this.isOnlyAttackAllowed = false;
     }
 
     /**
@@ -45,11 +48,15 @@ public class Cross implements IMove {
      */
     @Override
     public boolean isMoveAllowed(Address targetCell) {
-        boolean isPathClear = false;
+        boolean canMove = false;
         if (isDiagonal(targetCell) && isNumOfStepsValid(targetCell.file)) {
-            isPathClear = isMoveObstructed(targetCell);
+            if (isOnlyAttackAllowed && !Launcher.board.getCell(targetCell).isOccupied()) {
+                canMove = false;
+            } else {
+                canMove = isMoveObstructed(targetCell);
+            }
         }
-        return isPathClear;
+        return canMove;
     }
 
     private boolean isDiagonal(Address target) {
@@ -61,9 +68,8 @@ public class Cross implements IMove {
     private boolean isMoveObstructed(Address target) throws IllegalStateException {
         boolean isClear = true;
         Address current = piece.getAddress();
-        while((current = getNextCellInPath(current, target)) != null) {
-            if(Launcher.board.getCell(current).isOccupied())
-            {
+        while ((current = getNextCellInPath(current, target)) != null && !current.equals(target)) {
+            if (Launcher.board.getCell(current).isOccupied()) {
                 isClear = false;
                 break;
             }
@@ -72,9 +78,6 @@ public class Cross implements IMove {
     }
 
     private Address getNextCellInPath(Address currentCell, Address lastCell) {
-        if (currentCell.equals(lastCell)) {
-            return null;
-        }
         CellInfo.Rank rank = currentCell.rank;
         CellInfo.File file = currentCell.file;
         CellInfo.Rank lastRank = lastCell.rank;
@@ -95,5 +98,9 @@ public class Cross implements IMove {
 
     private boolean isNumOfStepsValid(CellInfo.File targetFile) {
         return Math.abs(piece.getFile().ordinal() - targetFile.ordinal()) <= maxSteps;
+    }
+
+    public void setIsOnlyAttackAllowed(boolean isOnlyAttackAllowed) {
+        this.isOnlyAttackAllowed = isOnlyAttackAllowed;
     }
 }
