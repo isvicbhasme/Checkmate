@@ -18,14 +18,14 @@ public class Pawn extends MovablePiece{
     private int maxMoves = 2;
     private final static boolean HORIZONTAL_MOVE_ALLOWED = false;
     private final static boolean BACKWARD_MOVE_ALLOWED = false;
-    private final Straight straightMove;
-    private final Cross crossMove;
+    private final StraightMove straightMove;
+    private final CrossMove crossMove;
 
     public Pawn(Piece piece) {
         this.piece = piece;
-        straightMove = new Straight(piece, maxMoves, HORIZONTAL_MOVE_ALLOWED, BACKWARD_MOVE_ALLOWED);
+        straightMove = new StraightMove(piece, maxMoves, HORIZONTAL_MOVE_ALLOWED, BACKWARD_MOVE_ALLOWED);
         straightMove.setIsAttackingAllowed(false);
-        crossMove = new Cross(piece, 1);
+        crossMove = new CrossMove(piece, 1);
         crossMove.setIsOnlyAttackAllowed(true);
         this.moveTypes.add(straightMove);
         this.moveTypes.add(crossMove);

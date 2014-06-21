@@ -21,7 +21,7 @@ public class Rook extends MovablePiece {
      * @param piece Rook on which moves are done
      */
     public Rook(Piece piece) {
-        this.moveTypes.add(new Straight(piece, Integer.MAX_VALUE, HORIZONTAL_MOVE_ALLOWED, BACKWARD_MOVE_ALLOWED));
+        this.moveTypes.add(new StraightMove(piece, Integer.MAX_VALUE, HORIZONTAL_MOVE_ALLOWED, BACKWARD_MOVE_ALLOWED));
         this.piece = piece;
     }
 

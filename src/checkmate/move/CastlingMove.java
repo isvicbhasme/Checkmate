@@ -17,7 +17,7 @@ import java.util.ArrayList;
  *
  * @author bhasme
  */
-public class Castling implements IMove {
+public class CastlingMove implements IMove {
 
     /**
      * Piece instance that is allowed to move straight
@@ -33,7 +33,7 @@ public class Castling implements IMove {
      *
      * @param piece Piece to be validated
      */
-    public Castling(Piece piece) {
+    public CastlingMove(Piece piece) {
         this.king = (King) piece;
     }
 

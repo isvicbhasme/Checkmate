@@ -18,13 +18,13 @@ public class King extends MovablePiece{
     private final static int MAX_MOVES = 1;
     private final static boolean HORIZONTAL_MOVE_ALLOWED = true;
     private final static boolean BACKWARD_MOVE_ALLOWED = true;
-    private final Castling castling;
+    private final CastlingMove castling;
 
     public King(Piece piece) {
         this.piece = piece;
-        this.castling = new Castling(piece);
-        this.moveTypes.add(new Straight(piece, MAX_MOVES, HORIZONTAL_MOVE_ALLOWED, BACKWARD_MOVE_ALLOWED));
-        this.moveTypes.add(new Cross(piece, MAX_MOVES));
+        this.castling = new CastlingMove(piece);
+        this.moveTypes.add(new StraightMove(piece, MAX_MOVES, HORIZONTAL_MOVE_ALLOWED, BACKWARD_MOVE_ALLOWED));
+        this.moveTypes.add(new CrossMove(piece, MAX_MOVES));
         this.moveTypes.add(castling);
     }
 

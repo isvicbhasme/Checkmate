@@ -14,7 +14,7 @@ import checkmate.util.CellInfo;
  *
  * @author Isaac
  */
-public class Cross implements IMove {
+public class CrossMove implements IMove {
 
     /**
      * Piece instance that is allowed to move straight
@@ -34,7 +34,7 @@ public class Cross implements IMove {
      * @param piece Piece to be validated
      * @param maxSteps Maximum steps that is allowed in one move
      */
-    public Cross(Piece piece, int maxSteps) {
+    public CrossMove(Piece piece, int maxSteps) {
         this.piece = piece;
         this.maxSteps = maxSteps;
         this.isOnlyAttackAllowed = false;

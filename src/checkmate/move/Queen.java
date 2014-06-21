@@ -19,8 +19,8 @@ public class Queen extends MovablePiece{
 
     public Queen(Piece piece) {
         this.piece = piece;
-        this.moveTypes.add(new Straight(piece, Integer.MAX_VALUE, HORIZONTAL_MOVE_ALLOWED, BACKWARD_MOVE_ALLOWED));
-        this.moveTypes.add(new Cross(piece, Integer.MAX_VALUE));
+        this.moveTypes.add(new StraightMove(piece, Integer.MAX_VALUE, HORIZONTAL_MOVE_ALLOWED, BACKWARD_MOVE_ALLOWED));
+        this.moveTypes.add(new CrossMove(piece, Integer.MAX_VALUE));
     }
     
 }

@@ -16,7 +16,7 @@ public class Knight extends MovablePiece{
 
     public Knight(Piece piece) {
         this.piece = piece;
-        this.moveTypes.add(new Hop(piece));
+        this.moveTypes.add(new HopMove(piece));
     }
     
 }

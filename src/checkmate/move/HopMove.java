@@ -14,7 +14,7 @@ import checkmate.util.CellInfo;
  *
  * @author bhasme
  */
-public class Hop implements IMove{
+public class HopMove implements IMove{
 
     /**
      * Piece instance that is allowed to move straight
@@ -36,7 +36,7 @@ public class Hop implements IMove{
         }
     }
     
-    public Hop(Piece piece) {
+    public HopMove(Piece piece) {
         this.piece = piece;
     }
     

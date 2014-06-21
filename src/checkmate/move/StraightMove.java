@@ -18,7 +18,7 @@ import java.util.Set;
  *
  * @author Isaac
  */
-public class Straight implements IMove {
+public class StraightMove implements IMove {
 
     /**
      * Piece instance that is allowed to move straight
@@ -50,7 +50,7 @@ public class Straight implements IMove {
      * @param isHorizontalMoveAllowed Shows if piece can move along the x-axis
      * (horizontal)
      */
-    public Straight(Piece piece, int maxSteps, boolean isHorizontalMoveAllowed, boolean isBackwardMoveAllowed) {
+    public StraightMove(Piece piece, int maxSteps, boolean isHorizontalMoveAllowed, boolean isBackwardMoveAllowed) {
         this.piece = piece;
         this.maxSteps = maxSteps;
         this.isHorizontalMoveAllowed = isHorizontalMoveAllowed;
