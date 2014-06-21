@@ -42,8 +42,8 @@ public class Hop implements IMove{
     
     @Override
     public boolean isMoveAllowed(Address targetCell) {
-        CellInfo.Rank srcRank = piece.getRankPosition();
-        CellInfo.File srcFile = piece.getFilePosition();
+        CellInfo.Rank srcRank = piece.getRank();
+        CellInfo.File srcFile = piece.getFile();
         if(srcRank == targetCell.rank || srcFile == targetCell.file)
             return false;
         
@@ -68,22 +68,22 @@ public class Hop implements IMove{
     }
     
     private boolean isCellAbovePiece(Address cell) {
-        return (cell.rank.ordinal() < piece.getRankPosition().ordinal());
+        return (cell.rank.ordinal() < piece.getRank().ordinal());
     }
     
     private boolean isCellLeftOfPiece(Address cell) {
-        return (cell.file.ordinal() < piece.getFilePosition().ordinal());
+        return (cell.file.ordinal() < piece.getFile().ordinal());
     }
     
     private Address[] getExpectedCells(Quadrant magnitude) {
         Address expectedCells[] = new Address[2];
         int index = 0;
-        int rank = piece.getRankPosition().ordinal() + (2 * magnitude.first);
-        int file = piece.getFilePosition().ordinal() + (1 * magnitude.second);
+        int rank = piece.getRank().ordinal() + (2 * magnitude.first);
+        int file = piece.getFile().ordinal() + (1 * magnitude.second);
         if(isRankFileValid(rank, file))
             expectedCells[index++] = new Address(CellInfo.Rank.values[rank], CellInfo.File.values[file]);
-        rank = piece.getRankPosition().ordinal() + (1 * magnitude.first);
-        file = piece.getFilePosition().ordinal() + (2 * magnitude.second);
+        rank = piece.getRank().ordinal() + (1 * magnitude.first);
+        file = piece.getFile().ordinal() + (2 * magnitude.second);
         if(isRankFileValid(rank, file))
             expectedCells[index++] = new Address(CellInfo.Rank.values[rank], CellInfo.File.values[file]);
         return expectedCells;

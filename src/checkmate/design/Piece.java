@@ -39,7 +39,7 @@ public abstract class Piece extends Text {
         this.color = (pieceType.getUnicodeChar() < PieceInfo.Type.BLACK_KING.getUnicodeChar())? PieceInfo.Color.WHITE : PieceInfo.Color.BLACK;
     }
 
-    public CellInfo.File getFilePosition() {
+    public CellInfo.File getFile() {
         return currentFile;
     }
 
@@ -51,12 +51,13 @@ public abstract class Piece extends Text {
         return font;
     }
 
-    public CellInfo.Rank getRankPosition() {
+    public CellInfo.Rank getRank() {
         return currentRank;
     }
 
     public void setPosition(CellInfo.Rank newRank, CellInfo.File newFile) {
         Cell cell = Launcher.board.getCell(newRank, newFile);
+        setX(0);setY(0);
         cell.addPieceToCellGroup(this);
         currentFile = newFile;
         currentRank = newRank;

@@ -59,6 +59,10 @@ public class Rook extends Piece {
         setPosition(defaultRank, defaultFile);
         isFirstMove = true;
     }
+    
+    public boolean isFirstMove() {
+        return isFirstMove;
+    }
 
     /**
      * Initialize the event handlers for mouse and keyboard.

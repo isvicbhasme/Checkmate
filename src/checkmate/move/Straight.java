@@ -74,9 +74,9 @@ public class Straight implements IMove {
 
     private boolean isPathFree(Address cellAddress) throws IllegalStateException {
         boolean isClear = false;
-        if (piece.getRankPosition() == cellAddress.rank && isHorizontalMoveAllowed) {
+        if (piece.getRank() == cellAddress.rank && isHorizontalMoveAllowed) {
             isClear = isHorizontalPathFree(cellAddress.file);
-        } else if (piece.getFilePosition() == cellAddress.file) {
+        } else if (piece.getFile() == cellAddress.file) {
             isClear = (isBackwardMoveRestricted && isPieceGoingBackward(cellAddress)) ? false 
                     : isVerticalPathFree(cellAddress.rank);
         }
@@ -85,11 +85,11 @@ public class Straight implements IMove {
 
     private boolean isVerticalPathFree(CellInfo.Rank toRank) throws IllegalStateException {
         boolean isPathClear = false;
-        if (piece.getRankPosition().compareTo(toRank) < 0) {
-            Set<CellInfo.Rank> ranksInPath = EnumSet.range(piece.getRankPosition(), toRank);
+        if (piece.getRank().compareTo(toRank) < 0) {
+            Set<CellInfo.Rank> ranksInPath = EnumSet.range(piece.getRank(), toRank);
             isPathClear = isRankPathClear(ranksInPath);
-        } else if (piece.getRankPosition().compareTo(toRank) > 0) {
-            Set<CellInfo.Rank> ranksInPath = EnumSet.range(toRank, piece.getRankPosition());
+        } else if (piece.getRank().compareTo(toRank) > 0) {
+            Set<CellInfo.Rank> ranksInPath = EnumSet.range(toRank, piece.getRank());
             isPathClear = isRankPathClear(ranksInPath);
         } else {
             throw new IllegalStateException("Source and destination of move is the same");
@@ -99,11 +99,11 @@ public class Straight implements IMove {
 
     private boolean isHorizontalPathFree(CellInfo.File toFile) throws IllegalStateException {
         boolean isPathClear = false;
-        if (piece.getFilePosition().compareTo(toFile) < 0) {
-            Set<CellInfo.File> filesInPath = EnumSet.range(piece.getFilePosition(), toFile);
+        if (piece.getFile().compareTo(toFile) < 0) {
+            Set<CellInfo.File> filesInPath = EnumSet.range(piece.getFile(), toFile);
             isPathClear = isFilePathClear(filesInPath);
-        } else if (piece.getFilePosition().compareTo(toFile) > 0) {
-            Set<CellInfo.File> filesInPath = EnumSet.range(toFile, piece.getFilePosition());
+        } else if (piece.getFile().compareTo(toFile) > 0) {
+            Set<CellInfo.File> filesInPath = EnumSet.range(toFile, piece.getFile());
             isPathClear = isFilePathClear(filesInPath);
         } else {
             throw new IllegalStateException("Source and destination of move is the same");
@@ -113,10 +113,10 @@ public class Straight implements IMove {
 
     private boolean isNumOfStepsValid(Address cellAddress) {
         if (isHorizontalMoveAllowed) {
-            return (Math.abs(cellAddress.file.ordinal() - piece.getFilePosition().ordinal()) <= maxSteps
-                    && Math.abs(cellAddress.rank.ordinal() - piece.getRankPosition().ordinal()) <= maxSteps);
+            return (Math.abs(cellAddress.file.ordinal() - piece.getFile().ordinal()) <= maxSteps
+                    && Math.abs(cellAddress.rank.ordinal() - piece.getRank().ordinal()) <= maxSteps);
         } else {
-            return Math.abs(cellAddress.rank.ordinal() - piece.getRankPosition().ordinal()) <= maxSteps;
+            return Math.abs(cellAddress.rank.ordinal() - piece.getRank().ordinal()) <= maxSteps;
         }
     }
 
@@ -125,10 +125,10 @@ public class Straight implements IMove {
         Iterator<CellInfo.File> pathIterator = filesInPath.iterator();
         while (pathIterator.hasNext()) {
             CellInfo.File fileInPath = pathIterator.next();
-            if (fileInPath == piece.getFilePosition()) {
+            if (fileInPath == piece.getFile()) {
                 continue; //skip because this is where is current piece resides
             }
-            Cell cellInPath = Launcher.board.getCell(piece.getRankPosition(), fileInPath);
+            Cell cellInPath = Launcher.board.getCell(piece.getRank(), fileInPath);
             if (cellInPath.isOccupied()) {
                 isPathClear = false;
                 break;
@@ -142,10 +142,10 @@ public class Straight implements IMove {
         Iterator<CellInfo.Rank> pathIterator = ranksInPath.iterator();
         while (pathIterator.hasNext()) {
             CellInfo.Rank rankInPath = pathIterator.next();
-            if (rankInPath == piece.getRankPosition()) {
+            if (rankInPath == piece.getRank()) {
                 continue; //skip because this is where is current piece resides
             }
-            Cell cellInPath = Launcher.board.getCell(rankInPath, piece.getFilePosition());
+            Cell cellInPath = Launcher.board.getCell(rankInPath, piece.getFile());
             if (cellInPath.isOccupied()) {
                 isPathClear = false;
                 break;
@@ -156,9 +156,9 @@ public class Straight implements IMove {
 
     private boolean isPieceGoingBackward(Address targetCell) {
         if (piece.isWhitePiece()) {
-            return targetCell.rank.ordinal() > piece.getRankPosition().ordinal();
+            return targetCell.rank.ordinal() > piece.getRank().ordinal();
         } else {
-            return targetCell.rank.ordinal() < piece.getRankPosition().ordinal();
+            return targetCell.rank.ordinal() < piece.getRank().ordinal();
         }
     }
 

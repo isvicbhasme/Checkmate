@@ -8,6 +8,7 @@ package checkmate.move;
 import checkmate.Launcher;
 import checkmate.design.King;
 import checkmate.design.Piece;
+import checkmate.design.Rook;
 import checkmate.util.Address;
 import checkmate.util.CellInfo;
 import java.util.ArrayList;
@@ -23,8 +24,9 @@ public class Castling implements IMove {
      */
     private final King king;
     private Address cellSkippedByKing;
-    private Address rookCell;
     private Address targetCell;
+    private Rook rook;
+    private boolean isRightMove;
 
     /**
      * Performs validations related to Castling movements
@@ -39,9 +41,10 @@ public class Castling implements IMove {
     public boolean isMoveAllowed(Address targetCell) {
         this.targetCell = targetCell;
         if (isTargetAddressValid()) {
-            setRookPosition();
+            setIsRightMove(targetCell.file);
+            setRook(targetCell.file);
             setCellSkippedByKing();
-            if (!king.isInCheck() && isPathUnoccupied() && isPathSafe()) {
+            if (isInitialMove() && !king.isInCheck() && isPathUnoccupied() && isPathSafe()) {
                 return true;
             }
         }
@@ -55,7 +58,7 @@ public class Castling implements IMove {
      * @return true if the targetCell is valid for castling, false otherwise
      */
     protected boolean isTargetAddressValid() {
-        boolean isRankValid = targetCell.rank == king.getRankPosition();
+        boolean isRankValid = targetCell.rank == king.getRank();
         boolean isFileValid = (targetCell.file == CellInfo.File.B || targetCell.file == CellInfo.File.F);
         return isRankValid && isFileValid;
     }
@@ -67,23 +70,16 @@ public class Castling implements IMove {
     protected void setCellSkippedByKing() {
         cellSkippedByKing = new Address();
         cellSkippedByKing.rank = targetCell.rank;
-        cellSkippedByKing.file = (rookCell.file.ordinal() > king.getFilePosition().ordinal())
-                ? CellInfo.File.values[king.getFilePosition().ordinal() + 1]
-                : CellInfo.File.values[king.getFilePosition().ordinal() - 1];
-    }
-
-    protected void setRookPosition() {
-        rookCell = new Address();
-        rookCell.rank = king.getRankPosition();
-        rookCell.file = (targetCell.file.ordinal() > king.getFilePosition().ordinal())
-                ? CellInfo.File.H : CellInfo.File.A;
+        cellSkippedByKing.file = getIsRightMove()
+                ? CellInfo.File.values[king.getFile().ordinal() + 1]
+                : CellInfo.File.values[king.getFile().ordinal() - 1];
     }
 
     protected boolean isPathSafe() {
         return isStraightPathSafe(cellSkippedByKing.rank, cellSkippedByKing.file)
-                && isStraightPathSafe(king.getRankPosition(), king.getFilePosition())
+                && isStraightPathSafe(king.getRank(), king.getFile())
                 && isCrossPathSafe(cellSkippedByKing.rank, cellSkippedByKing.file)
-                && isCrossPathSafe(king.getRankPosition(), king.getFilePosition());
+                && isCrossPathSafe(king.getRank(), king.getFile());
     }
 
     protected boolean isStraightPathSafe(CellInfo.Rank kingRank, CellInfo.File kingFile) {
@@ -112,7 +108,7 @@ public class Castling implements IMove {
         ArrayList<Address> positions = new ArrayList<>();
         Address newPosition;
         boolean isSafe = true;
-        int rankChange = (king.getRankPosition() == CellInfo.Rank.ONE) ? 1 : -1;
+        int rankChange = (king.getRank() == CellInfo.Rank.ONE) ? 1 : -1;
         int fileChange = -1;
         Outer:
         for (int i = 0; i < 2; i++) {
@@ -143,13 +139,13 @@ public class Castling implements IMove {
         return isSafe;
     }
 
-    protected Address getNextCrossCell(CellInfo.Rank rank, CellInfo.File file, int rankChange, int fileChange) {
-        if (rank == CellInfo.Rank.EIGHT || file == CellInfo.File.H) {
+    protected Address getNextCrossCell(CellInfo.Rank currentRank, CellInfo.File currentFile, int rankChange, int fileChange) {
+        if (currentFile == CellInfo.File.A || currentFile == CellInfo.File.H) {
             return null;
         }
         Address address = new Address();
-        address.rank = CellInfo.Rank.values[rank.ordinal() + rankChange];
-        address.file = CellInfo.File.values[file.ordinal() + fileChange];
+        address.rank = CellInfo.Rank.values[currentRank.ordinal() + rankChange];
+        address.file = CellInfo.File.values[currentFile.ordinal() + fileChange];
         return address;
     }
 
@@ -163,15 +159,40 @@ public class Castling implements IMove {
         if (!isFree) {
             return isFree;
         }
-        int lastFile = rookCell.file.ordinal() - 1;
-        int change = (lastFile > king.getFilePosition().ordinal()) ? 1 : -1;
-        int nextFile = king.getFilePosition().ordinal() + change;
+        int lastFile = rook.getFile().ordinal() - 1;
+        int change = getIsRightMove()? 1 : -1;
+        int nextFile = king.getFile().ordinal() + change;
         for (; nextFile <= lastFile; nextFile += change) {
-            if (Launcher.board.getCell(king.getRankPosition(), CellInfo.File.values[nextFile]).isOccupied()) {
+            if (Launcher.board.getCell(king.getRank(), CellInfo.File.values[nextFile]).isOccupied()) {
                 isFree = false;
                 break;
             }
         }
         return isFree;
+    }
+    
+    protected void setRook(CellInfo.File kingsTarget) {
+        if(getIsRightMove())
+        {
+            this.rook = (Rook) Launcher.board.getCell(king.getRank(), CellInfo.File.H).getPiece();
+        } else {
+            this.rook = (Rook) Launcher.board.getCell(king.getRank(), CellInfo.File.A).getPiece();
+        }
+    }
+    
+    Rook getRook() {
+        return this.rook;
+    }
+
+    private boolean isInitialMove() {
+        return king.isFirstMove() && rook!= null && rook.isFirstMove();
+    }
+    
+    private void setIsRightMove(CellInfo.File kingsTargetFile) {
+        this.isRightMove = (kingsTargetFile.ordinal() > king.getFile().ordinal());
+    }
+    
+    protected boolean getIsRightMove() {
+        return this.isRightMove;
     }
 }

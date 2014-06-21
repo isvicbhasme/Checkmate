@@ -53,8 +53,8 @@ public class Cross implements IMove {
     }
 
     private boolean isDiagonal(Address target) {
-        int rankDifference = Math.abs(piece.getRankPosition().ordinal() - target.rank.ordinal());
-        int fileDifference = Math.abs(piece.getFilePosition().ordinal() - target.file.ordinal());
+        int rankDifference = Math.abs(piece.getRank().ordinal() - target.rank.ordinal());
+        int fileDifference = Math.abs(piece.getFile().ordinal() - target.file.ordinal());
         return rankDifference == fileDifference;
     }
 
@@ -94,6 +94,6 @@ public class Cross implements IMove {
     }
 
     private boolean isNumOfStepsValid(CellInfo.File targetFile) {
-        return Math.abs(piece.getFilePosition().ordinal() - targetFile.ordinal()) <= maxSteps;
+        return Math.abs(piece.getFile().ordinal() - targetFile.ordinal()) <= maxSteps;
     }
 }
