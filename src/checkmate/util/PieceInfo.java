@@ -26,19 +26,7 @@ public class PieceInfo {
             return this.realColor;
         }
     }
-
-    public enum FontInfo {
-
-        TYPE("TAHOMA"),
-        SIZE("40");
-
-        public final String data;
-
-        FontInfo(String data) {
-            this.data = data;
-        }
-    }
-
+    
     public enum Position {
 
         LEFT,

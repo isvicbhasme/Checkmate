@@ -44,9 +44,9 @@ public abstract class Piece extends Text {
     }
 
     private Font getPieceFont() {
-        Font font = Font.font(PieceInfo.FontInfo.TYPE.data, Double.parseDouble(PieceInfo.FontInfo.SIZE.data));
+        Font font = Font.font(Launcher.resource.getStringConfig("Piece.Font.type"), Launcher.resource.getIntConfig("Piece.Font.size"));
         if (font == null) {
-            font = Font.font(Double.parseDouble(PieceInfo.FontInfo.SIZE.data));
+            font = Font.font(Launcher.resource.getIntConfig("Piece.Font.size"));
         }
         return font;
     }
