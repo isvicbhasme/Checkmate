@@ -25,7 +25,9 @@ public class Launcher extends Application {
         resource = new ResourceManager();
         board = new Board();
         board.createPieces();
-        Scene scene = new Scene(board, 500, 500);
+        int sceneWidth = resource.getIntConfig("Cell.length") * 8;
+        int sceneHeight = resource.getIntConfig("Cell.length") * 10;
+        Scene scene = new Scene(board, sceneWidth, sceneHeight);
         primaryStage.setTitle("Chess");
         primaryStage.setScene(scene);
         primaryStage.show();
