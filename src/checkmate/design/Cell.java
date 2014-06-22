@@ -7,6 +7,7 @@ package checkmate.design;
 
 import checkmate.Launcher;
 import checkmate.event.CellEvtHandler;
+import checkmate.util.Address;
 import checkmate.util.CellInfo;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
@@ -55,6 +56,10 @@ public class Cell extends CellGroup {
 
     public CellInfo.File getFile() {
         return file;
+    }
+    
+    public Address getAddress() {
+        return new Address(rank, file);
     }
 
     public int getDistanceFromCenter() {

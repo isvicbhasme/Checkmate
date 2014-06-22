@@ -8,6 +8,7 @@ package checkmate.move;
 import checkmate.Launcher;
 import checkmate.design.Cell;
 import checkmate.design.Piece;
+import checkmate.event.IEventHandler;
 import checkmate.util.Address;
 import checkmate.util.CellInfo;
 import java.util.ArrayList;
@@ -48,6 +49,7 @@ public abstract class MovablePiece implements IMovable {
             isPieceMoveInitiated = true;
         }
         animateMovement(newCell, currentCell, isPieceMoveInitiated);
+        IEventHandler.gamePlay.writeMoveToBuffer(currentCell.getAddress(), newCell.getAddress(), piece.getPieceType());
     }
     
     /**

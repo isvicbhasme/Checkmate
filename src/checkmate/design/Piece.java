@@ -57,7 +57,6 @@ public abstract class Piece extends Text {
 
     public void setPosition(CellInfo.Rank newRank, CellInfo.File newFile) {
         Cell cell = Launcher.board.getCell(newRank, newFile);
-        setX(0);setY(0);
         cell.addPieceToCellGroup(this);
         currentFile = newFile;
         currentRank = newRank;

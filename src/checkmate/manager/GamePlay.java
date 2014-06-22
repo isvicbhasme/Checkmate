@@ -6,6 +6,7 @@
 package checkmate.manager;
 
 import checkmate.design.Piece;
+import checkmate.util.Address;
 import checkmate.util.PieceInfo;
 
 /**
@@ -16,14 +17,18 @@ public class GamePlay {
 
     private boolean isPieceSelected;
     private Piece movingPiece;
+    private MoveRecorder moveRecorder;
+    private RecordingBuffer recordingData;
     private static GamePlay instance = null;
     private PieceInfo.Color playTurn = PieceInfo.Color.WHITE;
 
     private GamePlay() {
+        this.moveRecorder = new MoveRecorder();
+        this.recordingData = new RecordingBuffer();
     }
 
     public static GamePlay getInstance() {
-        if(instance == null) {
+        if (instance == null) {
             instance = new GamePlay();
         }
         return instance;
@@ -32,7 +37,7 @@ public class GamePlay {
     public boolean isPieceSelected() {
         return isPieceSelected;
     }
-    
+
     public Piece getMovingPiece() {
         return movingPiece;
     }
@@ -42,19 +47,19 @@ public class GamePlay {
         this.isPieceSelected = true;
         movingPiece.getCell().enableHighlight();
     }
-    
+
     public void togglePlayTurn() {
-        playTurn = (playTurn == PieceInfo.Color.WHITE)? PieceInfo.Color.BLACK : PieceInfo.Color.WHITE;
+        playTurn = (playTurn == PieceInfo.Color.WHITE) ? PieceInfo.Color.BLACK : PieceInfo.Color.WHITE;
     }
-    
+
     public boolean isWhitesTurnToPlay() {
         return playTurn == PieceInfo.Color.WHITE;
     }
-    
+
     public boolean isBlacksTurnToPlay() {
         return playTurn == PieceInfo.Color.BLACK;
     }
-    
+
     public PieceInfo.Color getPlayTurn() {
         return playTurn;
     }
@@ -65,4 +70,18 @@ public class GamePlay {
         isPieceSelected = false;
     }
 
+    public void writeMoveToBuffer(Movement move) {
+        recordingData.addToBuffer(move);
+    }
+
+    public void writeMoveToBuffer(Address fromCell, Address toCell, PieceInfo.Type pieceType) {
+        recordingData.addToBuffer(fromCell, toCell, pieceType);
+    }
+
+    public void flushBuffer() {
+        if (recordingData.getBuffer().size() > 0) {
+            moveRecorder.addToDisc(recordingData.getBuffer());
+            recordingData.clearBuffer();
+        }
+    }
 }
