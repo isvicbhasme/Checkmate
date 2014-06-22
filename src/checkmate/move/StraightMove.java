@@ -18,28 +18,19 @@ import java.util.Set;
  *
  * @author Isaac
  */
-public class StraightMove implements IMove {
+public class StraightMove extends Moves implements IMove {
 
-    /**
-     * Piece instance that is allowed to move straight
-     */
-    private final Piece piece;
 
     /**
      * Maximum steps that this.piece is allowed to move
      */
-    protected int maxSteps;
+    private int maxSteps;
 
     /**
      * Indicates whether the piece can move horizontal
      */
     private final boolean isHorizontalMoveAllowed;
 
-    /**
-     * Indicates whether the piece can move vertical
-     */
-    private final boolean isBackwardMoveRestricted;
-    private Address targetCell;
     private boolean isAttackingAllowed;
 
     /**
@@ -51,10 +42,10 @@ public class StraightMove implements IMove {
      * (horizontal)
      */
     public StraightMove(Piece piece, int maxSteps, boolean isHorizontalMoveAllowed, boolean isBackwardMoveAllowed) {
-        this.piece = piece;
+        super(piece);
         this.maxSteps = maxSteps;
         this.isHorizontalMoveAllowed = isHorizontalMoveAllowed;
-        this.isBackwardMoveRestricted = !isBackwardMoveAllowed;
+        setIsBackwardMoveRestricted(!isBackwardMoveAllowed);
         this.isAttackingAllowed = true;
     }
 
@@ -83,7 +74,7 @@ public class StraightMove implements IMove {
         if (piece.getRank() == targetCell.rank && isHorizontalMoveAllowed) {
             isClear = isHorizontalPathFree(targetCell.file);
         } else if (piece.getFile() == targetCell.file) {
-            isClear = (isBackwardMoveRestricted && isPieceGoingBackward()) ? false
+            isClear = (isBackwardMoveRestricted() && isPieceGoingBackward(targetCell)) ? false
                     : isVerticalPathFree(targetCell.rank);
         }
         return isClear;
@@ -160,21 +151,11 @@ public class StraightMove implements IMove {
         return isPathClear;
     }
 
-    private boolean isPieceGoingBackward() {
-        if (piece.isWhitePiece()) {
-            return targetCell.rank.ordinal() > piece.getRank().ordinal();
-        } else {
-            return targetCell.rank.ordinal() < piece.getRank().ordinal();
-        }
-    }
 
     public void setMaxSteps(int maxSteps) {
         this.maxSteps = maxSteps;
     }
 
-    private void setTargetCell(Address targetCell) {
-        this.targetCell = targetCell;
-    }
 
     public void setIsAttackingAllowed(boolean isAttackingAllowed) {
         this.isAttackingAllowed = isAttackingAllowed;

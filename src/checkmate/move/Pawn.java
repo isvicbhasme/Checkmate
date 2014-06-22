@@ -27,6 +27,7 @@ public class Pawn extends MovablePiece{
         straightMove.setIsAttackingAllowed(false);
         crossMove = new CrossMove(piece, 1);
         crossMove.setIsOnlyAttackAllowed(true);
+        crossMove.setIsBackwardMoveRestricted(true);
         this.moveTypes.add(straightMove);
         this.moveTypes.add(crossMove);
     }

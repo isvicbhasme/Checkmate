@@ -14,17 +14,12 @@ import checkmate.util.CellInfo;
  *
  * @author Isaac
  */
-public class CrossMove implements IMove {
-
-    /**
-     * Piece instance that is allowed to move straight
-     */
-    private final Piece piece;
+public class CrossMove extends Moves implements IMove {
 
     /**
      * Maximum steps that this.piece is allowed to move
      */
-    protected int maxSteps;
+    private int maxSteps;
 
     private boolean isOnlyAttackAllowed;
 
@@ -35,7 +30,7 @@ public class CrossMove implements IMove {
      * @param maxSteps Maximum steps that is allowed in one move
      */
     public CrossMove(Piece piece, int maxSteps) {
-        this.piece = piece;
+        super(piece);
         this.maxSteps = maxSteps;
         this.isOnlyAttackAllowed = false;
     }
@@ -53,7 +48,7 @@ public class CrossMove implements IMove {
             if (isOnlyAttackAllowed && !Launcher.board.getCell(targetCell).isOccupied()) {
                 canMove = false;
             } else {
-                canMove = isMoveObstructed(targetCell);
+                canMove = (isBackwardMoveRestricted() && isPieceGoingBackward(targetCell)) ? false : isMoveObstructed(targetCell);
             }
         }
         return canMove;

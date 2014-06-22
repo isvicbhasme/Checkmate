@@ -17,12 +17,8 @@ import java.util.ArrayList;
  *
  * @author bhasme
  */
-public class CastlingMove implements IMove {
+public class CastlingMove extends Moves implements IMove{
 
-    /**
-     * Piece instance that is allowed to move straight
-     */
-    private final King king;
     private Address cellSkippedByKing;
     private Address targetCell;
     private Rook rook;
@@ -34,7 +30,7 @@ public class CastlingMove implements IMove {
      * @param piece Piece to be validated
      */
     public CastlingMove(Piece piece) {
-        this.king = (King) piece;
+        super(piece);
     }
 
     @Override
@@ -44,7 +40,7 @@ public class CastlingMove implements IMove {
             setIsRightMove(targetCell.file);
             setRook(targetCell.file);
             setCellSkippedByKing();
-            if (isInitialMove() && !king.isInCheck() && isPathUnoccupied() && isPathSafe()) {
+            if (isInitialMove() && !((King)piece).isInCheck() && isPathUnoccupied() && isPathSafe()) {
                 return true;
             }
         }
@@ -58,7 +54,7 @@ public class CastlingMove implements IMove {
      * @return true if the targetCell is valid for castling, false otherwise
      */
     protected boolean isTargetAddressValid() {
-        boolean isRankValid = targetCell.rank == king.getRank();
+        boolean isRankValid = targetCell.rank == piece.getRank();
         boolean isFileValid = (targetCell.file == CellInfo.File.B || targetCell.file == CellInfo.File.F);
         return isRankValid && isFileValid;
     }
@@ -71,15 +67,15 @@ public class CastlingMove implements IMove {
         cellSkippedByKing = new Address();
         cellSkippedByKing.rank = targetCell.rank;
         cellSkippedByKing.file = getIsRightMove()
-                ? CellInfo.File.values[king.getFile().ordinal() + 1]
-                : CellInfo.File.values[king.getFile().ordinal() - 1];
+                ? CellInfo.File.values[piece.getFile().ordinal() + 1]
+                : CellInfo.File.values[piece.getFile().ordinal() - 1];
     }
 
     protected boolean isPathSafe() {
         return isStraightPathSafe(cellSkippedByKing.rank, cellSkippedByKing.file)
-                && isStraightPathSafe(king.getRank(), king.getFile())
+                && isStraightPathSafe(piece.getRank(), piece.getFile())
                 && isCrossPathSafe(cellSkippedByKing.rank, cellSkippedByKing.file)
-                && isCrossPathSafe(king.getRank(), king.getFile());
+                && isCrossPathSafe(piece.getRank(), piece.getFile());
     }
 
     protected boolean isStraightPathSafe(CellInfo.Rank kingRank, CellInfo.File kingFile) {
@@ -108,7 +104,7 @@ public class CastlingMove implements IMove {
         ArrayList<Address> positions = new ArrayList<>();
         Address newPosition;
         boolean isSafe = true;
-        int rankChange = (king.getRank() == CellInfo.Rank.ONE) ? 1 : -1;
+        int rankChange = (piece.getRank() == CellInfo.Rank.ONE) ? 1 : -1;
         int fileChange = -1;
         Outer:
         for (int i = 0; i < 2; i++) {
@@ -149,9 +145,6 @@ public class CastlingMove implements IMove {
         return address;
     }
 
-    protected boolean isOpponent(CellInfo.Rank rank, CellInfo.File file) {
-        return king.isWhitePiece() != Launcher.board.getCell(rank, file).isOccupiedByWhite();
-    }
 
     private boolean isPathUnoccupied() {
         boolean isFree = !Launcher.board.getCell(cellSkippedByKing).isOccupied()
@@ -161,9 +154,9 @@ public class CastlingMove implements IMove {
         }
         int lastFile = rook.getFile().ordinal() - 1;
         int change = getIsRightMove()? 1 : -1;
-        int nextFile = king.getFile().ordinal() + change;
+        int nextFile = piece.getFile().ordinal() + change;
         for (; nextFile <= lastFile; nextFile += change) {
-            if (Launcher.board.getCell(king.getRank(), CellInfo.File.values[nextFile]).isOccupied()) {
+            if (Launcher.board.getCell(piece.getRank(), CellInfo.File.values[nextFile]).isOccupied()) {
                 isFree = false;
                 break;
             }
@@ -174,9 +167,9 @@ public class CastlingMove implements IMove {
     protected void setRook(CellInfo.File kingsTarget) {
         if(getIsRightMove())
         {
-            this.rook = (Rook) Launcher.board.getCell(king.getRank(), CellInfo.File.H).getPiece();
+            this.rook = (Rook) Launcher.board.getCell(piece.getRank(), CellInfo.File.H).getPiece();
         } else {
-            this.rook = (Rook) Launcher.board.getCell(king.getRank(), CellInfo.File.A).getPiece();
+            this.rook = (Rook) Launcher.board.getCell(piece.getRank(), CellInfo.File.A).getPiece();
         }
     }
     
@@ -185,11 +178,11 @@ public class CastlingMove implements IMove {
     }
 
     private boolean isInitialMove() {
-        return king.isFirstMove() && rook!= null && rook.isFirstMove();
+        return ((King)piece).isFirstMove() && rook!= null && rook.isFirstMove();
     }
     
     private void setIsRightMove(CellInfo.File kingsTargetFile) {
-        this.isRightMove = (kingsTargetFile.ordinal() > king.getFile().ordinal());
+        this.isRightMove = (kingsTargetFile.ordinal() > piece.getFile().ordinal());
     }
     
     protected boolean getIsRightMove() {

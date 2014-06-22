@@ -14,12 +14,7 @@ import checkmate.util.CellInfo;
  *
  * @author bhasme
  */
-public class HopMove implements IMove{
-
-    /**
-     * Piece instance that is allowed to move straight
-     */
-    private final Piece piece;
+public class HopMove  extends Moves implements IMove{
     
     private enum Quadrant {
         TOP_LEFT(-1, -1),
@@ -37,7 +32,7 @@ public class HopMove implements IMove{
     }
     
     public HopMove(Piece piece) {
-        this.piece = piece;
+        super(piece);
     }
     
     @Override
@@ -66,15 +61,7 @@ public class HopMove implements IMove{
             return false;
         return isTargetCellExpected(expectedCells, targetCell);
     }
-    
-    private boolean isCellAbovePiece(Address cell) {
-        return (cell.rank.ordinal() < piece.getRank().ordinal());
-    }
-    
-    private boolean isCellLeftOfPiece(Address cell) {
-        return (cell.file.ordinal() < piece.getFile().ordinal());
-    }
-    
+       
     private Address[] getExpectedCells(Quadrant magnitude) {
         Address expectedCells[] = new Address[2];
         int index = 0;
