@@ -5,7 +5,7 @@
  */
 package checkmate.event;
 
-import checkmate.GamePlay;
+import checkmate.manager.GamePlay;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 
