@@ -50,6 +50,7 @@ public class CellInfo {
 
         ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT;
         public static final Rank values[] = values();
+        public static final int size = values().length;
     }
 
     /**
@@ -59,6 +60,7 @@ public class CellInfo {
 
         A, B, C, D, E, F, G, H;
         public static final File values[] = values();
+        public static final int size = values().length;
     }
 
 }

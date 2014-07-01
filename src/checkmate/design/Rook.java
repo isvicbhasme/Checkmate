@@ -22,7 +22,6 @@ public class Rook extends Piece {
      */
     public Rook(PieceInfo.Type pieceType, PieceInfo.Position position) throws IOException {
         super(pieceType, position);
-        setInitialPosition(pieceType, position);
         initEventHandlers();
         moveHandler = (IMovable) new checkmate.move.Rook(this);
     }

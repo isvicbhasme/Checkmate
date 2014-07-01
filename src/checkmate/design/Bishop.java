@@ -14,7 +14,6 @@ public final class Bishop extends Piece {
 
     public Bishop(PieceInfo.Type pieceType, PieceInfo.Position position) {
         super(pieceType, position);
-        setInitialPosition(pieceType, position);
         initEventHandlers();
         moveHandler = (IMovable) new checkmate.move.Bishop(this);
     }

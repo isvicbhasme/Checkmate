@@ -7,6 +7,7 @@ package checkmate.design;
 
 import checkmate.Launcher;
 import checkmate.event.PieceEvtHandler;
+import checkmate.manager.RepetitionManager;
 import checkmate.move.IMovable;
 import checkmate.util.Address;
 import checkmate.util.CellInfo;
@@ -37,6 +38,8 @@ public abstract class Piece extends Text {
         initCommonEvents();
         this.pieceType = pieceType;
         this.color = (pieceType.getUnicodeChar() < PieceInfo.Type.BLACK_KING.getUnicodeChar())? PieceInfo.Color.WHITE : PieceInfo.Color.BLACK;
+        setInitialPosition(pieceType, position);
+        RepetitionManager.getInstance().hash(pieceType, currentRank, currentFile);
     }
 
     public CellInfo.File getFile() {

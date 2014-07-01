@@ -135,6 +135,8 @@ public class PieceInfo {
             this.unicodeChar = unicodeChar;
         }
         
+        public static final int size = Type.values().length;
+        
         public char getUnicodeChar() {
             return unicodeChar;
         }

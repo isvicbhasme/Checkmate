@@ -12,7 +12,6 @@ public class Knight extends Piece {
 
     public Knight(PieceInfo.Type pieceType, PieceInfo.Position position) {
         super(pieceType, position);
-        setInitialPosition(pieceType, position);
         initEventHandlers();
         moveHandler = new checkmate.move.Knight(this);
     }

@@ -7,6 +7,7 @@ package checkmate.event;
 
 import checkmate.design.Cell;
 import checkmate.design.Piece;
+import checkmate.manager.RepetitionManager;
 import checkmate.util.CellInfo;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -44,10 +45,15 @@ public class CellEvtHandler implements IEventHandler {
     private void processPieceMovement(Cell clickedCell, Piece selectedPiece) {
         CellInfo.Rank newRank = clickedCell.getRank();
         CellInfo.File newFile = clickedCell.getFile();
+        CellInfo.Rank oldRank = selectedPiece.getRank();
+        CellInfo.File oldFile = selectedPiece.getFile();
         gamePlay.resetPieceMovement();
         if (selectedPiece.getMoveHandler().moveIfPermitted(newRank, newFile)) {
             gamePlay.togglePlayTurn();
             gamePlay.flushBuffer();
+            RepetitionManager.getInstance().hash(selectedPiece.getPieceType(), oldRank, oldFile);
+            RepetitionManager.getInstance().hash(selectedPiece.getPieceType(), newRank, newFile);
+            RepetitionManager.getInstance().storeHash();
         }
     }
 

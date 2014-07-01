@@ -6,6 +6,7 @@
 package checkmate;
 
 import checkmate.design.Board;
+import checkmate.manager.RepetitionManager;
 import checkmate.util.ResourceManager;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -19,10 +20,12 @@ public class Launcher extends Application {
 
     public static ResourceManager resource;
     public static Board board;
+    public static RepetitionManager repetitionManager;
 
     @Override
     public void start(Stage primaryStage) {
         resource = new ResourceManager();
+        repetitionManager = RepetitionManager.getInstance();
         board = new Board();
         board.createPieces();
         int sceneWidth = resource.getIntConfig("Cell.length") * 8;

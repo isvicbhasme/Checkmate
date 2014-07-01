@@ -15,7 +15,6 @@ public class King extends Piece {
 
     public King(PieceInfo.Type pieceType, PieceInfo.Position position) {
         super(pieceType, position);
-        setInitialPosition(pieceType, position);
         initEventHandlers();
         this.moveHandler = new checkmate.move.King(this);
         this.isInCheck = false;

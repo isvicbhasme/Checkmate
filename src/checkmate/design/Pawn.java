@@ -12,7 +12,6 @@ public class Pawn extends Piece {
 
     public Pawn(PieceInfo.Type pieceType, PieceInfo.Position position) {
         super(pieceType, position);
-        setInitialPosition(pieceType, position);
         initEventHandlers();
         moveHandler = new checkmate.move.Pawn(this);
     }

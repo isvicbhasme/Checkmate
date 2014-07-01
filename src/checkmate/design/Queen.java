@@ -14,7 +14,6 @@ public class Queen extends Piece{
     
     public Queen(PieceInfo.Type pieceType, PieceInfo.Position position) {
         super(pieceType, position);
-        setInitialPosition(pieceType, position);
         initEventHandlers();
         moveHandler = (IMovable) new checkmate.move.Queen(this);
     }
