@@ -5,7 +5,10 @@
  */
 package checkmate.design;
 
+<<<<<<< HEAD
+=======
 import checkmate.manager.RepetitionManager;
+>>>>>>> 94309beef8672e8756e0eceb0522d145b8093418
 import checkmate.util.Address;
 import checkmate.util.CellInfo;
 import checkmate.util.PieceInfo;
@@ -83,7 +86,10 @@ public class Board extends GridPane {
         } catch (IOException ex) {
             Logger.getLogger(Board.class.getName()).log(Level.SEVERE, null, ex);
         }
+<<<<<<< HEAD
+=======
         RepetitionManager.getInstance().storeHash();
+>>>>>>> 94309beef8672e8756e0eceb0522d145b8093418
     }
     
     public void removeFromBoard(Piece piece) {

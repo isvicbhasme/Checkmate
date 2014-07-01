@@ -135,8 +135,11 @@ public class PieceInfo {
             this.unicodeChar = unicodeChar;
         }
         
+<<<<<<< HEAD
+=======
         public static final int size = Type.values().length;
         
+>>>>>>> 94309beef8672e8756e0eceb0522d145b8093418
         public char getUnicodeChar() {
             return unicodeChar;
         }
