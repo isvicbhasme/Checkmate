@@ -9,6 +9,7 @@ import checkmate.Launcher;
 import checkmate.design.Cell;
 import checkmate.design.Piece;
 import static checkmate.event.IEventHandler.gamePlay;
+import checkmate.manager.RepetitionManager;
 import checkmate.util.CellInfo;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -49,12 +50,19 @@ public class PieceEvtHandler implements IEventHandler {
     private void processPieceAttack(Cell targetCell, Piece attackingPiece, Piece attackedPiece) {
         CellInfo.Rank newRank = targetCell.getRank();
         CellInfo.File newFile = targetCell.getFile();
+        CellInfo.Rank oldRank = attackingPiece.getRank();
+        CellInfo.File oldFile = attackingPiece.getFile();
         gamePlay.resetPieceMovement();
         if (attackingPiece.getMoveHandler().isMovePermitted(newRank, newFile)) {
             targetCell.removePieceFromCellGroup(attackedPiece);
             Launcher.board.removeFromBoard(attackedPiece);
             attackingPiece.getMoveHandler().moveTo(newRank, newFile);
             gamePlay.togglePlayTurn();
+            RepetitionManager.getInstance().hashTogglePlay();
+            RepetitionManager.getInstance().hash(attackedPiece.getPieceType(), newRank, newFile);
+            RepetitionManager.getInstance().hash(attackingPiece.getPieceType(), oldRank, oldFile);
+            RepetitionManager.getInstance().hash(attackingPiece.getPieceType(), newRank, newFile);
+            RepetitionManager.getInstance().storeHash();
         }
     }
 
