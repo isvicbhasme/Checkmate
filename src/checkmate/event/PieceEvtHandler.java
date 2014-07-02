@@ -43,7 +43,6 @@ public class PieceEvtHandler implements IEventHandler {
     protected void processSecondClick(Piece piece) {
         if (areOponents(piece, gamePlay.getMovingPiece())) {
             processPieceAttack(piece.getCell(), gamePlay.getMovingPiece(), piece);
-            gamePlay.flushBuffer();
         }
     }
 
@@ -52,7 +51,6 @@ public class PieceEvtHandler implements IEventHandler {
         CellInfo.File newFile = targetCell.getFile();
         gamePlay.resetPieceMovement();
         if (attackingPiece.getMoveHandler().isMovePermitted(newRank, newFile)) {
-            gamePlay.writeMoveToBuffer(attackedPiece.getAddress(), null, attackedPiece.getPieceType());
             targetCell.removePieceFromCellGroup(attackedPiece);
             Launcher.board.removeFromBoard(attackedPiece);
             attackingPiece.getMoveHandler().moveTo(newRank, newFile);
