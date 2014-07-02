@@ -22,7 +22,7 @@ public class RepetitionManager {
     private final int numOfPieces = PieceInfo.Type.size;
     private final long[][] bitStringTable = new long[numOfPieces][numOfCells];
     private long whitesTurnToPlay;
-    private long[] castlingRights = new long[4];
+    private long[] castlingRights = new long[PieceInfo.CastlingSide.size];
     private long[] enPassantAvailables = new long[CellInfo.File.size];
     private Queue hashHistory = new ArrayBlockingQueue(100);
     private long zobristKey = 0;
@@ -93,7 +93,7 @@ public class RepetitionManager {
         zobristKey ^= enPassantAvailables[enPassantFile.ordinal()];
     }
     
-    public void hashCastlingRights(int position) {
-        zobristKey ^= castlingRights[position];
+    public void hashCastlingRights(PieceInfo.CastlingSide position) {
+        zobristKey ^= castlingRights[position.ordinal()];
     }
 }

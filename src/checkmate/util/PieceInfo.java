@@ -141,4 +141,13 @@ public class PieceInfo {
             return unicodeChar;
         }
     }
+    
+    public enum CastlingSide {
+        WHITE_KING_SIDE,
+        WHITE_QUEEN_SIDE,
+        BLACK_KING_SIDE,
+        BLACK_QUEEN_SIDE;
+        
+        public static final int size = CastlingSide.values().length;
+    }
 }
