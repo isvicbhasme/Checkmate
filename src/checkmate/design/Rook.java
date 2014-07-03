@@ -1,6 +1,6 @@
-
 package checkmate.design;
 
+import checkmate.Launcher;
 import checkmate.move.IMovable;
 import checkmate.util.CellInfo;
 import checkmate.util.PieceInfo;
@@ -11,7 +11,7 @@ import java.io.IOException;
  * @author bhasme
  */
 public class Rook extends Piece {
-    
+
     protected boolean isFirstMove;
 
     /**
@@ -28,6 +28,7 @@ public class Rook extends Piece {
 
     /**
      * Sets the initial position of a chess piece during startup
+     *
      * @param pieceType Enum specifying the type of chess piece
      * @param position Enum specifying the position of chess piece
      */
@@ -53,7 +54,7 @@ public class Rook extends Piece {
         setPosition(defaultRank, defaultFile);
         isFirstMove = true;
     }
-    
+
     public boolean isFirstMove() {
         return isFirstMove;
     }
@@ -70,6 +71,19 @@ public class Rook extends Piece {
     @Override
     public void setPosition(CellInfo.Rank newRank, CellInfo.File newFile) {
         super.setPosition(newRank, newFile);
-        isFirstMove = false;
+        if (isFirstMove()) {
+            disableCastlingHash();
+            isFirstMove = false;
+        }
+    }
+
+    private void disableCastlingHash() {
+        Piece king = isWhitePiece()? Launcher.board.getPiece(PieceInfo.Type.WHITE_KING) : Launcher.board.getPiece(PieceInfo.Type.BLACK_KING);
+        if(isKingSide()) {
+            ((King)king).disableKingSideCastleHash();
+        }
+        else {
+            ((King)king).disableQueenSideCastleHash();
+        }
     }
 }

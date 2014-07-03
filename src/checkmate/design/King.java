@@ -78,7 +78,7 @@ public class King extends Piece {
         }
     }
     
-    public void disableKingSideCastle() {
+    public void disableKingSideCastleHash() {
         if(isWhitePiece())
             RepetitionManager.getInstance().hashCastlingRights(PieceInfo.CastlingSide.WHITE_KING_SIDE);
         else
@@ -86,7 +86,7 @@ public class King extends Piece {
         isKingSideCastlePossible = false;
     }
     
-    public void disableQueenSideCastle() {
+    public void disableQueenSideCastleHash() {
         if(isWhitePiece())
             RepetitionManager.getInstance().hashCastlingRights(PieceInfo.CastlingSide.WHITE_QUEEN_SIDE);
         else

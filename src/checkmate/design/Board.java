@@ -86,6 +86,13 @@ public class Board extends GridPane {
         RepetitionManager.getInstance().storeHash();
     }
     
+    public Piece getPiece(PieceInfo.Type pieceType) {
+        if(pieceType == PieceInfo.Type.BLACK_PAWN || pieceType == PieceInfo.Type.WHITE_PAWN)  {
+            throw new UnsupportedOperationException("Cannot get piece of Type: "+pieceType);
+        }
+        return boardPieces.get(pieceType);
+    }
+    
     public void removeFromBoard(Piece piece) {
         defeatedPieces.put(piece.getPieceType(), boardPieces.remove(piece.getPieceType()));
     }

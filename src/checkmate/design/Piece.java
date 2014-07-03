@@ -29,6 +29,7 @@ public abstract class Piece extends Text {
     protected static final PieceEvtHandler eventHandler = new PieceEvtHandler();
     protected IMovable moveHandler;
     protected final PieceInfo.Color color;
+    private final boolean isKingSide;
 
     public Piece(PieceInfo.Type pieceType, PieceInfo.Position position) {
         super(pieceType.getUnicodeChar() + "");
@@ -37,9 +38,14 @@ public abstract class Piece extends Text {
         setFont(getPieceFont());
         initCommonEvents();
         this.pieceType = pieceType;
-        this.color = (pieceType.getUnicodeChar() < PieceInfo.Type.BLACK_KING.getUnicodeChar())? PieceInfo.Color.WHITE : PieceInfo.Color.BLACK;
+        this.color = (pieceType.getUnicodeChar() < PieceInfo.Type.BLACK_KING.getUnicodeChar()) ? PieceInfo.Color.WHITE : PieceInfo.Color.BLACK;
         setInitialPosition(pieceType, position);
         RepetitionManager.getInstance().hash(pieceType, currentRank, currentFile);
+        isKingSide = currentFile.ordinal() > CellInfo.File.D.ordinal();
+    }
+    
+    public boolean isKingSide() {
+        return isKingSide;
     }
 
     public CellInfo.File getFile() {
@@ -80,6 +86,7 @@ public abstract class Piece extends Text {
 
     /**
      * Retrieves the cell in which the current piece is located.
+     *
      * @return Cell of the current piece
      */
     public Cell getCell() {
@@ -89,11 +96,11 @@ public abstract class Piece extends Text {
     public IMovable getMoveHandler() {
         return moveHandler;
     }
-    
+
     public Address getAddress() {
         return new Address(currentRank, currentFile);
     }
-    
+
     public boolean isWhitePiece() {
         return color == PieceInfo.Color.WHITE;
     }
