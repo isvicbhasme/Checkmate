@@ -55,7 +55,7 @@ public class CastlingMove extends Moves implements IMove{
      */
     protected boolean isTargetAddressValid() {
         boolean isRankValid = targetCell.rank == piece.getRank();
-        boolean isFileValid = (targetCell.file == CellInfo.File.B || targetCell.file == CellInfo.File.F);
+        boolean isFileValid = (targetCell.file == CellInfo.File.C || targetCell.file == CellInfo.File.G);
         return isRankValid && isFileValid;
     }
 
