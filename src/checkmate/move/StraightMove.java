@@ -71,11 +71,11 @@ public class StraightMove extends Moves implements IMove {
 
     private boolean isPathFree() throws IllegalStateException {
         boolean isClear = false;
-        if (piece.getRank() == targetCell.rank && isHorizontalMoveAllowed) {
-            isClear = isHorizontalPathFree(targetCell.file);
-        } else if (piece.getFile() == targetCell.file) {
-            isClear = (isBackwardMoveRestricted() && isPieceGoingBackward(targetCell)) ? false
-                    : isVerticalPathFree(targetCell.rank);
+        if (piece.getRank() == targetAddress.rank && isHorizontalMoveAllowed) {
+            isClear = isHorizontalPathFree(targetAddress.file);
+        } else if (piece.getFile() == targetAddress.file) {
+            isClear = (isBackwardMoveRestricted() && isPieceGoingBackward(targetAddress)) ? false
+                    : isVerticalPathFree(targetAddress.rank);
         }
         return isClear;
     }
@@ -122,7 +122,7 @@ public class StraightMove extends Moves implements IMove {
         Iterator<CellInfo.File> pathIterator = filesInPath.iterator();
         while (pathIterator.hasNext()) {
             CellInfo.File fileInPath = pathIterator.next();
-            if (fileInPath == piece.getFile() || fileInPath == targetCell.file) {
+            if (fileInPath == piece.getFile() || fileInPath == targetAddress.file) {
                 continue; //skip the ends, because it is either the piece's current position or the destination
             }
             Cell cellInPath = Launcher.board.getCell(piece.getRank(), fileInPath);
@@ -139,7 +139,7 @@ public class StraightMove extends Moves implements IMove {
         Iterator<CellInfo.Rank> pathIterator = ranksInPath.iterator();
         while (pathIterator.hasNext()) {
             CellInfo.Rank rankInPath = pathIterator.next();
-            if (rankInPath == piece.getRank() || rankInPath == targetCell.rank) {
+            if (rankInPath == piece.getRank() || rankInPath == targetAddress.rank) {
                 continue; //skip the ends, because it is either the piece's current position or the destination
             }
             Cell cellInPath = Launcher.board.getCell(rankInPath, piece.getFile());

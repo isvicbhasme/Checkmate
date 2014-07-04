@@ -9,11 +9,14 @@ import checkmate.util.PieceInfo;
  * @author Isaac
  */
 public class Pawn extends Piece {
+    
+    private boolean isEnpassantPossible;
 
     public Pawn(PieceInfo.Type pieceType, PieceInfo.Position position) {
         super(pieceType, position);
         initEventHandlers();
         moveHandler = new checkmate.move.Pawn(this);
+        this.isEnpassantPossible = false;
     }
 
     @Override
@@ -97,4 +100,14 @@ public class Pawn extends Piece {
         setOnMouseClicked(eventHandler::handleMouseEvent);
         setOnKeyPressed(eventHandler::handleKeyEvent);
     }
+
+    public boolean isEnpassantPossible() {
+        return isEnpassantPossible;
+    }
+
+    public void setIsEnpassantPossible(boolean isEnpassantPossible) {
+        this.isEnpassantPossible = isEnpassantPossible;
+    }
+    
+    
 }

@@ -24,7 +24,7 @@ public abstract class Moves {
      * Piece instance that is allowed to move straight
      */
     protected final Piece piece;
-    protected Address targetCell;
+    protected Address targetAddress;
 
     public Moves(Piece piece) {
         this.piece = piece;
@@ -41,7 +41,7 @@ public abstract class Moves {
     }
 
     protected void setTargetCell(Address targetCell) {
-        this.targetCell = targetCell;
+        this.targetAddress = targetCell;
     }
 
     protected boolean isCellAbovePiece(Address cell) {
