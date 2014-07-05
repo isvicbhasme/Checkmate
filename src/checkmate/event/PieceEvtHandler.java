@@ -59,9 +59,9 @@ public class PieceEvtHandler implements IEventHandler {
             attackingPiece.getMoveHandler().moveTo(newRank, newFile);
             gamePlay.togglePlayTurn();
             RepetitionManager.getInstance().hashTogglePlay();
-            RepetitionManager.getInstance().hash(attackedPiece.getPieceType(), newRank, newFile);
-            RepetitionManager.getInstance().hash(attackingPiece.getPieceType(), oldRank, oldFile);
-            RepetitionManager.getInstance().hash(attackingPiece.getPieceType(), newRank, newFile);
+            RepetitionManager.getInstance().hash(attackedPiece.getPieceTypeForHashing(), newRank, newFile);
+            RepetitionManager.getInstance().hash(attackingPiece.getPieceTypeForHashing(), oldRank, oldFile);
+            RepetitionManager.getInstance().hash(attackingPiece.getPieceTypeForHashing(), newRank, newFile);
             RepetitionManager.getInstance().storeHash();
         }
     }

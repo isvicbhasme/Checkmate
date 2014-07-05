@@ -51,8 +51,8 @@ public class CellEvtHandler implements IEventHandler {
         if (selectedPiece.getMoveHandler().moveIfPermitted(newRank, newFile)) {
             gamePlay.togglePlayTurn();
             RepetitionManager.getInstance().hashTogglePlay();
-            RepetitionManager.getInstance().hash(selectedPiece.getPieceType(), oldRank, oldFile);
-            RepetitionManager.getInstance().hash(selectedPiece.getPieceType(), newRank, newFile);
+            RepetitionManager.getInstance().hash(selectedPiece.getPieceTypeForHashing(), oldRank, oldFile);
+            RepetitionManager.getInstance().hash(selectedPiece.getPieceTypeForHashing(), newRank, newFile);
             RepetitionManager.getInstance().storeHash();
         }
     }

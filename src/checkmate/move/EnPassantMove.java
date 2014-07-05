@@ -40,7 +40,7 @@ public class EnPassantMove extends CrossMove {
     }
 
     private void removeAttackedPawn(Pawn attackedPiece) {
-        RepetitionManager.getInstance().hash(attackedPiece.getPieceType(), attackedPiece.getAddress());
+        RepetitionManager.getInstance().hash(attackedPiece.getPieceTypeForHashing(), attackedPiece.getAddress());
         attackedPiece.getCell().removePieceFromCellGroup((Piece) attackedPiece);
         Launcher.board.removeFromBoard(attackedPiece);
     }

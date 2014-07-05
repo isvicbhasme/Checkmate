@@ -94,6 +94,6 @@ public class Board extends GridPane {
     }
     
     public void removeFromBoard(Piece piece) {
-        defeatedPieces.put(piece.getPieceType(), boardPieces.remove(piece.getPieceType()));
+        defeatedPieces.put(piece.getPieceTypeForHashing(), boardPieces.remove(piece.getPieceTypeForHashing()));
     }
 }

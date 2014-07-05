@@ -11,6 +11,7 @@ import checkmate.util.ResourceManager;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
 /**
  *
@@ -21,6 +22,7 @@ public class Launcher extends Application {
     public static ResourceManager resource;
     public static Board board;
     public static RepetitionManager repetitionManager;
+    public static Window primaryWindow;
 
     @Override
     public void start(Stage primaryStage) {
@@ -34,6 +36,7 @@ public class Launcher extends Application {
         primaryStage.setTitle("Chess");
         primaryStage.setScene(scene);
         primaryStage.show();
+        primaryWindow = primaryStage;
     }
 
     /**

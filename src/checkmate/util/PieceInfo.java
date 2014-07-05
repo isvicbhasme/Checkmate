@@ -116,29 +116,35 @@ public class PieceInfo {
     }
 
     public enum Type {
-        WHITE_ROOK('\u2656'),
-        WHITE_KNIGHT('\u2658'),
-        WHITE_BISHOP('\u2657'),
-        WHITE_KING('\u2654'),
-        WHITE_QUEEN('\u2655'),
-        WHITE_PAWN('\u2659'),
-        BLACK_ROOK('\u265C'),
-        BLACK_KNIGHT('\u265E'),
-        BLACK_BISHOP('\u265D'),
-        BLACK_KING('\u265A'),
-        BLACK_QUEEN('\u265B'),
-        BLACK_PAWN('\u265F');
+        WHITE_ROOK('\u2656', Name.ROOK),
+        WHITE_KNIGHT('\u2658', Name.KNIGHT),
+        WHITE_BISHOP('\u2657', Name.BISHOP),
+        WHITE_KING('\u2654', Name.KING),
+        WHITE_QUEEN('\u2655', Name.QUEEN),
+        WHITE_PAWN('\u2659', Name.PAWN),
+        BLACK_ROOK('\u265C', Name.ROOK),
+        BLACK_KNIGHT('\u265E', Name.KNIGHT),
+        BLACK_BISHOP('\u265D', Name.BISHOP),
+        BLACK_KING('\u265A', Name.KING),
+        BLACK_QUEEN('\u265B', Name.QUEEN),
+        BLACK_PAWN('\u265F', Name.PAWN);
         
         private final char unicodeChar;
+        private final Name pieceName;
 
-        Type(char unicodeChar) {
+        Type(char unicodeChar, Name pieceName) {
             this.unicodeChar = unicodeChar;
+            this.pieceName = pieceName;
         }
         
         public static final int size = Type.values().length;
         
         public char getUnicodeChar() {
             return unicodeChar;
+        }
+        
+        public Name getPieceName() {
+            return pieceName;
         }
     }
     
@@ -149,5 +155,14 @@ public class PieceInfo {
         BLACK_QUEEN_SIDE;
         
         public static final int size = CastlingSide.values().length;
+    }
+    
+    public enum Name {
+        ROOK,
+        KNIGHT,
+        BISHOP,
+        QUEEN,
+        KING,
+        PAWN
     }
 }

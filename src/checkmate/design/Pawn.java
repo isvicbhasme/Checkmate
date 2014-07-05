@@ -1,6 +1,7 @@
 
 package checkmate.design;
 
+import checkmate.move.IMovable;
 import checkmate.util.CellInfo;
 import checkmate.util.PieceInfo;
 
@@ -11,12 +12,14 @@ import checkmate.util.PieceInfo;
 public class Pawn extends Piece {
     
     private boolean isEnpassantPossible;
+    private boolean isPromoted;
 
     public Pawn(PieceInfo.Type pieceType, PieceInfo.Position position) {
         super(pieceType, position);
         initEventHandlers();
         moveHandler = new checkmate.move.Pawn(this);
-        this.isEnpassantPossible = false;
+        isEnpassantPossible = false;
+        isPromoted = false;
     }
 
     @Override
@@ -109,5 +112,13 @@ public class Pawn extends Piece {
         this.isEnpassantPossible = isEnpassantPossible;
     }
     
+    public boolean isPromoted() {
+        return isPromoted;
+    }
     
+    public void promote(IMovable newMoveHandler) {
+        isPromoted = true;
+        moveHandler = newMoveHandler;
+        setText(unicodeChar+"");
+    }
 }
