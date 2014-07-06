@@ -5,9 +5,11 @@
  */
 package checkmate.manager;
 
+import checkmate.design.Piece;
 import checkmate.util.Address;
 import checkmate.util.CellInfo;
 import checkmate.util.PieceInfo;
+import java.util.Iterator;
 import java.util.Queue;
 import java.util.Random;
 import java.util.concurrent.ArrayBlockingQueue;
@@ -36,6 +38,26 @@ public class RepetitionManager {
     public static RepetitionManager getInstance() {
         return RepetitionManagerHolder.INSTANCE;
     }
+    
+    public void hashPieceMovement(Piece selectedPiece, Address sourceAddress, Address targetAddress) {
+        hash(selectedPiece.getPieceTypeForHashing(), sourceAddress);
+        hash(selectedPiece.getPieceTypeForHashing(), targetAddress);
+    }
+    
+    public void storePieceMovementHash(Piece selectedPiece, Address sourceAddress, Address targetAddress) {
+        hashTogglePlay();
+        hash(selectedPiece.getPieceTypeForHashing(), sourceAddress);
+        hash(selectedPiece.getPieceTypeForHashing(), targetAddress);
+        storeHash();
+    }
+
+    public void storePieceAttackHash(Piece attackedPiece, Address targetAddress, Piece attackingPiece, Address sourceAddress) {
+        hashTogglePlay();
+        hash(attackedPiece.getPieceTypeForHashing(), targetAddress);
+        hash(attackingPiece.getPieceTypeForHashing(), sourceAddress);
+        hash(attackingPiece.getPieceTypeForHashing(), targetAddress);
+        storeHash();
+    }
 
     private static class RepetitionManagerHolder {
 
@@ -52,31 +74,33 @@ public class RepetitionManager {
         }
         random.setSeed(seed++);
         whitesTurnToPlay = random.nextLong();
-        for (int i=0; i< castlingRights.length; i++) {
+        for (int i = 0; i < castlingRights.length; i++) {
             random.setSeed(seed++);
             castlingRights[i] = random.nextLong();
         }
-        for (int i=0; i< enPassantAvailables.length; i++) {
+        for (int i = 0; i < enPassantAvailables.length; i++) {
             random.setSeed(seed++);
             enPassantAvailables[i] = random.nextLong();
         }
     }
-    
+
     private void initZobristKey() {
         zobristKey ^= whitesTurnToPlay;
-        for (int i=0; i< castlingRights.length; i++) {
+        for (int i = 0; i < castlingRights.length; i++) {
             zobristKey ^= castlingRights[i];
         }
     }
-    
+
     public void recreatePawnBitString(PieceInfo.Type pieceType, CellInfo.Rank rank, CellInfo.File file) {
-        if(pieceType.getPieceName() == PieceInfo.Name.PAWN) {
+        if (pieceType.getPieceName() != PieceInfo.Name.PAWN) {
             throw new IllegalStateException("Only a Pawn should be promoted");
         }
         hash(pieceType, rank, file);
         Random random = new Random();
-        random.setSeed(seed++);
-        bitStringTable[pieceType.ordinal()][(rank.ordinal() * 8) + file.ordinal()] = random.nextLong();
+        for (int j = 0; j < numOfCells; j++) {
+            random.setSeed(seed++);
+            bitStringTable[pieceType.ordinal()][j] = random.nextLong();
+        }
         hash(pieceType, rank, file);
     }
 
@@ -86,6 +110,17 @@ public class RepetitionManager {
 
     public void storeHash() {
         hashHistory.add(zobristKey);
+        int foundCount = 0;
+        Iterator iterator = hashHistory.iterator();
+        while (iterator.hasNext()) {
+            if (zobristKey == (long) iterator.next()) {
+                foundCount++;
+            }
+        }
+        if (foundCount > 2) {
+            //TODO: Display dialog for optional draw of game
+            System.out.println("Move repeated thrice");
+        }
     }
 
     public void hash(PieceInfo.Type pieceType, CellInfo.Rank rank, CellInfo.File file) {
@@ -95,15 +130,15 @@ public class RepetitionManager {
     public void hash(PieceInfo.Type pieceType, Address address) {
         hash(pieceType, address.rank, address.file);
     }
-    
+
     public void hashTogglePlay() {
         zobristKey ^= whitesTurnToPlay;
     }
-    
+
     public void hashEnPassant(CellInfo.File enPassantFile) {
         zobristKey ^= enPassantAvailables[enPassantFile.ordinal()];
     }
-    
+
     public void hashCastlingRights(PieceInfo.CastlingSide position) {
         zobristKey ^= castlingRights[position.ordinal()];
     }

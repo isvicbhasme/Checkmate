@@ -132,7 +132,7 @@ public class Pawn extends MovablePiece{
                 public void handle(ActionEvent event) {
                     PieceInfo.Type pieceType = (PieceInfo.Type)selectedPieceText.getUserData();
                     IMovable moveHandler = getNewMoveHandler(pieceType);
-                    ((checkmate.design.Pawn)piece).promote(moveHandler);
+                    ((checkmate.design.Pawn)piece).promote(moveHandler, pieceType.getUnicodeChar());
                     RepetitionManager.getInstance().recreatePawnBitString(piece.getPieceTypeForHashing(), piece.getRank(), piece.getFile());
                     closeWindowOfButton((Button)event.getSource());
                 }

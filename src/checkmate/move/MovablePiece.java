@@ -51,6 +51,17 @@ public abstract class MovablePiece implements IMovable {
     }
     
     /**
+     * Moves the piece to the specified cell. Note that the validity of the
+     * movement is not checked by this method.
+     *
+     * @param targetAddress Target address to which the piece should be moved
+     */
+    @Override
+    public void moveTo(Address targetAddress) {
+        moveTo(targetAddress.rank, targetAddress.file);
+    }
+    
+    /**
      * Helper method to remove piece from current cell and set its position to new cell.
      * @param currentCell Current cell in which the piece is located
      * @param newCell New cell to which the piece should be moved
@@ -126,6 +137,29 @@ public abstract class MovablePiece implements IMovable {
             moveTo(rank, file);
         }
         return isMoveAllowed;
+    }
+    
+    /**
+     * Checks whether a move to the specified cell is valid. But the actual move
+     * is not performed.
+     *
+     * @param cellAddress Target cell address to which the movement should be checked
+     * @return True if move is permitted. False otherwise.
+     */
+    @Override
+    public boolean isMovePermitted(Address cellAddress) {
+        return isMovePermitted(cellAddress.rank, cellAddress.file);
+    }
+
+    /**
+     * Moves the piece to the specified cell, if it is permitted.
+     *
+     * @param cellAddress Target cell address to which the piece should be moved
+     * @return True if piece is moved, False otherwise
+     */
+    @Override
+    public boolean moveIfPermitted(Address cellAddress) {
+        return moveIfPermitted(cellAddress.rank, cellAddress.file);
     }
 
 }

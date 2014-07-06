@@ -8,6 +8,7 @@ package checkmate.event;
 import checkmate.design.Cell;
 import checkmate.design.Piece;
 import checkmate.manager.RepetitionManager;
+import checkmate.util.Address;
 import checkmate.util.CellInfo;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -43,19 +44,15 @@ public class CellEvtHandler implements IEventHandler {
     }
 
     private void processPieceMovement(Cell clickedCell, Piece selectedPiece) {
-        CellInfo.Rank newRank = clickedCell.getRank();
-        CellInfo.File newFile = clickedCell.getFile();
-        CellInfo.Rank oldRank = selectedPiece.getRank();
-        CellInfo.File oldFile = selectedPiece.getFile();
+        Address targetAddress = new Address(clickedCell.getRank(), clickedCell.getFile());
+        Address sourceAddress = new Address(selectedPiece.getRank(), selectedPiece.getFile());
         gamePlay.resetPieceMovement();
-        if (selectedPiece.getMoveHandler().moveIfPermitted(newRank, newFile)) {
+        if (selectedPiece.getMoveHandler().moveIfPermitted(targetAddress)) {
             gamePlay.togglePlayTurn();
-            RepetitionManager.getInstance().hashTogglePlay();
-            RepetitionManager.getInstance().hash(selectedPiece.getPieceTypeForHashing(), oldRank, oldFile);
-            RepetitionManager.getInstance().hash(selectedPiece.getPieceTypeForHashing(), newRank, newFile);
-            RepetitionManager.getInstance().storeHash();
+            RepetitionManager.getInstance().storePieceMovementHash(selectedPiece, sourceAddress, targetAddress);
         }
     }
+
 
     private boolean isTurnToPlay(Piece selectedPiece) {
         if (selectedPiece.isWhitePiece()) {

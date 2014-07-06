@@ -61,21 +61,8 @@ public class King extends Piece {
     }
 
     private void removeCastlingHashkeys() {
-        if (isWhitePiece()) {
-            if (isKingSideCastlePossible) {
-                RepetitionManager.getInstance().hashCastlingRights(PieceInfo.CastlingSide.WHITE_KING_SIDE);
-            }
-            if (isQueenSideCastlePossible) {
-                RepetitionManager.getInstance().hashCastlingRights(PieceInfo.CastlingSide.WHITE_QUEEN_SIDE);
-            }
-        } else {
-            if (isKingSideCastlePossible) {
-                RepetitionManager.getInstance().hashCastlingRights(PieceInfo.CastlingSide.BLACK_KING_SIDE);
-            }
-            if (isQueenSideCastlePossible) {
-                RepetitionManager.getInstance().hashCastlingRights(PieceInfo.CastlingSide.BLACK_QUEEN_SIDE);
-            }
-        }
+        disableKingSideCastleHash();
+        disableQueenSideCastleHash();
     }
     
     public void disableKingSideCastleHash() {

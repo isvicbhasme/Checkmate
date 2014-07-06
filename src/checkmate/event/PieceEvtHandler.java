@@ -10,7 +10,7 @@ import checkmate.design.Cell;
 import checkmate.design.Piece;
 import static checkmate.event.IEventHandler.gamePlay;
 import checkmate.manager.RepetitionManager;
-import checkmate.util.CellInfo;
+import checkmate.util.Address;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 
@@ -48,21 +48,15 @@ public class PieceEvtHandler implements IEventHandler {
     }
 
     private void processPieceAttack(Cell targetCell, Piece attackingPiece, Piece attackedPiece) {
-        CellInfo.Rank newRank = targetCell.getRank();
-        CellInfo.File newFile = targetCell.getFile();
-        CellInfo.Rank oldRank = attackingPiece.getRank();
-        CellInfo.File oldFile = attackingPiece.getFile();
+        Address targetAddress = new Address(targetCell.getRank(), targetCell.getFile());
+        Address sourceAddress = new Address(attackingPiece.getRank(), attackingPiece.getFile());
         gamePlay.resetPieceMovement();
-        if (attackingPiece.getMoveHandler().isMovePermitted(newRank, newFile)) {
+        if (attackingPiece.getMoveHandler().isMovePermitted(targetAddress)) {
             targetCell.removePieceFromCellGroup(attackedPiece);
             Launcher.board.removeFromBoard(attackedPiece);
-            attackingPiece.getMoveHandler().moveTo(newRank, newFile);
+            attackingPiece.getMoveHandler().moveTo(targetAddress);
             gamePlay.togglePlayTurn();
-            RepetitionManager.getInstance().hashTogglePlay();
-            RepetitionManager.getInstance().hash(attackedPiece.getPieceTypeForHashing(), newRank, newFile);
-            RepetitionManager.getInstance().hash(attackingPiece.getPieceTypeForHashing(), oldRank, oldFile);
-            RepetitionManager.getInstance().hash(attackingPiece.getPieceTypeForHashing(), newRank, newFile);
-            RepetitionManager.getInstance().storeHash();
+            RepetitionManager.getInstance().storePieceAttackHash(attackedPiece, targetAddress, attackingPiece, sourceAddress);
         }
     }
 

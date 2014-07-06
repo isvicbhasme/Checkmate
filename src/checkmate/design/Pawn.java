@@ -116,9 +116,9 @@ public class Pawn extends Piece {
         return isPromoted;
     }
     
-    public void promote(IMovable newMoveHandler) {
+    public void promote(IMovable newMoveHandler, char text) {
         isPromoted = true;
         moveHandler = newMoveHandler;
-        setText(unicodeChar+"");
+        setText(text+"");
     }
 }
