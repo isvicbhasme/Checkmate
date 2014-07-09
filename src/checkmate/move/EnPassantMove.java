@@ -9,7 +9,6 @@ import checkmate.Launcher;
 import checkmate.design.Cell;
 import checkmate.design.Piece;
 import checkmate.design.Pawn;
-import checkmate.manager.RepetitionManager;
 import checkmate.util.Address;
 
 /**
@@ -28,25 +27,18 @@ public class EnPassantMove extends CrossMove {
     public boolean isMoveAllowed(Address targetAddress) {
         boolean isAttackAllowed = false;
         Pawn attackedPawn = getAttackedPawn(targetAddress);
-        if (attackedPawn != null && attackedPawn.isEnpassantPossible()) {
-            setIsOnlyAttackAllowed(false); //TODO: Not a convincing method name
+        if (attackedPawn != null && attackedPawn.isEnpassantPossible() && attackedPawn.isWhitePiece() != piece.isWhitePiece()) {
             isAttackAllowed = super.isMoveAllowed(targetAddress);
-            if (isAttackAllowed) {
-                attackedPawn.setIsEnpassantPossible(false);
-                removeAttackedPawn(attackedPawn);
-            }
         }
         return isAttackAllowed;
     }
 
-    private void removeAttackedPawn(Pawn attackedPiece) {
-        RepetitionManager.getInstance().hash(attackedPiece.getPieceTypeForHashing(), attackedPiece.getAddress());
-        attackedPiece.getCell().removePieceFromCellGroup((Piece) attackedPiece);
-        Launcher.board.removeFromBoard(attackedPiece);
-    }
-
     private Pawn getAttackedPawn(Address targetAddress) {
-        Cell attackedPawnCell = Launcher.board.getCell(piece.getRank(), targetAddress.file);
-        return (Pawn) attackedPawnCell.getPiece();
+        try {
+            Cell attackedPawnCell = Launcher.board.getCell(piece.getRank(), targetAddress.file);
+            return (Pawn) attackedPawnCell.getPiece();
+        } catch (ClassCastException e) {
+            return null;
+        }
     }
 }

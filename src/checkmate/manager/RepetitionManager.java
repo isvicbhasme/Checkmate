@@ -91,7 +91,7 @@ public class RepetitionManager {
         }
     }
 
-    public void recreatePawnBitString(PieceInfo.Type pieceType, CellInfo.Rank rank, CellInfo.File file) {
+    public void doPawnPromoteHashing(PieceInfo.Type pieceType, CellInfo.Rank rank, CellInfo.File file) {
         if (pieceType.getPieceName() != PieceInfo.Name.PAWN) {
             throw new IllegalStateException("Only a Pawn should be promoted");
         }

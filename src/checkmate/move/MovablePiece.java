@@ -8,6 +8,7 @@ package checkmate.move;
 import checkmate.Launcher;
 import checkmate.design.Cell;
 import checkmate.design.Piece;
+import checkmate.manager.RepetitionManager;
 import checkmate.util.Address;
 import checkmate.util.CellInfo;
 import java.util.ArrayList;
@@ -38,6 +39,7 @@ public abstract class MovablePiece implements IMovable {
      */
     @Override
     public void moveTo(CellInfo.Rank rank, CellInfo.File file) {
+        preHashMovingPiece(rank, file);
         Cell currentCell = Launcher.board.getCell(piece.getRank(), piece.getFile());
         Cell newCell = Launcher.board.getCell(rank, file);
         boolean isPieceMoveInitiated = false;
@@ -161,5 +163,12 @@ public abstract class MovablePiece implements IMovable {
     public boolean moveIfPermitted(Address cellAddress) {
         return moveIfPermitted(cellAddress.rank, cellAddress.file);
     }
-
+    
+    private void preHashMovingPiece(CellInfo.Rank rank, CellInfo.File file) {
+        RepetitionManager.getInstance().hash(piece.getPieceTypeForHashing(), piece.getRank(), piece.getFile());
+        RepetitionManager.getInstance().hash(piece.getPieceTypeForHashing(), rank, file);
+        if(Launcher.board.getCell(rank, file).isOccupied()) {
+            RepetitionManager.getInstance().hash(Launcher.board.getCell(rank, file).getPiece().getPieceTypeForHashing(), rank, file);
+        }
+    }
 }

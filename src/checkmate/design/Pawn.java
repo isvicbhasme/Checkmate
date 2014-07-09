@@ -1,6 +1,7 @@
 
 package checkmate.design;
 
+import checkmate.manager.RepetitionManager;
 import checkmate.move.IMovable;
 import checkmate.util.CellInfo;
 import checkmate.util.PieceInfo;
@@ -109,6 +110,7 @@ public class Pawn extends Piece {
     }
 
     public void setIsEnpassantPossible(boolean isEnpassantPossible) {
+        RepetitionManager.getInstance().hashEnPassant(currentFile);
         this.isEnpassantPossible = isEnpassantPossible;
     }
     

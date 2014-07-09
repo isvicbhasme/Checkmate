@@ -49,14 +49,14 @@ public class PieceEvtHandler implements IEventHandler {
 
     private void processPieceAttack(Cell targetCell, Piece attackingPiece, Piece attackedPiece) {
         Address targetAddress = new Address(targetCell.getRank(), targetCell.getFile());
-        Address sourceAddress = new Address(attackingPiece.getRank(), attackingPiece.getFile());
         gamePlay.resetPieceMovement();
         if (attackingPiece.getMoveHandler().isMovePermitted(targetAddress)) {
+            attackingPiece.getMoveHandler().moveTo(targetAddress);
             targetCell.removePieceFromCellGroup(attackedPiece);
             Launcher.board.removeFromBoard(attackedPiece);
-            attackingPiece.getMoveHandler().moveTo(targetAddress);
             gamePlay.togglePlayTurn();
-            RepetitionManager.getInstance().storePieceAttackHash(attackedPiece, targetAddress, attackingPiece, sourceAddress);
+            RepetitionManager.getInstance().hashTogglePlay();
+            RepetitionManager.getInstance().storeHash();
         }
     }
 

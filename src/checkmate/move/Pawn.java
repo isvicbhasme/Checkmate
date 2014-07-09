@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package checkmate.move;
 
 import checkmate.Launcher;
+import checkmate.design.Cell;
 import checkmate.design.Piece;
 import checkmate.manager.RepetitionManager;
 import checkmate.util.CellInfo;
@@ -31,8 +31,8 @@ import javafx.stage.StageStyle;
  *
  * @author Isaac
  */
-public class Pawn extends MovablePiece{
-    
+public class Pawn extends MovablePiece {
+
     private int maxMoves = 2;
     private final static boolean HORIZONTAL_MOVE_ALLOWED = false;
     private final static boolean BACKWARD_MOVE_ALLOWED = false;
@@ -48,6 +48,7 @@ public class Pawn extends MovablePiece{
         crossMove.setIsOnlyAttackAllowed(true);
         crossMove.setIsBackwardMoveRestricted(true);
         enPassantMove = new EnPassantMove(piece);
+        enPassantMove.setIsOnlyAttackAllowed(false);
         this.moveTypes.add(straightMove);
         this.moveTypes.add(crossMove);
         this.moveTypes.add(enPassantMove);
@@ -55,37 +56,58 @@ public class Pawn extends MovablePiece{
 
     @Override
     public void moveTo(CellInfo.Rank rank, CellInfo.File file) {
-        if(Math.abs(piece.getRank().ordinal() - rank.ordinal()) == 2) {
-            ((checkmate.design.Pawn)piece).setIsEnpassantPossible(true);
-        } else if (((checkmate.design.Pawn)piece).isEnpassantPossible()) {
-            ((checkmate.design.Pawn)piece).setIsEnpassantPossible(false);
+        if (Math.abs(piece.getRank().ordinal() - rank.ordinal()) == 2) {
+            ((checkmate.design.Pawn) piece).setIsEnpassantPossible(true);
+        } else if (((checkmate.design.Pawn) piece).isEnpassantPossible()) {
+            ((checkmate.design.Pawn) piece).setIsEnpassantPossible(false);
         }
+        checkmate.design.Pawn attackedPawn = isCrossMove(rank, file) ? getAttackedPawn(file) : null;
         super.moveTo(rank, file);
+        if (attackedPawn != null) {
+            attackedPawn.setIsEnpassantPossible(false);
+            removeAttackedPawn(attackedPawn);
+        }
         this.maxMoves = 1;
         straightMove.setMaxSteps(maxMoves);
-        if(isPromoteApplicable(rank)) {
+        if (isPromoteApplicable(rank)) {
             initiatePromotionDialog();
         }
     }
     
+    private void removeAttackedPawn(checkmate.design.Pawn attackedPiece) {
+        RepetitionManager.getInstance().hash(attackedPiece.getPieceTypeForHashing(), attackedPiece.getAddress());
+        attackedPiece.getCell().removePieceFromCellGroup((Piece) attackedPiece);
+        Launcher.board.removeFromBoard(attackedPiece);
+    }
+
+    private checkmate.design.Pawn getAttackedPawn(CellInfo.File file) {
+        Cell attackedPawnCell = Launcher.board.getCell(piece.getRank(), file);
+        return (checkmate.design.Pawn) attackedPawnCell.getPiece();
+    }
+
     private boolean isPromoteApplicable(CellInfo.Rank rank) {
         return rank == CellInfo.Rank.ONE || rank == CellInfo.Rank.EIGHT;
     }
-    
+
     private void initiatePromotionDialog() {
         final Stage promoteDialogStage = new Stage(StageStyle.DECORATED);
         promoteDialogStage.initModality(Modality.WINDOW_MODAL);
         promoteDialogStage.initOwner(Launcher.primaryWindow);
-        
+
         DialogBox dialogBox = new DialogBox();
         Scene dialogScene = new Scene(dialogBox);
         promoteDialogStage.setScene(dialogScene);
         promoteDialogStage.setTitle("Pawn Promotion");
         promoteDialogStage.show();
     }
-    
+
+    private boolean isCrossMove(CellInfo.Rank rank, CellInfo.File file) {
+        return Math.abs(rank.ordinal() - piece.getRank().ordinal()) == 1
+                && Math.abs(file.ordinal() - piece.getFile().ordinal()) == 1;
+    }
+
     private class DialogBox extends VBox {
-        
+
         private Text selectedPieceText = null;
 
         public DialogBox() {
@@ -104,7 +126,7 @@ public class Pawn extends MovablePiece{
             hbox.getChildren().addAll(rookOption, bishopOption, knightOption, queenOption);
             this.getChildren().add(hbox);
         }
-        
+
         private void addButtonsToSecondRow() {
             HBox hbox = new HBox(15);
             hbox.getChildren().add(setupOkButton());
@@ -119,7 +141,7 @@ public class Pawn extends MovablePiece{
             cancelBtn.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
-                    closeWindowOfButton((Button)event.getSource());
+                    closeWindowOfButton((Button) event.getSource());
                 }
             });
             return cancelBtn;
@@ -130,17 +152,17 @@ public class Pawn extends MovablePiece{
             okBtn.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
-                    PieceInfo.Type pieceType = (PieceInfo.Type)selectedPieceText.getUserData();
+                    PieceInfo.Type pieceType = (PieceInfo.Type) selectedPieceText.getUserData();
                     IMovable moveHandler = getNewMoveHandler(pieceType);
-                    ((checkmate.design.Pawn)piece).promote(moveHandler, pieceType.getUnicodeChar());
-                    RepetitionManager.getInstance().recreatePawnBitString(piece.getPieceTypeForHashing(), piece.getRank(), piece.getFile());
-                    closeWindowOfButton((Button)event.getSource());
+                    ((checkmate.design.Pawn) piece).promote(moveHandler, pieceType.getUnicodeChar());
+                    RepetitionManager.getInstance().doPawnPromoteHashing(piece.getPieceTypeForHashing(), piece.getRank(), piece.getFile());
+                    closeWindowOfButton((Button) event.getSource());
                 }
 
                 private IMovable getNewMoveHandler(PieceInfo.Type pieceType) throws IllegalStateException {
                     IMovable moveHandler = null;
-                    switch(pieceType.getPieceName()) {
-                        case BISHOP: 
+                    switch (pieceType.getPieceName()) {
+                        case BISHOP:
                             moveHandler = new checkmate.move.Bishop(piece);
                             break;
                         case KNIGHT:
@@ -153,52 +175,52 @@ public class Pawn extends MovablePiece{
                             moveHandler = new checkmate.move.Queen(piece);
                             break;
                         default:
-                            throw new IllegalStateException("Promotion to "+pieceType+" is not a legal operation in chess");
+                            throw new IllegalStateException("Promotion to " + pieceType + " is not a legal operation in chess");
                     }
                     return moveHandler;
                 }
             });
             return okBtn;
         }
-        
+
         private void closeWindowOfButton(Button btn) {
-            Stage dialogStage = (Stage)btn.getScene().getWindow();
+            Stage dialogStage = (Stage) btn.getScene().getWindow();
             dialogStage.close();
         }
-        
+
         private Text getPieceGraphics(PieceInfo.Name pieceName) {
             char unicode = 0;
             PieceInfo.Type pieceType;
             switch (pieceName) {
                 case BISHOP:
-                    pieceType = piece.isWhitePiece()? PieceInfo.Type.WHITE_BISHOP: PieceInfo.Type.BLACK_BISHOP;
+                    pieceType = piece.isWhitePiece() ? PieceInfo.Type.WHITE_BISHOP : PieceInfo.Type.BLACK_BISHOP;
                     break;
                 case KNIGHT:
-                    pieceType = piece.isWhitePiece()? PieceInfo.Type.WHITE_KNIGHT : PieceInfo.Type.BLACK_KNIGHT;
+                    pieceType = piece.isWhitePiece() ? PieceInfo.Type.WHITE_KNIGHT : PieceInfo.Type.BLACK_KNIGHT;
                     break;
                 case ROOK:
-                    pieceType = piece.isWhitePiece()? PieceInfo.Type.WHITE_ROOK : PieceInfo.Type.BLACK_ROOK;
+                    pieceType = piece.isWhitePiece() ? PieceInfo.Type.WHITE_ROOK : PieceInfo.Type.BLACK_ROOK;
                     break;
                 case QUEEN:
-                    pieceType = piece.isWhitePiece()? PieceInfo.Type.WHITE_QUEEN : PieceInfo.Type.BLACK_QUEEN;
+                    pieceType = piece.isWhitePiece() ? PieceInfo.Type.WHITE_QUEEN : PieceInfo.Type.BLACK_QUEEN;
                     break;
                 default:
-                    throw new IllegalStateException("Promotion of "+pieceName+" is not a legal operation in chess");
+                    throw new IllegalStateException("Promotion of " + pieceName + " is not a legal operation in chess");
             }
             unicode = pieceType.getUnicodeChar();
-            Text text = new Text(unicode+"");
+            Text text = new Text(unicode + "");
             text.setUserData(pieceType);
             text.setFont(Font.font(Launcher.resource.getIntConfig("Piece.Font.size")));
             text.setFill(Color.BLACK);
             text.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                
+
                 @Override
                 public void handle(MouseEvent event) {
-                    if(selectedPieceText != null) {
+                    if (selectedPieceText != null) {
                         selectedPieceText.setFill(Color.BLACK);
                         selectedPieceText = null;
                     }
-                    selectedPieceText = ((Text)event.getSource());
+                    selectedPieceText = ((Text) event.getSource());
                     selectedPieceText.setFill(Color.FORESTGREEN);
                 }
             });
