@@ -44,10 +44,18 @@ public abstract class Piece extends Text {
         isKingSide = currentFile.ordinal() > CellInfo.File.D.ordinal();
     }
     
+    /**
+     * Indicates whether the piece is positioned at the king side or queen side
+     * @return true if on the king side, false otherwise
+     */
     public boolean isKingSide() {
         return isKingSide;
     }
 
+    /**
+     * Gets the file in which the piece is located
+     * @return file of piece
+     */
     public CellInfo.File getFile() {
         return currentFile;
     }
@@ -60,10 +68,19 @@ public abstract class Piece extends Text {
         return font;
     }
 
+    /**
+     * Gets the rank in which the piece is located
+     * @return rank of piece
+     */
     public CellInfo.Rank getRank() {
         return currentRank;
     }
 
+    /**
+     * Sets the position of this piece to the indicated cell position
+     * @param newRank rank position
+     * @param newFile file position
+     */
     public void setPosition(CellInfo.Rank newRank, CellInfo.File newFile) {
         Cell cell = Launcher.board.getCell(newRank, newFile);
         cell.addPieceToCellGroup(this);
@@ -76,12 +93,25 @@ public abstract class Piece extends Text {
     private void initCommonEvents() {
     }
 
+    /**
+     * Gets the type of this piece as set during board setup
+     * @return the piece type
+     */
     public PieceInfo.Type getPieceType() {
         return pieceType;
     }
 
+    /**
+     * Creates the event handlers for this piece responsible for handling keyboard
+     * and mouse events.
+     */
     protected abstract void initEventHandlers();
 
+    /**
+     * Sets the position of the piece at start-up
+     * @param pieceType indicates the type of this piece
+     * @param position indicates the position of this piece type
+     */
     protected abstract void setInitialPosition(PieceInfo.Type pieceType, PieceInfo.Position position);
 
     /**
@@ -93,14 +123,26 @@ public abstract class Piece extends Text {
         return Launcher.board.getCell(currentRank, currentFile);
     }
 
+    /**
+     * Gets the moveHandler of the piece, responsible for evaluating and moving the piece.
+     * @return the moveHandler of the piece
+     */
     public IMovable getMoveHandler() {
         return moveHandler;
     }
 
+    /**
+     * gets the address of the cell in which the piece is located
+     * @return the piece address of type Address
+     */
     public Address getAddress() {
         return new Address(currentRank, currentFile);
     }
 
+    /**
+     * Indicates whether this piece is white or black
+     * @return true if this piece is white, false otherwise
+     */
     public boolean isWhitePiece() {
         return color == PieceInfo.Color.WHITE;
     }

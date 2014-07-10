@@ -40,6 +40,12 @@ public class Launcher extends Application {
         primaryWindow = primaryStage;
     }
     
+    /**
+     * Displays a modal dialog box with the given message, and closes the game window
+     * when the dialog box is closed.
+     * 
+     * @param message Message to be displayed in dialog box
+     */
     public static void endGameWithMsg(String message) {
         Stage endGameDialog = new Stage();
         StackPane pane = new StackPane(new Text(message));
@@ -58,6 +64,7 @@ public class Launcher extends Application {
     }
 
     /**
+     * Main method
      * @param args the command line arguments
      */
     public static void main(String[] args) {
