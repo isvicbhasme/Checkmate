@@ -6,12 +6,15 @@
 package checkmate;
 
 import checkmate.design.Board;
-import checkmate.manager.RepetitionManager;
 import checkmate.util.ResourceManager;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.layout.StackPane;
+import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.Window;
+import javafx.stage.WindowEvent;
 
 /**
  *
@@ -21,7 +24,7 @@ public class Launcher extends Application {
 
     public static ResourceManager resource;
     public static Board board;
-    public static Window primaryWindow;
+    public static Stage primaryWindow;
 
     @Override
     public void start(Stage primaryStage) {
@@ -35,6 +38,23 @@ public class Launcher extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
         primaryWindow = primaryStage;
+    }
+    
+    public static void endGameWithMsg(String message) {
+        Stage endGameDialog = new Stage();
+        StackPane pane = new StackPane(new Text(message));
+        Scene endScene = new Scene(pane, 200, 100);
+        endGameDialog.setTitle("Checkmate - message");
+        endGameDialog.initOwner(primaryWindow);
+        endGameDialog.initModality(Modality.APPLICATION_MODAL);
+        endGameDialog.setScene(endScene);
+        endGameDialog.show();
+        endGameDialog.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) {
+                primaryWindow.close();
+            }
+        });
     }
 
     /**

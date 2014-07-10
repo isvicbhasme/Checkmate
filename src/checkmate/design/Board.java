@@ -5,6 +5,7 @@
  */
 package checkmate.design;
 
+import checkmate.Launcher;
 import checkmate.manager.RepetitionManager;
 import checkmate.util.Address;
 import checkmate.util.CellInfo;
@@ -62,7 +63,7 @@ public class Board extends GridPane {
             boardPieces.put(PieceInfo.Type.BLACK_PAWN, new Pawn(PieceInfo.Type.BLACK_PAWN, PieceInfo.Position.SIX));
             boardPieces.put(PieceInfo.Type.BLACK_PAWN, new Pawn(PieceInfo.Type.BLACK_PAWN, PieceInfo.Position.SEVEN));
             boardPieces.put(PieceInfo.Type.BLACK_PAWN, new Pawn(PieceInfo.Type.BLACK_PAWN, PieceInfo.Position.EIGHT));
-            
+
             boardPieces.put(PieceInfo.Type.WHITE_ROOK, new Rook(PieceInfo.Type.WHITE_ROOK, PieceInfo.Position.LEFT));
             boardPieces.put(PieceInfo.Type.WHITE_KNIGHT, new Knight(PieceInfo.Type.WHITE_KNIGHT, PieceInfo.Position.LEFT));
             boardPieces.put(PieceInfo.Type.WHITE_BISHOP, new Bishop(PieceInfo.Type.WHITE_BISHOP, PieceInfo.Position.LEFT));
@@ -85,15 +86,24 @@ public class Board extends GridPane {
         }
         RepetitionManager.getInstance().storeHash();
     }
-    
+
     public Piece getPiece(PieceInfo.Type pieceType) {
-        if(pieceType == PieceInfo.Type.BLACK_PAWN || pieceType == PieceInfo.Type.WHITE_PAWN)  {
-            throw new UnsupportedOperationException("Cannot get piece of Type: "+pieceType);
+        if (pieceType == PieceInfo.Type.BLACK_PAWN || pieceType == PieceInfo.Type.WHITE_PAWN) {
+            throw new UnsupportedOperationException("Cannot get piece of Type: " + pieceType);
         }
         return boardPieces.get(pieceType);
     }
-    
+
     public void removeFromBoard(Piece piece) {
         defeatedPieces.put(piece.getPieceTypeForHashing(), boardPieces.remove(piece.getPieceTypeForHashing()));
+        if (piece.getPieceTypeForHashing().getPieceName() == PieceInfo.Name.KING) {
+            String message = "Game Over...";
+            if (piece.getPieceTypeForHashing() == PieceInfo.Type.WHITE_KING) {
+                message += " Black wins!";
+            } else {
+                message += " White wins!";
+            }
+            Launcher.endGameWithMsg(message);
+        }
     }
 }
