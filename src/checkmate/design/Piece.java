@@ -23,7 +23,7 @@ public abstract class Piece extends Text {
 
     protected CellInfo.File currentFile;
     protected CellInfo.Rank currentRank;
-    protected PieceInfo.Type pieceTypeForHash;
+    protected PieceInfo.Type pieceType;
     protected char unicodeChar;
     protected final PieceInfo.Position position;
     protected static final PieceEvtHandler eventHandler = new PieceEvtHandler();
@@ -37,7 +37,7 @@ public abstract class Piece extends Text {
         this.position = position;
         setFont(getPieceFont());
         initCommonEvents();
-        this.pieceTypeForHash = pieceType;
+        this.pieceType = pieceType;
         this.color = (pieceType.getUnicodeChar() < PieceInfo.Type.BLACK_KING.getUnicodeChar()) ? PieceInfo.Color.WHITE : PieceInfo.Color.BLACK;
         setInitialPosition(pieceType, position);
         RepetitionManager.getInstance().hash(pieceType, currentRank, currentFile);
@@ -76,8 +76,8 @@ public abstract class Piece extends Text {
     private void initCommonEvents() {
     }
 
-    public PieceInfo.Type getPieceTypeForHashing() {
-        return pieceTypeForHash;
+    public PieceInfo.Type getPieceType() {
+        return pieceType;
     }
 
     protected abstract void initEventHandlers();

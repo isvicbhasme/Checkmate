@@ -40,22 +40,22 @@ public class RepetitionManager {
     }
     
     public void hashPieceMovement(Piece selectedPiece, Address sourceAddress, Address targetAddress) {
-        hash(selectedPiece.getPieceTypeForHashing(), sourceAddress);
-        hash(selectedPiece.getPieceTypeForHashing(), targetAddress);
+        hash(selectedPiece.getPieceType(), sourceAddress);
+        hash(selectedPiece.getPieceType(), targetAddress);
     }
     
     public void storePieceMovementHash(Piece selectedPiece, Address sourceAddress, Address targetAddress) {
         hashTogglePlay();
-        hash(selectedPiece.getPieceTypeForHashing(), sourceAddress);
-        hash(selectedPiece.getPieceTypeForHashing(), targetAddress);
+        hash(selectedPiece.getPieceType(), sourceAddress);
+        hash(selectedPiece.getPieceType(), targetAddress);
         storeHash();
     }
 
     public void storePieceAttackHash(Piece attackedPiece, Address targetAddress, Piece attackingPiece, Address sourceAddress) {
         hashTogglePlay();
-        hash(attackedPiece.getPieceTypeForHashing(), targetAddress);
-        hash(attackingPiece.getPieceTypeForHashing(), sourceAddress);
-        hash(attackingPiece.getPieceTypeForHashing(), targetAddress);
+        hash(attackedPiece.getPieceType(), targetAddress);
+        hash(attackingPiece.getPieceType(), sourceAddress);
+        hash(attackingPiece.getPieceType(), targetAddress);
         storeHash();
     }
 

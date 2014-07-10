@@ -95,10 +95,10 @@ public class Board extends GridPane {
     }
 
     public void removeFromBoard(Piece piece) {
-        defeatedPieces.put(piece.getPieceTypeForHashing(), boardPieces.remove(piece.getPieceTypeForHashing()));
-        if (piece.getPieceTypeForHashing().getPieceName() == PieceInfo.Name.KING) {
+        defeatedPieces.put(piece.getPieceType(), boardPieces.remove(piece.getPieceType()));
+        if (piece.getPieceType().getPieceName() == PieceInfo.Name.KING) {
             String message = "Game Over...";
-            if (piece.getPieceTypeForHashing() == PieceInfo.Type.WHITE_KING) {
+            if (piece.getPieceType() == PieceInfo.Type.WHITE_KING) {
                 message += " Black wins!";
             } else {
                 message += " White wins!";

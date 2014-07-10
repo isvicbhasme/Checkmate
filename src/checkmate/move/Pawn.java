@@ -75,7 +75,7 @@ public class Pawn extends MovablePiece {
     }
     
     private void removeAttackedPawn(checkmate.design.Pawn attackedPiece) {
-        RepetitionManager.getInstance().hash(attackedPiece.getPieceTypeForHashing(), attackedPiece.getAddress());
+        RepetitionManager.getInstance().hash(attackedPiece.getPieceType(), attackedPiece.getAddress());
         attackedPiece.getCell().removePieceFromCellGroup((Piece) attackedPiece);
         Launcher.board.removeFromBoard(attackedPiece);
     }
@@ -155,7 +155,7 @@ public class Pawn extends MovablePiece {
                     PieceInfo.Type pieceType = (PieceInfo.Type) selectedPieceText.getUserData();
                     IMovable moveHandler = getNewMoveHandler(pieceType);
                     ((checkmate.design.Pawn) piece).promote(moveHandler, pieceType.getUnicodeChar());
-                    RepetitionManager.getInstance().doPawnPromoteHashing(piece.getPieceTypeForHashing(), piece.getRank(), piece.getFile());
+                    RepetitionManager.getInstance().doPawnPromoteHashing(piece.getPieceType(), piece.getRank(), piece.getFile());
                     closeWindowOfButton((Button) event.getSource());
                 }
 

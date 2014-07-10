@@ -165,10 +165,10 @@ public abstract class MovablePiece implements IMovable {
     }
     
     private void preHashMovingPiece(CellInfo.Rank rank, CellInfo.File file) {
-        RepetitionManager.getInstance().hash(piece.getPieceTypeForHashing(), piece.getRank(), piece.getFile());
-        RepetitionManager.getInstance().hash(piece.getPieceTypeForHashing(), rank, file);
+        RepetitionManager.getInstance().hash(piece.getPieceType(), piece.getRank(), piece.getFile());
+        RepetitionManager.getInstance().hash(piece.getPieceType(), rank, file);
         if(Launcher.board.getCell(rank, file).isOccupied()) {
-            RepetitionManager.getInstance().hash(Launcher.board.getCell(rank, file).getPiece().getPieceTypeForHashing(), rank, file);
+            RepetitionManager.getInstance().hash(Launcher.board.getCell(rank, file).getPiece().getPieceType(), rank, file);
         }
     }
 }
