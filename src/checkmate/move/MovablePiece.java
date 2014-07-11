@@ -69,7 +69,7 @@ public abstract class MovablePiece implements IMovable {
      * @param newCell New cell to which the piece should be moved
      */
     private void movePiece(Cell currentCell, Cell newCell) {
-        currentCell.removePieceFromCellGroup(piece);
+        currentCell.removePieceFromCell(piece);
         currentCell.enableEventHandlers();
         piece.setPosition(newCell.getRank(), newCell.getFile());
     }

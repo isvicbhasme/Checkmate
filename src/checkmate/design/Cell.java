@@ -9,6 +9,7 @@ import checkmate.Launcher;
 import checkmate.event.CellEvtHandler;
 import checkmate.util.Address;
 import checkmate.util.CellInfo;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeType;
@@ -17,12 +18,15 @@ import javafx.scene.shape.StrokeType;
  *
  * @author bhasme
  */
-public class Cell extends CellGroup {
+public class Cell extends StackPane {
 
     private final int length;
     private final Rectangle cell;
     private static final CellEvtHandler cellHandler = new CellEvtHandler();
     private boolean isOccupied;
+    protected CellInfo.Color color;
+    protected CellInfo.Rank rank;
+    protected CellInfo.File file;
 
     public Cell(CellInfo.Rank rank, CellInfo.File file) {
         super();
@@ -38,7 +42,6 @@ public class Cell extends CellGroup {
         this.rank = rank;
         this.file = file;
         getChildren().add(cell);
-        //cellHandler = new CellEvtHandler();
         enableEventHandlers();
     }
 
@@ -74,7 +77,7 @@ public class Cell extends CellGroup {
         isOccupied = true;
     }
 
-    public void removePieceFromCellGroup(Piece piece) {
+    public void removePieceFromCell(Piece piece) {
         getChildren().remove(piece);
         isOccupied = false;
     }
