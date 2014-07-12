@@ -76,7 +76,6 @@ public class Pawn extends MovablePiece {
     
     private void removeAttackedPawn(checkmate.design.Pawn attackedPiece) {
         RepetitionManager.getInstance().hash(attackedPiece.getPieceType(), attackedPiece.getAddress());
-        attackedPiece.getCell().removePieceFromCell((Piece) attackedPiece);
         Launcher.board.removeFromBoard(attackedPiece);
     }
 

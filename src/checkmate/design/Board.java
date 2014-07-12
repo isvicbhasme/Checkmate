@@ -95,6 +95,7 @@ public class Board extends GridPane {
     }
 
     public void removeFromBoard(Piece piece) {
+        piece.getCell().removePieceFromCell(piece);
         defeatedPieces.put(piece.getPieceType(), boardPieces.remove(piece.getPieceType()));
         if (piece.getPieceType().getPieceName() == PieceInfo.Name.KING) {
             String message = "Game Over...";

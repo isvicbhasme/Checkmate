@@ -83,7 +83,7 @@ public abstract class Piece extends Text {
      */
     public void setPosition(CellInfo.Rank newRank, CellInfo.File newFile) {
         Cell cell = Launcher.board.getCell(newRank, newFile);
-        cell.addPieceToCellGroup(this);
+        cell.addPieceToCell(this);
         currentFile = newFile;
         currentRank = newRank;
         Cell newCell = Launcher.board.getCell(newRank, newFile);
@@ -145,5 +145,15 @@ public abstract class Piece extends Text {
      */
     public boolean isWhitePiece() {
         return color == PieceInfo.Color.WHITE;
+    }
+    
+    /**
+     * Sets the rank and file positions to NULL
+     * However, this does not remove the piece from its current position.
+     * 
+     */
+    public void resetPosition() {
+        currentFile = null;
+        currentRank = null;
     }
 }

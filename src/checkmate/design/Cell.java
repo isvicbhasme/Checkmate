@@ -69,7 +69,7 @@ public class Cell extends StackPane {
         return CellInfo.centerDistanceMap[file.ordinal() + (8 * rank.ordinal())];
     }
 
-    public void addPieceToCellGroup(Piece piece) {
+    public void addPieceToCell(Piece piece) {
         while (getChildren().size() > 1) {
             getChildren().remove(1);
         }
@@ -79,6 +79,7 @@ public class Cell extends StackPane {
 
     public void removePieceFromCell(Piece piece) {
         getChildren().remove(piece);
+        piece.resetPosition();
         isOccupied = false;
     }
 

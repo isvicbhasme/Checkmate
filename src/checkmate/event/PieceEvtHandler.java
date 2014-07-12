@@ -52,7 +52,6 @@ public class PieceEvtHandler implements IEventHandler {
         gamePlay.resetPieceMovement();
         if (attackingPiece.getMoveHandler().isMovePermitted(targetAddress)) {
             attackingPiece.getMoveHandler().moveTo(targetAddress);
-            targetCell.removePieceFromCell(attackedPiece);
             Launcher.board.removeFromBoard(attackedPiece);
             gamePlay.togglePlayTurn();
             RepetitionManager.getInstance().hashTogglePlay();
