@@ -7,7 +7,7 @@ import checkmate.util.CellInfo;
 import checkmate.util.PieceInfo;
 
 /**
- *
+ * Contains design behaviors specific to a pawn
  * @author Isaac
  */
 public class Pawn extends Piece {

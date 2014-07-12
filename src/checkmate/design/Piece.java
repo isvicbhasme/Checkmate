@@ -16,7 +16,9 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 /**
- *
+ * The design.Piece class is an abstract class which deals with the common appearance or design of chess pieces.
+ * Extends from Text since all chess pieces are displayed as text.
+ * 
  * @author bhasme
  */
 public abstract class Piece extends Text {
@@ -108,7 +110,7 @@ public abstract class Piece extends Text {
     protected abstract void initEventHandlers();
 
     /**
-     * Sets the position of the piece at start-up
+     * Sets the position of the piece at game start-up
      * @param pieceType indicates the type of this piece
      * @param position indicates the position of this piece type
      */

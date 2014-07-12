@@ -5,7 +5,7 @@ import checkmate.util.CellInfo;
 import checkmate.util.PieceInfo;
 
 /**
- *
+ * Contains design behaviors specific to a king
  * @author Isaac
  */
 public class King extends Piece {

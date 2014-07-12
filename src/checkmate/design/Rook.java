@@ -7,7 +7,7 @@ import checkmate.util.PieceInfo;
 import java.io.IOException;
 
 /**
- *
+ * Contains design behaviors specific to a rook
  * @author bhasme
  */
 public class Rook extends Piece {

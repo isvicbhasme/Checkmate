@@ -7,7 +7,7 @@ import checkmate.util.CellInfo;
 import checkmate.util.PieceInfo;
 
 /**
- *
+ * Contains design behaviors specific to a bishop
  * @author Isaac
  */
 public final class Bishop extends Piece {

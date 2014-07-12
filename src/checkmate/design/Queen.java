@@ -7,7 +7,7 @@ import checkmate.util.CellInfo;
 import checkmate.util.PieceInfo;
 
 /**
- *
+ * Contains design behaviors specific to a queen
  * @author Isaac
  */
 public class Queen extends Piece{
