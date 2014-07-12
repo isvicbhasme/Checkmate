@@ -13,13 +13,13 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 
 /**
- *
+ * Captures keyboard and mouse events on a cell of the chess board
  * @author Isaac
  */
 public class CellEvtHandler implements IEventHandler {
 
     /**
-     *
+     * Handles mouse events triggered from a chess cell
      * @param event MouseEvent object
      */
     @Override
@@ -34,7 +34,7 @@ public class CellEvtHandler implements IEventHandler {
     }
 
     /**
-     *
+     * Handles keyboard events triggered from a chess cell
      * @param event KeyEvent object
      */
     @Override
@@ -42,6 +42,11 @@ public class CellEvtHandler implements IEventHandler {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    /**
+     * Performs a piece move to an empty cell, if the move is valid.
+     * @param clickedCell is the target cell
+     * @param selectedPiece is the piece that needs to be moved
+     */
     private void processPieceMovement(Cell clickedCell, Piece selectedPiece) {
         Address targetAddress = new Address(clickedCell.getRank(), clickedCell.getFile());
         gamePlay.resetPieceMovement();
@@ -52,7 +57,11 @@ public class CellEvtHandler implements IEventHandler {
         }
     }
 
-
+    /**
+     * Indicates whether it is the selected piece's (white or black) turn to make a move on the chess board
+     * @param selectedPiece selected piece
+     * @return true if it is a valid turn, false otherwise
+     */
     private boolean isTurnToPlay(Piece selectedPiece) {
         if (selectedPiece.isWhitePiece()) {
             return gamePlay.isWhitesTurnToPlay();
