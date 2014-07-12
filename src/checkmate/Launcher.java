@@ -30,7 +30,7 @@ public class Launcher extends Application {
     public void start(Stage primaryStage) {
         resource = new ResourceManager();
         board = new Board();
-        board.createPieces();
+        board.createBoardElements();
         int sceneWidth = resource.getIntConfig("Cell.length") * 8;
         int sceneHeight = resource.getIntConfig("Cell.length") * 10;
         Scene scene = new Scene(board, sceneWidth, sceneHeight);

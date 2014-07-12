@@ -18,6 +18,7 @@ import javafx.scene.layout.GridPane;
 
 /**
  * The Board class is a container for all chess elements - cells and pieces
+ *
  * @author bhasme
  */
 public class Board extends GridPane {
@@ -25,15 +26,19 @@ public class Board extends GridPane {
     private HashMap<PieceInfo.Type, Piece> boardPieces = new HashMap();
     private HashMap<PieceInfo.Type, Piece> defeatedPieces = new HashMap();
 
-    public Board() {
-        create();
+    /**
+     * Creates and initializes all chess board elements
+     */
+    public void createBoardElements() {
+        createCells();
+        createPieces();
     }
 
     /**
-     * Creates all cells of the chess board (black, white squares) at their respective
-     * rank and file positions
+     * Creates all cells of the chess board (black, white squares) at their
+     * respective rank and file positions
      */
-    public final void create() {
+    private final void createCells() {
         for (CellInfo.Rank rank : CellInfo.Rank.values()) {
             for (CellInfo.File file : CellInfo.File.values()) {
                 add(new Cell(rank, file), file.ordinal(), rank.ordinal());
@@ -43,6 +48,7 @@ public class Board extends GridPane {
 
     /**
      * Retrieves the cell at the given rank and file
+     *
      * @param rank Rank on the board
      * @param file File on the board
      * @return cell object
@@ -53,17 +59,18 @@ public class Board extends GridPane {
 
     /**
      * Retrieves the cell at the given address on the board
-     * @param newAddress address on the board
+     *
+     * @param cellAddress address on the board
      * @return cell object
      */
-    public Cell getCell(Address newAddress) {
-        return (Cell) getChildren().get(newAddress.file.ordinal() + (8 * newAddress.rank.ordinal()));
+    public Cell getCell(Address cellAddress) {
+        return (Cell) getChildren().get(cellAddress.file.ordinal() + (8 * cellAddress.rank.ordinal()));
     }
 
     /**
-     * Creates and initialized all chess pieces on the board
+     * Creates and initializes all chess pieces on the board
      */
-    public void createPieces() {
+    private void createPieces() {
         try {
             boardPieces.put(PieceInfo.Type.BLACK_ROOK, new Rook(PieceInfo.Type.BLACK_ROOK, PieceInfo.Position.LEFT));
             boardPieces.put(PieceInfo.Type.BLACK_KNIGHT, new Knight(PieceInfo.Type.BLACK_KNIGHT, PieceInfo.Position.LEFT));
@@ -106,22 +113,27 @@ public class Board extends GridPane {
     }
 
     /**
-     * Gets a piece of the given type from the chess board
+     * Gets a piece of the given type from the chess board. Currently only
+     * retrieval of king is supported.
+     *
      * @param pieceType
      * @return chess piece of type design.Piece
+     * @throws UnsupportedOperationException when trying to retrieve any
+     * unsupported chess piece.
      */
     public Piece getPiece(PieceInfo.Type pieceType) {
-        if (pieceType == PieceInfo.Type.BLACK_PAWN || pieceType == PieceInfo.Type.WHITE_PAWN) {
+        if (pieceType != PieceInfo.Type.BLACK_KING && pieceType != PieceInfo.Type.WHITE_KING) {
             throw new UnsupportedOperationException("Cannot get piece of Type: " + pieceType);
         }
         return boardPieces.get(pieceType);
     }
 
     /**
-     * Removes the given piece from the chess board. This method can be used when a piece
-     * is attacked and thus needs to be removed from the board.
-     * 
+     * Removes the given piece from the chess board. This method can be used
+     * when a piece is attacked and thus needs to be removed from the board.
+     *
      * If a king is conquered, it implicitly invokes the end of game procedure.
+     *
      * @param piece Piece to be removed
      */
     public void removeFromBoard(Piece piece) {
