@@ -158,11 +158,21 @@ public class PieceInfo {
     }
     
     public enum Name {
-        ROOK,
-        KNIGHT,
-        BISHOP,
-        QUEEN,
-        KING,
-        PAWN
+        ROOK(500),
+        KNIGHT(320),
+        BISHOP(325),
+        QUEEN(975),
+        KING(32767),
+        PAWN(100);
+        
+        private final int score;
+        
+        Name(int score) {
+            this.score = score;
+        }
+        
+        public int getScore() {
+            return score;
+        }
     }
 }
