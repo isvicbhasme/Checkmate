@@ -1,5 +1,3 @@
-
-
 package checkmate.design;
 
 import checkmate.move.IMovable;
@@ -8,6 +6,7 @@ import checkmate.util.PieceInfo;
 
 /**
  * Contains design behaviors specific to a bishop
+ *
  * @author Isaac
  */
 public final class Bishop extends Piece {
@@ -28,7 +27,7 @@ public final class Bishop extends Piece {
 
             defaultFile = position == PieceInfo.Position.LEFT ? PieceInfo.InitBlackPosition.BISHOP_LEFT.getFile()
                     : PieceInfo.InitBlackPosition.BISHOP_RIGHT.getFile();
-        } else if(pieceType == PieceInfo.Type.WHITE_BISHOP) {
+        } else if (pieceType == PieceInfo.Type.WHITE_BISHOP) {
             defaultRank = position == PieceInfo.Position.LEFT ? PieceInfo.InitWhitePosition.BISHOP_LEFT.getRank()
                     : PieceInfo.InitWhitePosition.BISHOP_RIGHT.getRank();
 
@@ -42,8 +41,10 @@ public final class Bishop extends Piece {
 
     @Override
     protected final void initEventHandlers() {
-        setOnMouseClicked(eventHandler::handleMouseEvent);
-        setOnKeyPressed(eventHandler::handleKeyEvent);
+        if (!isComputerPiece()) {
+            setOnMouseClicked(eventHandler::handleMouseEvent);
+            setOnKeyPressed(eventHandler::handleKeyEvent);
+        }
     }
-    
+
 }

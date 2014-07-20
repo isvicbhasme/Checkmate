@@ -1,5 +1,3 @@
-
-
 package checkmate.design;
 
 import checkmate.move.IMovable;
@@ -8,10 +6,11 @@ import checkmate.util.PieceInfo;
 
 /**
  * Contains design behaviors specific to a queen
+ *
  * @author Isaac
  */
-public class Queen extends Piece{
-    
+public class Queen extends Piece {
+
     public Queen(PieceInfo.Type pieceType, PieceInfo.Position position) {
         super(pieceType, position);
         initEventHandlers();
@@ -25,7 +24,7 @@ public class Queen extends Piece{
         if (pieceType == PieceInfo.Type.BLACK_QUEEN) {
             defaultRank = PieceInfo.InitBlackPosition.QUEEN.getRank();
             defaultFile = PieceInfo.InitBlackPosition.QUEEN.getFile();
-        } else if(pieceType == PieceInfo.Type.WHITE_QUEEN) {
+        } else if (pieceType == PieceInfo.Type.WHITE_QUEEN) {
             defaultRank = PieceInfo.InitWhitePosition.QUEEN.getRank();
             defaultFile = PieceInfo.InitWhitePosition.QUEEN.getFile();
         } else {
@@ -36,7 +35,9 @@ public class Queen extends Piece{
 
     @Override
     protected final void initEventHandlers() {
-        setOnMouseClicked(eventHandler::handleMouseEvent);
-        setOnKeyPressed(eventHandler::handleKeyEvent);
-    }    
+        if (!isComputerPiece()) {
+            setOnMouseClicked(eventHandler::handleMouseEvent);
+            setOnKeyPressed(eventHandler::handleKeyEvent);
+        }
+    }
 }

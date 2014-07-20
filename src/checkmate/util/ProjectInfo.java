@@ -12,4 +12,23 @@ package checkmate.util;
  */
 public class ProjectInfo {
     public static final String configFileName = "/checkmate/util/checkmate.properties";
+    
+    public enum PlayType {
+        DOUBLE_PLAYER,
+        SINGLE_PLAYER;
+        
+        private PieceInfo.Color playerColor;
+        
+        PlayType() {
+            playerColor = null;
+        }
+        
+        public void setPlayerColor(PieceInfo.Color playerColor) {
+            this.playerColor = playerColor;
+        }
+        
+        public PieceInfo.Color getPlayerColor() {
+            return this.playerColor;
+        }
+    }
 }

@@ -7,18 +7,21 @@ package checkmate.design;
 
 import checkmate.Launcher;
 import checkmate.event.PieceEvtHandler;
+import checkmate.manager.GamePlay;
 import checkmate.manager.RepetitionManager;
 import checkmate.move.IMovable;
 import checkmate.util.Address;
 import checkmate.util.CellInfo;
 import checkmate.util.PieceInfo;
+import checkmate.util.ProjectInfo;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 /**
- * The design.Piece class is an abstract class which deals with the common appearance or design of chess pieces.
- * Extends from Text since all chess pieces are displayed as text.
- * 
+ * The design.Piece class is an abstract class which deals with the common
+ * appearance or design of chess pieces. Extends from Text since all chess
+ * pieces are displayed as text.
+ *
  * @author bhasme
  */
 public abstract class Piece extends Text {
@@ -32,6 +35,7 @@ public abstract class Piece extends Text {
     protected IMovable moveHandler;
     protected final PieceInfo.Color color;
     private final boolean isKingSide;
+    private final int score;
 
     public Piece(PieceInfo.Type pieceType, PieceInfo.Position position) {
         super(pieceType.getUnicodeChar() + "");
@@ -44,10 +48,12 @@ public abstract class Piece extends Text {
         setInitialPosition(pieceType, position);
         RepetitionManager.getInstance().hash(pieceType, currentRank, currentFile);
         isKingSide = currentFile.ordinal() > CellInfo.File.D.ordinal();
+        score = pieceType.getPieceName().getScore();
     }
-    
+
     /**
      * Indicates whether the piece is positioned at the king side or queen side
+     *
      * @return true if on the king side, false otherwise
      */
     public boolean isKingSide() {
@@ -56,6 +62,7 @@ public abstract class Piece extends Text {
 
     /**
      * Gets the file in which the piece is located
+     *
      * @return file of piece
      */
     public CellInfo.File getFile() {
@@ -72,6 +79,7 @@ public abstract class Piece extends Text {
 
     /**
      * Gets the rank in which the piece is located
+     *
      * @return rank of piece
      */
     public CellInfo.Rank getRank() {
@@ -80,6 +88,7 @@ public abstract class Piece extends Text {
 
     /**
      * Sets the position of this piece to the indicated cell position
+     *
      * @param newRank rank position
      * @param newFile file position
      */
@@ -97,6 +106,7 @@ public abstract class Piece extends Text {
 
     /**
      * Gets the type of this piece as set during board setup
+     *
      * @return the piece type
      */
     public PieceInfo.Type getPieceType() {
@@ -104,13 +114,19 @@ public abstract class Piece extends Text {
     }
 
     /**
-     * Creates the event handlers for this piece responsible for handling keyboard
-     * and mouse events.
+     * Creates the event handlers for this piece responsible for handling
+     * keyboard and mouse events.
      */
     protected abstract void initEventHandlers();
 
+    protected boolean isComputerPiece() {
+        return (GamePlay.getInstance().getPlayType() == ProjectInfo.PlayType.SINGLE_PLAYER
+                && color.ordinal() != GamePlay.getInstance().getPlayType().getPlayerColor().ordinal());
+    }
+
     /**
      * Sets the position of the piece at game start-up
+     *
      * @param pieceType indicates the type of this piece
      * @param position indicates the position of this piece type
      */
@@ -126,7 +142,9 @@ public abstract class Piece extends Text {
     }
 
     /**
-     * Gets the moveHandler of the piece, responsible for evaluating and moving the piece.
+     * Gets the moveHandler of the piece, responsible for evaluating and moving
+     * the piece.
+     *
      * @return the moveHandler of the piece
      */
     public IMovable getMoveHandler() {
@@ -135,6 +153,7 @@ public abstract class Piece extends Text {
 
     /**
      * gets the address of the cell in which the piece is located
+     *
      * @return the piece address of type Address
      */
     public Address getAddress() {
@@ -143,16 +162,17 @@ public abstract class Piece extends Text {
 
     /**
      * Indicates whether this piece is white or black
+     *
      * @return true if this piece is white, false otherwise
      */
     public boolean isWhitePiece() {
         return color == PieceInfo.Color.WHITE;
     }
-    
+
     /**
-     * Sets the rank and file positions to NULL
-     * However, this does not remove the piece from its current position.
-     * 
+     * Sets the rank and file positions to NULL However, this does not remove
+     * the piece from its current position.
+     *
      */
     public void resetPosition() {
         currentFile = null;

@@ -1,4 +1,3 @@
-
 package checkmate.design;
 
 import checkmate.util.CellInfo;
@@ -6,6 +5,7 @@ import checkmate.util.PieceInfo;
 
 /**
  * Contains design behaviors specific to a knight
+ *
  * @author bhasme
  */
 public class Knight extends Piece {
@@ -26,7 +26,7 @@ public class Knight extends Piece {
 
             defaultFile = position == PieceInfo.Position.LEFT ? PieceInfo.InitBlackPosition.KNIGHT_LEFT.getFile()
                     : PieceInfo.InitBlackPosition.KNIGHT_RIGHT.getFile();
-        } else if(pieceType == PieceInfo.Type.WHITE_KNIGHT) {
+        } else if (pieceType == PieceInfo.Type.WHITE_KNIGHT) {
             defaultRank = position == PieceInfo.Position.LEFT ? PieceInfo.InitWhitePosition.KNIGHT_LEFT.getRank()
                     : PieceInfo.InitWhitePosition.KNIGHT_RIGHT.getRank();
 
@@ -40,8 +40,10 @@ public class Knight extends Piece {
 
     @Override
     protected final void initEventHandlers() {
-        setOnMouseClicked(eventHandler::handleMouseEvent);
-        setOnKeyPressed(eventHandler::handleKeyEvent);
+        if (!isComputerPiece()) {
+            setOnMouseClicked(eventHandler::handleMouseEvent);
+            setOnKeyPressed(eventHandler::handleKeyEvent);
+        }
     }
 
 }

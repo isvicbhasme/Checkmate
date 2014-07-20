@@ -7,9 +7,12 @@ package checkmate.manager;
 
 import checkmate.design.Piece;
 import checkmate.util.PieceInfo;
+import checkmate.util.ProjectInfo;
 
 /**
- * The GamePlay singleton class is responsible for maintaining the status of a ongoing chess game
+ * The GamePlay singleton class is responsible for maintaining the status of a
+ * ongoing chess game
+ *
  * @author bhasme
  */
 public class GamePlay {
@@ -18,12 +21,15 @@ public class GamePlay {
     private Piece movingPiece;
     private static GamePlay instance = null;
     private PieceInfo.Color playTurn = PieceInfo.Color.WHITE;
+    private ProjectInfo.PlayType playType;
 
     private GamePlay() {
     }
 
     /**
-     * Returns an existing instance of GamePlay. If not existing, a new instance is created.
+     * Returns an existing instance of GamePlay. If not existing, a new instance
+     * is created.
+     *
      * @return GamePlay instance
      */
     public static GamePlay getInstance() {
@@ -35,6 +41,7 @@ public class GamePlay {
 
     /**
      * Indicates whether a piece is already selected to make a move or attack
+     *
      * @return true is selected, false otherwise
      */
     public boolean isPieceSelected() {
@@ -43,6 +50,7 @@ public class GamePlay {
 
     /**
      * Retrieves the instance of the selected piece
+     *
      * @return Piece
      */
     public Piece getMovingPiece() {
@@ -51,6 +59,7 @@ public class GamePlay {
 
     /**
      * Sets the given piece as the selected piece to initiate a move or attack
+     *
      * @param movingPiece
      */
     public void setMovingPiece(Piece movingPiece) {
@@ -68,6 +77,7 @@ public class GamePlay {
 
     /**
      * Indicates whether it is the white's turn to make a move or attack
+     *
      * @return true if white's turn, false otherwise
      */
     public boolean isWhitesTurnToPlay() {
@@ -76,6 +86,7 @@ public class GamePlay {
 
     /**
      * Indicates whether it is the black's turn to make a move or attack
+     *
      * @return true if black's turn, false otherwise
      */
     public boolean isBlacksTurnToPlay() {
@@ -84,6 +95,7 @@ public class GamePlay {
 
     /**
      * Indicates the color of the side which needs to make a move or attack
+     *
      * @return PieceInfo.Color
      */
     public PieceInfo.Color getPlayTurn() {
@@ -97,5 +109,13 @@ public class GamePlay {
         movingPiece.getCell().disableHighlight();
         movingPiece = null;
         isPieceSelected = false;
+    }
+
+    public ProjectInfo.PlayType getPlayType() {
+        return playType;
+    }
+
+    public void setPlayType(ProjectInfo.PlayType playType) {
+        this.playType = playType;
     }
 }

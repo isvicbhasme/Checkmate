@@ -6,6 +6,7 @@ import checkmate.util.PieceInfo;
 
 /**
  * Contains design behaviors specific to a king
+ *
  * @author Isaac
  */
 public class King extends Piece {
@@ -41,8 +42,10 @@ public class King extends Piece {
 
     @Override
     protected final void initEventHandlers() {
-        setOnMouseClicked(eventHandler::handleMouseEvent);
-        setOnKeyPressed(eventHandler::handleKeyEvent);
+        if (!isComputerPiece()) {
+            setOnMouseClicked(eventHandler::handleMouseEvent);
+            setOnKeyPressed(eventHandler::handleKeyEvent);
+        }
     }
 
     public boolean isFirstMove() {
@@ -64,20 +67,22 @@ public class King extends Piece {
         disableKingSideCastleHash();
         disableQueenSideCastleHash();
     }
-    
+
     public void disableKingSideCastleHash() {
-        if(isWhitePiece())
+        if (isWhitePiece()) {
             RepetitionManager.getInstance().hashCastlingRights(PieceInfo.CastlingSide.WHITE_KING_SIDE);
-        else
+        } else {
             RepetitionManager.getInstance().hashCastlingRights(PieceInfo.CastlingSide.BLACK_KING_SIDE);
+        }
         isKingSideCastlePossible = false;
     }
-    
+
     public void disableQueenSideCastleHash() {
-        if(isWhitePiece())
+        if (isWhitePiece()) {
             RepetitionManager.getInstance().hashCastlingRights(PieceInfo.CastlingSide.WHITE_QUEEN_SIDE);
-        else
+        } else {
             RepetitionManager.getInstance().hashCastlingRights(PieceInfo.CastlingSide.BLACK_QUEEN_SIDE);
+        }
         isQueenSideCastlePossible = false;
     }
 

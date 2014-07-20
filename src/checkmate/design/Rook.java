@@ -8,6 +8,7 @@ import java.io.IOException;
 
 /**
  * Contains design behaviors specific to a rook
+ *
  * @author bhasme
  */
 public class Rook extends Piece {
@@ -64,8 +65,10 @@ public class Rook extends Piece {
      */
     @Override
     protected final void initEventHandlers() {
-        setOnMouseClicked(eventHandler::handleMouseEvent);
-        setOnKeyPressed(eventHandler::handleKeyEvent);
+        if (!isComputerPiece()) {
+            setOnMouseClicked(eventHandler::handleMouseEvent);
+            setOnKeyPressed(eventHandler::handleKeyEvent);
+        }
     }
 
     @Override
@@ -78,12 +81,9 @@ public class Rook extends Piece {
     }
 
     private void disableCastlingHash() {
-        Piece king = isWhitePiece()? Launcher.board.getPiece(PieceInfo.Type.WHITE_KING) : Launcher.board.getPiece(PieceInfo.Type.BLACK_KING);
-        if(isKingSide()) {
-            ((King)king).disableKingSideCastleHash();
-        }
-        else {
-            ((King)king).disableQueenSideCastleHash();
+        Piece king = isWhitePiece() ? Launcher.board.getPiece(PieceInfo.Type.WHITE_KING) : Launcher.board.getPiece(PieceInfo.Type.BLACK_KING);
+        if (isKingSide()) {
+            ((King) king).disableKingSideCastleHash();
         }
     }
 }
