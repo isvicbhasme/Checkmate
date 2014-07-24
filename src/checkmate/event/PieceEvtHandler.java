@@ -11,17 +11,20 @@ import checkmate.design.Piece;
 import static checkmate.event.IEventHandler.gamePlay;
 import checkmate.manager.RepetitionManager;
 import checkmate.util.Address;
+import checkmate.util.ProjectInfo;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 
 /**
  * Captures keyboard and mouse events on a chess piece from the chess board
+ *
  * @author Isaac
  */
 public class PieceEvtHandler implements IEventHandler {
 
     /**
      * Handles mouse events triggered from a chess cell
+     *
      * @param event MouseEvent object
      */
     @Override
@@ -30,14 +33,20 @@ public class PieceEvtHandler implements IEventHandler {
         if (gamePlay.isPieceSelected()) {
             if (isTurnToPlay(gamePlay.getMovingPiece())) {
                 processSecondClick(piece);
+                event.consume();
+                if (gamePlay.getPlayType() == ProjectInfo.PlayType.SINGLE_PLAYER && gamePlay.isAiTurnToPlay()) {
+                    gamePlay.triggerAiMove();
+                }
             }
         } else if (isTurnToPlay(piece)) {
             processFirstClick(piece);
+            event.consume();
         }
     }
 
     /**
      * Handles keyboard events triggered from a chess cell
+     *
      * @param event KeyEvent object
      */
     @Override
@@ -47,7 +56,8 @@ public class PieceEvtHandler implements IEventHandler {
 
     /**
      * Selects the clicked piece to make a move or attack
-     * @param piece 
+     *
+     * @param piece
      */
     protected void processFirstClick(Piece piece) {
         gamePlay.setMovingPiece(piece);
@@ -55,7 +65,8 @@ public class PieceEvtHandler implements IEventHandler {
 
     /**
      * Indicates the opponents piece to be attacked by the selected piece.
-     * @param piece 
+     *
+     * @param piece
      */
     protected void processSecondClick(Piece piece) {
         if (areOponents(piece, gamePlay.getMovingPiece())) {
@@ -64,7 +75,9 @@ public class PieceEvtHandler implements IEventHandler {
     }
 
     /**
-     * Performs validations on the current attack on a piece and performs the attack only if valid
+     * Performs validations on the current attack on a piece and performs the
+     * attack only if valid
+     *
      * @param targetCell cell at which the attacked piece is located
      * @param attackingPiece piece performing the attack
      * @param attackedPiece opponent's piece which is being attacked
@@ -82,7 +95,9 @@ public class PieceEvtHandler implements IEventHandler {
     }
 
     /**
-     * Indicates whether it is the selected piece's (white or black) turn to make a move on the chess board
+     * Indicates whether it is the selected piece's (white or black) turn to
+     * make a move on the chess board
+     *
      * @param selectedPiece selected piece
      * @return true if it is a valid turn, false otherwise
      */
@@ -96,6 +111,7 @@ public class PieceEvtHandler implements IEventHandler {
 
     /**
      * Indicates whether the given two pieces are opponents to each other
+     *
      * @param piece1 Piece 1
      * @param piece2 Piece 2
      * @return true if the pieces are opponents to each other, false otherwise

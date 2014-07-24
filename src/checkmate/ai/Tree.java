@@ -5,6 +5,7 @@
  */
 package checkmate.ai;
 
+import checkmate.design.Piece;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -12,24 +13,24 @@ import java.util.Scanner;
  *
  * @author bhasme
  */
-public class Tree {
+public class Tree implements IAi {
 
     int depth = 0;
     int id = 1;
     Node root;
     Random rand;
 
-    public Tree() {
+    protected Tree() {
         root = new Node();
         root.depth = 0;
         rand = new Random();
     }
 
-    public static void main(String[] args) {
+    protected static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
         Tree tree = new Tree();
-        System.out.println("Enter depth: ");
-        tree.depth = scan.nextInt();
+        //System.out.println("Enter depth: ");
+        tree.depth = 5;//scan.nextInt();
         tree.createNodes(tree.root);
         tree.displayNodes(tree.root);
         tree.computeScores(tree.root);
@@ -37,31 +38,33 @@ public class Tree {
         tree.displayNodes(tree.root);
     }
 
-    public void createNodes(Node parent) {
+    protected void createNodes(Node parent) {
         parent.id = id++;
         if (depth > parent.depth) {
-            parent.child1 = new Node();
-            parent.child1.parent = parent;
-            parent.child1.depth = parent.depth + 1;
-            createNodes(parent.child1);
-            parent.child2 = new Node();
-            parent.child2.parent = parent;
-            parent.child2.depth = parent.depth + 1;
-            createNodes(parent.child2);
+            for (checkmate.design.Piece piece : getPieces()) {
+                for (Node child : getPossibleMoves()) {
+                    Node node = new Node();
+                    node.parent = parent;
+                    node.depth = parent.depth + 1;
+                    parent.children.add(node);
+                    createNodes(node);
+                }
+            }
         }
 
     }
 
-    public void displayNodes(Node parent) {
+    protected void displayNodes(Node parent) {
         String parentId = (parent.parent != null) ? "" + parent.parent.id : "root";
         System.out.format("Node, value = %1$-12.12s, depth = %2$-12.12s, id = %3$-12.12s, parentId = %4$-12.12s\n", parent.value, parent.depth, parent.id, parentId);
         if (depth > parent.depth) {
-            displayNodes(parent.child1);
-            displayNodes(parent.child2);
+            for (Node child : parent.children) {
+                displayNodes(child);
+            }
         }
     }
-    
-    public void computeScores(Node node) {
+
+    protected void computeScores(Node node) {
         if (depth == node.depth) {
             node.value = rand.nextInt(50);
         } else if (node.depth % 2 == 0) {
@@ -69,16 +72,30 @@ public class Tree {
         } else {
             node.value = Integer.MAX_VALUE;
         }
-        if(depth > node.depth) {
-            computeScores(node.child1);
-            computeScores(node.child2);
+        if (depth > node.depth) {
+            for (Node child : node.children) {
+                computeScores(child);
+            }
         }
-        if(node.parent!=null) {
-            if(node.parent.depth % 2 == 0) {
+        if (node.parent != null) {
+            if (node.parent.depth % 2 == 0) {
                 node.parent.value = Math.max(node.parent.value, node.value);
             } else {
                 node.parent.value = Math.min(node.parent.value, node.value);
             }
         }
+    }
+
+    @Override
+    public void generateMove() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private Iterable<Piece> getPieces() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private Iterable<Node> getPossibleMoves() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

@@ -9,17 +9,20 @@ import checkmate.design.Cell;
 import checkmate.design.Piece;
 import checkmate.manager.RepetitionManager;
 import checkmate.util.Address;
+import checkmate.util.ProjectInfo;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 
 /**
  * Captures keyboard and mouse events on a cell of the chess board
+ *
  * @author Isaac
  */
 public class CellEvtHandler implements IEventHandler {
 
     /**
      * Handles mouse events triggered from a chess cell
+     *
      * @param event MouseEvent object
      */
     @Override
@@ -29,12 +32,17 @@ public class CellEvtHandler implements IEventHandler {
             Piece selectedPiece = gamePlay.getMovingPiece();
             if (isTurnToPlay(selectedPiece)) {
                 processPieceMovement(clickedCell, selectedPiece);
+                event.consume();
+                if(gamePlay.getPlayType() == ProjectInfo.PlayType.SINGLE_PLAYER && gamePlay.isAiTurnToPlay()) {
+                    gamePlay.triggerAiMove();
+                }
             }
         }
     }
 
     /**
      * Handles keyboard events triggered from a chess cell
+     *
      * @param event KeyEvent object
      */
     @Override
@@ -44,6 +52,7 @@ public class CellEvtHandler implements IEventHandler {
 
     /**
      * Performs a piece move to an empty cell, if the move is valid.
+     *
      * @param clickedCell is the target cell
      * @param selectedPiece is the piece that needs to be moved
      */
@@ -58,7 +67,9 @@ public class CellEvtHandler implements IEventHandler {
     }
 
     /**
-     * Indicates whether it is the selected piece's (white or black) turn to make a move on the chess board
+     * Indicates whether it is the selected piece's (white or black) turn to
+     * make a move on the chess board
+     *
      * @param selectedPiece selected piece
      * @return true if it is a valid turn, false otherwise
      */

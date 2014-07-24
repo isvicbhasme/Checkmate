@@ -5,9 +5,14 @@
  */
 package checkmate.manager;
 
+import checkmate.Launcher;
+import checkmate.ai.IAi;
+import checkmate.ai.Tree;
 import checkmate.design.Piece;
 import checkmate.util.PieceInfo;
 import checkmate.util.ProjectInfo;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * The GamePlay singleton class is responsible for maintaining the status of a
@@ -22,8 +27,14 @@ public class GamePlay {
     private static GamePlay instance = null;
     private PieceInfo.Color playTurn = PieceInfo.Color.WHITE;
     private ProjectInfo.PlayType playType;
+    private IAi intelligence;
 
     private GamePlay() {
+        try {
+            intelligence = (IAi) Class.forName(Launcher.resource.getStringConfig("GamePlay.ai")).newInstance();
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
+            Logger.getLogger(GamePlay.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -117,5 +128,15 @@ public class GamePlay {
 
     public void setPlayType(ProjectInfo.PlayType playType) {
         this.playType = playType;
+    }
+    
+    public boolean isAiTurnToPlay() {
+        if(getPlayType() == ProjectInfo.PlayType.DOUBLE_PLAYER)
+            throw new IllegalAccessError("Double player mode cannot play against AI");
+        return playTurn != getPlayType().getPlayerColor();
+    }
+    
+    public void triggerAiMove() {
+        intelligence.generateMove();
     }
 }
